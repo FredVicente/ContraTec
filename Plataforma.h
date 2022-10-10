@@ -1,18 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Objeto.h"
 
-class Plataforma
+class Plataforma : public Objeto
 {
 private:
-	sf::RectangleShape plataforma;
 
 public:
-	sf::Vector2f posicao;
-	sf::Vector2f tamanho;
 	Plataforma() {};
-	Plataforma(float x, float y, float tx, float ty);
+	Plataforma(float x, float y, float tx, float ty) : Objeto(x, y, tx, ty) {};
 	~Plataforma() {};
-
-	sf::RectangleShape getShape() { return plataforma; };
 };
 
