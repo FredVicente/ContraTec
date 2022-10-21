@@ -1,11 +1,17 @@
 #pragma once
-#include "Plataforma.h"
-#include "Personagem.h"
+#include <SFML/Graphics.hpp>
+#include <list>
+#include <Math/Coord.h>
+#include <Listas/ListaEntidades.h>
+#include <Gerenciadores/GerenciadorColisao.h>
+
+using namespace Listas;
+using namespace Gerenciadores;
+using namespace Entidades;
+using namespace Math;
 
 class Principal
 {
-private:
-
 public:
 	Principal() {};
 	~Principal() {};

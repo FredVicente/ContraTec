@@ -1,5 +1,5 @@
 Debug
-include
+include/SFML
 lib
 .vs
 Project1.sln
