@@ -2,6 +2,7 @@
 #include <Entidades/Personagem.h>
 #include <Entidades/Plataforma.h>
 #include <Listas/ListaEntidades.h>
+#include <list>
 
 using namespace Listas;
 
@@ -15,7 +16,7 @@ namespace Gerenciadores {
 		GerenciadorColisao() {};
 		~GerenciadorColisao() {};
 
-		void Colisao(ListaEntidades* lE);
+		void Colisao();
 	};
 }
 

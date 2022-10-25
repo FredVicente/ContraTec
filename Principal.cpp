@@ -4,7 +4,6 @@ void Principal::Executar(){
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
-    ListaEntidades *lEntidades = new ListaEntidades();
     GerenciadorColisao *gC = new GerenciadorColisao();
 
     Coord<float> tamanho(50,120);
@@ -13,13 +12,7 @@ void Principal::Executar(){
     Plataforma* plataforma2 = new Plataforma(Coord<float>(350, 350), Coord<float>(100, 50));
     Plataforma* plataforma3 = new Plataforma(Coord<float>(500, 350), Coord<float>(100, 50));
     Plataforma* chao = new Plataforma(Coord<float>(0, 500), Coord<float>(850, 50));
-
-    lEntidades->lista.push_back(personagem);
-    lEntidades->lista.push_back(plataforma);
-    lEntidades->lista.push_back(plataforma2);
-    lEntidades->lista.push_back(plataforma3);
-    lEntidades->lista.push_back(chao);
-
+    
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -51,10 +44,10 @@ void Principal::Executar(){
 
         personagem->Mover();
 
-        gC->Colisao(lEntidades);
+        gC->Colisao();
 
-        std::list<Entidade*>::iterator iterador = lEntidades->lista.begin();;
-        while (iterador != lEntidades->lista.end()) {
+        std::list<Entidade*>::iterator iterador = Entidade::lista.begin();;
+        while (iterador != Entidade::lista.end()) {
             Entidade* entidade = NULL;
             entidade = *iterador;
             window.draw(*entidade->shape);

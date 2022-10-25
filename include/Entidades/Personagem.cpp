@@ -1,6 +1,8 @@
 #include "Personagem.h"
+#include "Listas/ListaEntidades.h"
 
 using namespace Entidades;
+using namespace Listas;
 
 Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho) : Entidade(posicao, tamanho, jogador) {
 	velocidade = Coord<float>(0, 0);

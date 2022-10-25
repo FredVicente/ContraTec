@@ -1,5 +1,6 @@
 #pragma once
 #include "Ente.h"
+#include <list>
 
 namespace Entidades {
 	enum ID {
@@ -17,6 +18,7 @@ namespace Entidades {
 		sf::RectangleShape* shape;
 		Coord<float> posicao;
 		Coord<float> tamanho;
+		static std::list<Entidade*> lista;
 
 		Entidade(Coord<float> posicao = Coord<float>(0.f, 0.f), Coord<float> tamanho = Coord<float>(0.f, 0.f), ID id = vazio);
 		~Entidade() {};
