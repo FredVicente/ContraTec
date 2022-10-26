@@ -1,6 +1,4 @@
 #pragma once
-#include <Entidades/Personagem.h>
-#include <Entidades/Plataforma.h>
 #include <Listas/ListaEntidades.h>
 #include <list>
 
@@ -16,7 +14,11 @@ namespace Gerenciadores {
 		GerenciadorColisao() {};
 		~GerenciadorColisao() {};
 
-		void Colisao();
+		// Testa a colisao entre todas a entidades do jogo.
+		void Colisoes();
+
+		// Testa a colisao entre duas entidades diretamente.
+		int TestaColisao(Entidade* e1, Entidade* e2);
 	};
 }
 

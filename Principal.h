@@ -3,6 +3,8 @@
 #include <list>
 #include <Math/Coord.h>
 #include <Listas/ListaEntidades.h>
+#include <Entidades/Personagem.h>
+#include <Entidades/Plataforma.h>
 #include <Gerenciadores/GerenciadorColisao.h>
 
 using namespace Listas;

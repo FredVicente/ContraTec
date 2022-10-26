@@ -9,6 +9,8 @@ namespace Entidades {
 		~Plataforma() {};
 
 		void Executar() {};
+
+		void Colisao(Entidade* e, int dir) {};
 	};
 }
 

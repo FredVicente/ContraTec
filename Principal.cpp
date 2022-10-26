@@ -10,7 +10,7 @@ void Principal::Executar(){
     Personagem* personagem = new Personagem(Coord<float>(30,50), tamanho);
     Plataforma* plataforma = new Plataforma(Coord<float>(200, 450), Coord<float>(200,50));
     Plataforma* plataforma2 = new Plataforma(Coord<float>(350, 350), Coord<float>(100, 50));
-    Plataforma* plataforma3 = new Plataforma(Coord<float>(500, 350), Coord<float>(100, 50));
+    Plataforma* plataforma3 = new Plataforma(Coord<float>(600, 300), Coord<float>(80, 50));
     Plataforma* chao = new Plataforma(Coord<float>(0, 500), Coord<float>(850, 50));
     
     while (window.isOpen()) {
@@ -25,9 +25,8 @@ void Principal::Executar(){
                     personagem->velocidade.x = 0.2f;
                 if (event.key.code == sf::Keyboard::A)
                     personagem->velocidade.x = -0.2f;
-                if (event.key.code == sf::Keyboard::W && personagem->colisao.y) {
+                if (event.key.code == sf::Keyboard::W && personagem->pulo) {
                     personagem->velocidade.y = -0.7;
-                    personagem->colisao.y = false;
                 }
                 break;
             case sf::Event::KeyReleased:
@@ -44,7 +43,7 @@ void Principal::Executar(){
 
         personagem->Mover();
 
-        gC->Colisao();
+        gC->Colisoes();
 
         std::list<Entidade*>::iterator iterador = Entidade::lista.begin();;
         while (iterador != Entidade::lista.end()) {

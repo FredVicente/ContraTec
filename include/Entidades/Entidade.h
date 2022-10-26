@@ -1,6 +1,11 @@
 #pragma once
 #include "Ente.h"
-#include <list>
+#include <list> 
+#define NAO_COLIDINDO 0
+#define BAIXO 1
+#define CIMA 2
+#define DIREITA 3
+#define ESQUERDA 4
 
 namespace Entidades {
 	enum ID {
@@ -14,17 +19,18 @@ namespace Entidades {
 	class Entidade : public Ente{
 	public:
 		ID id;
-		Coord<bool> colisao;
 		sf::RectangleShape* shape;
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		static std::list<Entidade*> lista;
 
-		Entidade(Coord<float> posicao = Coord<float>(0.f, 0.f), Coord<float> tamanho = Coord<float>(0.f, 0.f), ID id = vazio);
+		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
 		~Entidade() {};
 
 		void setPosicao(Coord<float> posicao);
 
 		void virtual Executar() = 0;
+
+		void virtual Colisao(Entidade* e, int dir) = 0;
 	};
 }

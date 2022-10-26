@@ -11,8 +11,6 @@ Entidade::Entidade(Coord<float> posicao, Coord<float> tamanho, ID id) {
 	this->tamanho = tamanho;
 	this->id = id;
 	lista.push_back(this);
-	colisao.x = false;
-	colisao.y = false;
 	shape = new sf::RectangleShape(sf::Vector2f(tamanho.x, tamanho.y));
 	setPosicao(posicao);
 }
