@@ -4,41 +4,49 @@
 using namespace Entidades;
 using namespace Listas;
 
-Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho) : Entidade(posicao, tamanho, jogador) {
-	velocidade = Coord<float>(0, 0);
-	aceleracao = Coord<float>(0, 0.001f);
-	shape->setFillColor(sf::Color::Green);
-}
+namespace Entidades{
 
-void Personagem::Mover() {
-	velocidade += aceleracao;
-	posicao += velocidade;
+	namespace Personagens{
 
-	setPosicao(posicao);
-}
+		Personagem::Personagem(ID id, Coord<float> posicao, Coord<float> tamanho) : Entidade(id, posicao, tamanho) {
+			velocidade = Coord<float>(0, 0);
+			aceleracao = Coord<float>(0, 0.001f);
+			shape->setFillColor(sf::Color::Green);
+		}
 
-void Personagem::Colisao(Entidade* e, int dir) {
-	if (e->id == inimigo) {
-		// Implementar depois
+		void Personagem::Mover() {
+			velocidade += aceleracao;
+			posicao += velocidade;
+
+			setPosicao(posicao);
+		}
+
+		void Personagem::Colisao(Entidade* e, int dir) {
+			if (e->id == inimigo) {
+				// Implementar depois
+			}
+
+			if(e->id == plataforma){
+				if (dir == DIREITA) {
+					posicao.x = e->posicao.x - tamanho.x;
+					velocidade.x = 0;
+				}
+				else if (dir == ESQUERDA) {
+					posicao.x = e->posicao.x + e->tamanho.x;
+					velocidade.x = 0;
+				}
+				if (dir == BAIXO) {
+					posicao.y = e->posicao.y - tamanho.y;
+					velocidade.y = 0;
+					pulo = true;
+				}
+				else if (dir == CIMA) {
+					posicao.y = e->posicao.y + e->tamanho.y;
+					velocidade.y = 0;
+				}
+			}
+		}
+
 	}
 
-	if(e->id == plataforma){
-		if (dir == DIREITA) {
-			posicao.x = e->posicao.x - tamanho.x;
-			velocidade.x = 0;
-		}
-		else if (dir == ESQUERDA) {
-			posicao.x = e->posicao.x + e->tamanho.x;
-			velocidade.x = 0;
-		}
-		if (dir == BAIXO) {
-			posicao.y = e->posicao.y - tamanho.y;
-			velocidade.y = 0;
-			pulo = true;
-		}
-		else if (dir == CIMA) {
-			posicao.y = e->posicao.y + e->tamanho.y;
-			velocidade.y = 0;
-		}
-	}
 }

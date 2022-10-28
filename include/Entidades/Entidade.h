@@ -24,7 +24,7 @@ namespace Entidades {
 		Coord<float> tamanho;
 		static std::list<Entidade*> lista;
 
-		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
+		Entidade(ID id, Coord<float> posicao, Coord<float> tamanho);
 		~Entidade() {};
 
 		void setPosicao(Coord<float> posicao);

@@ -6,7 +6,7 @@ using namespace Listas;
 
 std::list<Entidade*> Entidade::lista;
 
-Entidade::Entidade(Coord<float> posicao, Coord<float> tamanho, ID id) {
+Entidade::Entidade(ID id, Coord<float> posicao, Coord<float> tamanho) {
 	this->posicao = posicao;
 	this->tamanho = tamanho;
 	this->id = id;
