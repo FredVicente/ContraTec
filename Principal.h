@@ -19,8 +19,8 @@ using namespace std;
 class Principal
 {
 public:
-	Principal() {};
+	Principal() { Inicializar() };
 	~Principal() {};
-	void Executar();
+	void Inicializar();
 };
 

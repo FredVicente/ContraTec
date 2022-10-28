@@ -5,7 +5,7 @@ int main()
 {
     Principal principal;
 
-    principal.Executar();
+    principal.Inicializar();
 
     return 0;
 }

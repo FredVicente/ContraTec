@@ -2,7 +2,7 @@
 
 using namespace Entidades::Personagens;
 
-void Principal::Executar(){
+void Principal::Inicializar(){
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
@@ -35,6 +35,7 @@ void Principal::Executar(){
                     jogador1->velocidade.x = -0.2f;
                 if (event.key.code == sf::Keyboard::W && jogador1->pulo) {
                     jogador1->velocidade.y = -0.7;
+                    jogador1->pulo = false;
                 }
                 break;
             case sf::Event::KeyReleased:
@@ -60,7 +61,7 @@ void Principal::Executar(){
         while (iterador != Entidade::lista.end()) {
             Entidade* entidade = NULL;
             entidade = *iterador;
-            window.draw(*entidade->shape);
+            window.draw(*entidade->getShape());
             iterador++;
         }
 

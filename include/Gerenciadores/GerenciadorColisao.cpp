@@ -3,13 +3,13 @@
 using namespace Gerenciadores;
 
 void GerenciadorColisao::Colisoes() {
-    // Lista que contém todas as entidades do jogo.
+    // Lista que contÃ©m todas as entidades do jogo.
     std::list<Entidade*> l = Entidade::lista;
-    // Entidades de comparação.
+    // Entidades de comparaÃ§Ã£o.
     Entidade* e1;
     Entidade* e2;
 
-    // Começa o loop entre as entidades.
+    // ComeÃ§a o loop entre as entidades.
     iterador1 = l.begin();
     while (iterador1 != l.end()) {
         e1 = *iterador1;
@@ -21,22 +21,22 @@ void GerenciadorColisao::Colisoes() {
             Entidade* e2 = *iterador2;
             iterador2++;
 
-            // Apenas testa se não são dois objetos do mesmo tipo.
-            if (e1->id != e2->id) {
-                // Direção de colisão.
+            // Apenas testa se nÃ£o sÃ£o dois objetos do mesmo tipo.
+            if (e1->getID() != e2->getID()) {
+                // DireÃ§Ã£o de colisÃ£o.
                 int dir = TestaColisao(e1, e2);
 
                 if (dir != NAO_COLIDINDO) {
-                    // Não precisa testar efeito de colisão na plataforma, pois ela se manterá igual.
-                    if (e1->id != plataforma)
+                    // NÃ£o precisa testar efeito de colisÃ£o na plataforma, pois ela se manterÃ¡ igual.
+                    if (e1->getID() != plataforma)
                         e1->Colisao(e2, dir);
-                    // Inverte a direção de colisão do objeto.
+                    // Inverte a direÃ§Ã£o de colisÃ£o do objeto.
                     if (dir % 2)
                         dir++;
                     else
                         dir--;
                     // Colisao do segundo objeto.
-                    if (e2->id != plataforma)
+                    if (e2->getID() != plataforma)
                         e2->Colisao(e1, dir);
                 }
             }
@@ -45,34 +45,34 @@ void GerenciadorColisao::Colisoes() {
 }
 
 int GerenciadorColisao::TestaColisao(Entidade* e1, Entidade* e2) {
-    // Essa funçao apenas testa se o objeto está colidindo, o efeito da colisao é feito dentro da entidade.
-    // A função so retorna a direção de colisão! Retorna 0 caso não esteja colidindo.
+    // Essa funÃ§ao apenas testa se o objeto estÃ¡ colidindo, o efeito da colisao Ã© feito dentro da entidade.
+    // A funÃ§Ã£o so retorna a direÃ§Ã£o de colisÃ£o! Retorna 0 caso nÃ£o esteja colidindo.
 
-    // A interseção é usada para saber em qual coordenada exatamente o objeto está colidindo.
+    // A interseÃ§Ã£o Ã© usada para saber em qual coordenada exatamente o objeto estÃ¡ colidindo.
     Coord<float> intersecao;
-    intersecao.x = e1->posicao.x + e1->tamanho.x - e2->posicao.x;
-    intersecao.y = e1->posicao.y + e1->tamanho.y - e2->posicao.y;
+    intersecao.x = e1->getPosicao().x + e1->getTamanho().x - e2->getPosicao().x;
+    intersecao.y = e1->getPosicao().y + e1->getTamanho().y - e2->getPosicao().y;
     
-    if (intersecao.x > e1->tamanho.x)
-        intersecao.x = e1->tamanho.x;
-    if (e1->posicao.x >= e2->posicao.x + e2->tamanho.x - e1->tamanho.x)
-        intersecao.x = e2->posicao.x + e2->tamanho.x - e1->posicao.x;
+    if (intersecao.x > e1->getTamanho().x)
+        intersecao.x = e1->getTamanho().x;
+    if (e1->getPosicao().x >= e2->getPosicao().x + e2->getTamanho().x - e1->getTamanho().x)
+        intersecao.x = e2->getPosicao().x + e2->getTamanho().x - e1->getPosicao().x;
     
-    if (intersecao.y > e1->tamanho.y)
-        intersecao.y = e1->tamanho.y;
-    if (e1->posicao.y >= e2->posicao.y + e2->tamanho.y - e1->tamanho.y)
-        intersecao.y = e2->posicao.y + e2->tamanho.y - e1->posicao.y;
+    if (intersecao.y > e1->getTamanho().y)
+        intersecao.y = e1->getTamanho().y;
+    if (e1->getPosicao().y >= e2->getPosicao().y + e2->getTamanho().y - e1->getTamanho().y)
+        intersecao.y = e2->getPosicao().y + e2->getTamanho().y - e1->getPosicao().y;
 
     if (intersecao.x <= 0 || intersecao.y <= 0) { return 0; }
 
     if (intersecao.x > intersecao.y) {
-        if (e1->posicao.y + e1->tamanho.y < e2->posicao.y + e2->tamanho.y / 2)
+        if (e1->getPosicao().y + e1->getTamanho().y < e2->getPosicao().y + e2->getTamanho().y / 2)
             return BAIXO;
         else
             return CIMA;
     }
     else {
-        if (e1->posicao.x + e1->tamanho.x < e2->posicao.x + e2->tamanho.x / 2)
+        if (e1->getPosicao().x + e1->getTamanho().x < e2->getPosicao().x + e2->getTamanho().x / 2)
             return DIREITA;
         else
             return ESQUERDA;

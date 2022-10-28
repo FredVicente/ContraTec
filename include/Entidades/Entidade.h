@@ -17,15 +17,21 @@ namespace Entidades {
 		imagem
 	};
 	class Entidade : public Ente{
-	public:
+	protected:
 		ID id;
 		sf::RectangleShape* shape;
 		Coord<float> posicao;
 		Coord<float> tamanho;
+	public:
 		static std::list<Entidade*> lista;
 
 		Entidade(ID id, Coord<float> posicao, Coord<float> tamanho);
-		~Entidade() {};
+		~Entidade() { free(shape); };
+
+		Coord<float> getPosicao() { return posicao; };
+		Coord<float> getTamanho() { return tamanho; };
+		sf::RectangleShape* getShape() { return shape; };
+		int getID() { return id; };
 
 		void setPosicao(Coord<float> posicao);
 
