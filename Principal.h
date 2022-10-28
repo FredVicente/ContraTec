@@ -15,8 +15,8 @@ using namespace Math;
 class Principal
 {
 public:
-	Principal() {};
+	Principal() { Inicializar(); };
 	~Principal() {};
-	void Executar();
+	void Inicializar();
 };
 

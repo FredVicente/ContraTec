@@ -1,6 +1,6 @@
 #include "Principal.h"
 
-void Principal::Executar(){
+void Principal::Inicializar(){
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
@@ -27,6 +27,7 @@ void Principal::Executar(){
                     personagem->velocidade.x = -0.2f;
                 if (event.key.code == sf::Keyboard::W && personagem->pulo) {
                     personagem->velocidade.y = -0.7;
+                    personagem->pulo = false;
                 }
                 break;
             case sf::Event::KeyReleased:
@@ -49,7 +50,7 @@ void Principal::Executar(){
         while (iterador != Entidade::lista.end()) {
             Entidade* entidade = NULL;
             entidade = *iterador;
-            window.draw(*entidade->shape);
+            window.draw(*entidade->getShape());
             iterador++;
         }
 

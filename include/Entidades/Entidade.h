@@ -17,20 +17,26 @@ namespace Entidades {
 		imagem
 	};
 	class Entidade : public Ente{
-	public:
-		ID id;
-		sf::RectangleShape* shape;
+	private:
 		Coord<float> posicao;
 		Coord<float> tamanho;
+		sf::RectangleShape* shape;
+	protected:
+		ID id;
+	public:
 		static std::list<Entidade*> lista;
 
+		Entidade() { id = vazio, shape = NULL; };
 		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
-		~Entidade() {};
+		~Entidade() { free(shape); };
 
+		Coord<float> getPosicao() { return posicao; };
+		Coord<float> getTamanho() { return tamanho; };
+		sf::RectangleShape* getShape() { return shape; };
+		int getID() { return id; };
 		void setPosicao(Coord<float> posicao);
 
 		void virtual Executar() = 0;
-
 		void virtual Colisao(Entidade* e, int dir) = 0;
 	};
 }
