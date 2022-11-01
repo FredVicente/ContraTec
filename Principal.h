@@ -5,6 +5,7 @@
 #include <Listas/ListaEntidades.h>
 #include <Entidades/Personagem.h>
 #include <Entidades/Plataforma.h>
+#include <Entidades/Personagens/Jogador.h>
 #include <Gerenciadores/GerenciadorColisao.h>
 #include <Personagens/Jogador.h>
 #include <iostream>

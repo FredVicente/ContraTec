@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 Debug
 lib
 .vs
@@ -5,4 +6,6 @@ Project1.sln
 Project1.vcxproj
 Project1.vcxproj.filters
 Project1.vcxproj.user
+=======
+>>>>>>> Stashed changes
 .vscode

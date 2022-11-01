@@ -16,7 +16,11 @@ namespace Entidades {
 		projetil,
 		imagem
 	};
+<<<<<<< Updated upstream
 	class Entidade : public Ente{
+=======
+	class Entidade : public Ente {
+>>>>>>> Stashed changes
 	protected:
 		ID id;
 		sf::RectangleShape* shape;
@@ -34,6 +38,7 @@ namespace Entidades {
 		int getID() { return id; };
 
 		void setPosicao(Coord<float> posicao);
+		void setTamanho(Coord<float> tamanho);
 
 		void virtual Executar() = 0;
 

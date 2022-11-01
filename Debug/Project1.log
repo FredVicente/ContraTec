@@ -1,0 +1,12 @@
+﻿  Principal.cpp
+E:\Users\frede\Programação\ContraTec\Principal.cpp(5,59): warning C4244: 'argumento': conversão de 'T' para 'unsigned int', possível perda de dados
+          with
+          [
+              T=float
+          ]
+E:\Users\frede\Programação\ContraTec\Principal.cpp(5,49): warning C4244: 'argumento': conversão de 'T' para 'unsigned int', possível perda de dados
+          with
+          [
+              T=float
+          ]
+  Project1.vcxproj -> E:\Users\frede\Programação\ContraTec\Debug\Project1.exe
