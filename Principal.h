@@ -6,7 +6,6 @@
 #include <Entidades/Plataforma.h>
 #include <Entidades/Personagens/Jogador.h>
 #include <Gerenciadores/GerenciadorColisao.h>
-#include <Personagens/Jogador.h>
 #include <iostream>
 #include <Fases/Fase1.h>
 
@@ -26,4 +25,3 @@ public:
 	~Principal() {};
 	void Inicializar();
 };
-

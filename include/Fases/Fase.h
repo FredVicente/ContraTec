@@ -1,6 +1,8 @@
 #pragma once
+
+#include "Ente.h"
 #include "Entidades/Plataforma.h"
-#include "Entidades/Personagem.h"
+#include "Entidades/Personagens/Jogador.h"
 #include "Gerenciadores/GerenciadorColisao.h"
 #include <list>
 

@@ -5,10 +5,9 @@ void Principal::Inicializar(){
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
     Coord<float> tamanho(50,120);
-    //Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(30,50), tamanho);
-    Personagem* personagem = new  Personagem(Coord<float>(30,50), tamanho);
-    fase1.player = personagem;
-    fase1.lista.push_back(personagem);
+    Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(30,50), tamanho);
+    fase1.player = jogador1;
+    fase1.lista.push_back(jogador1);
     
     while (window.isOpen()) {
         sf::Event event;
@@ -17,9 +16,9 @@ void Principal::Inicializar(){
             case sf::Event::Closed:
                 window.close();
                 break;
+
             case sf::Event::KeyPressed:
 
-/*
                 if (event.key.code == sf::Keyboard::D)
                     jogador1->pControle.notifyPressed("D");
                 else if (event.key.code == sf::Keyboard::A)
@@ -28,17 +27,8 @@ void Principal::Inicializar(){
                     jogador1->pControle.notifyPressed("W");
                 else if (event.key.code == sf::Keyboard::Num1)
                     jogador1->pControle.notifyPressed("1");
-*/
-                if (event.key.code == sf::Keyboard::D)
-                    personagem->velocidade.x = 0.2f;
-                if (event.key.code == sf::Keyboard::A)
-                    personagem->velocidade.x = -0.2f;
-                if (event.key.code == sf::Keyboard::W && personagem->pulo) {
-                    personagem->velocidade.y = -0.7;
-                    personagem->pulo = false;
-                }
-                break;
-            /*case sf::Event::KeyReleased:
+
+            case sf::Event::KeyReleased:
 
                 if (event.key.code == sf::Keyboard::D)
                     jogador1->pControle.notifyReleased("D");
@@ -48,14 +38,14 @@ void Principal::Inicializar(){
                     jogador1->pControle.notifyReleased("W");
                 else if (event.key.code == sf::Keyboard::Num1)
                     jogador1->pControle.notifyReleased("1");
-                break;*/
+
             default:
                 break;
             }
         }
         window.clear();
 
-        personagem->Mover();
+        jogador1->Mover();
 
         fase1.gC.Colisoes(fase1.lista);
 
