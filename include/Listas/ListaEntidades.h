@@ -4,6 +4,7 @@
 
 using namespace Entidades;
 
+// Sem uso por enquanto.
 namespace Listas {
 	class ListaEntidades {
 	public:

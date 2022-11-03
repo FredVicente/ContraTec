@@ -1,10 +1,9 @@
 #include "GerenciadorColisao.h"
+#include "Entidades/Entidade.h"
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::Colisoes() {
-    // Lista que contém todas as entidades do jogo.
-    std::list<Entidade*> l = Entidade::lista;
+void GerenciadorColisao::Colisoes(std::list<Entidade*> l) {
     // Entidades de comparação.
     Entidade* e1;
     Entidade* e2;
