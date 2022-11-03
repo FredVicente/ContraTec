@@ -45,6 +45,7 @@
     <ClCompile Include="Principal.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+
     <ClCompile Include="include\Entidades\Plataforma.cpp">
       <Filter>Arquivos de Origem\Entidades</Filter>
     </ClCompile>
@@ -59,6 +60,7 @@
     </ClCompile>
     <ClCompile Include="Fase1.cpp">
       <Filter>Arquivos de Origem\Fases</Filter>
+
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

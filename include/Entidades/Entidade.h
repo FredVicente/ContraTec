@@ -15,15 +15,16 @@ namespace Entidades {
 		projetil,
 		imagem
 	};
+
 	class Entidade : public Ente{
 	protected:
+    ID id;
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		sf::RectangleShape* shape;
-		ID id;
 	public:
 		Entidade() { id = vazio; shape = NULL; };
-		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
+		Entidade(ID id, Coord<float> posicao, Coord<float> tamanho);
 		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };
@@ -31,6 +32,7 @@ namespace Entidades {
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
 		void setPosicao(Coord<float> posicao);
+		void setTamanho(Coord<float> tamanho);
 
 		void virtual Executar() {};
 		void virtual Colisao(Entidade* e, int dir) = 0;

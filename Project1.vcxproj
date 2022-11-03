@@ -151,21 +151,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Fase1.cpp" />
+    <ClCompile Include="include\Controles\ControleJogador.cpp" />
     <ClCompile Include="include\Entidades\Entidade.cpp" />
     <ClCompile Include="include\Entidades\Personagem.cpp" />
+    <ClCompile Include="include\Entidades\Personagens\Jogador.cpp" />
+    <ClCompile Include="Fase1.cpp" />
     <ClCompile Include="include\Entidades\Plataforma.cpp" />
     <ClCompile Include="include\Gerenciadores\GerenciadorColisao.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Principal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Controles\ControleJogador.h" />
     <ClInclude Include="include\Ente.h" />
     <ClInclude Include="include\Entidades\Entidade.h" />
     <ClInclude Include="include\Entidades\Personagem.h" />
+    <ClInclude Include="include\Entidades\Personagens\Jogador.h" />
     <ClInclude Include="include\Entidades\Plataforma.h" />
+
     <ClInclude Include="include\Fases\Fase.h" />
     <ClInclude Include="include\Fases\Fase1.h" />
+
     <ClInclude Include="include\Gerenciadores\GerenciadorColisao.h" />
     <ClInclude Include="include\Listas\ListaEntidades.h" />
     <ClInclude Include="include\Math\Coord.h" />

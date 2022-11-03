@@ -5,6 +5,7 @@ void Principal::Inicializar(){
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
     Coord<float> tamanho(50,120);
+    //Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(30,50), tamanho);
     Personagem* personagem = new  Personagem(Coord<float>(30,50), tamanho);
     fase1.player = personagem;
     fase1.lista.push_back(personagem);
@@ -17,6 +18,17 @@ void Principal::Inicializar(){
                 window.close();
                 break;
             case sf::Event::KeyPressed:
+
+/*
+                if (event.key.code == sf::Keyboard::D)
+                    jogador1->pControle.notifyPressed("D");
+                else if (event.key.code == sf::Keyboard::A)
+                    jogador1->pControle.notifyPressed("A");
+                else if (event.key.code == sf::Keyboard::W && jogador1->pulo) 
+                    jogador1->pControle.notifyPressed("W");
+                else if (event.key.code == sf::Keyboard::Num1)
+                    jogador1->pControle.notifyPressed("1");
+*/
                 if (event.key.code == sf::Keyboard::D)
                     personagem->velocidade.x = 0.2f;
                 if (event.key.code == sf::Keyboard::A)
@@ -26,12 +38,17 @@ void Principal::Inicializar(){
                     personagem->pulo = false;
                 }
                 break;
-            case sf::Event::KeyReleased:
-                if (event.key.code == sf::Keyboard::D && personagem->velocidade.x > 0 ||
-                    event.key.code == sf::Keyboard::A && personagem->velocidade.x < 0)
-                        personagem->velocidade.x = 0;
-            case sf::Event::MouseButtonPressed:
-                if (event.mouseButton.x)
+            /*case sf::Event::KeyReleased:
+
+                if (event.key.code == sf::Keyboard::D)
+                    jogador1->pControle.notifyReleased("D");
+                else if (event.key.code == sf::Keyboard::A)
+                    jogador1->pControle.notifyReleased("A");
+                else if (event.key.code == sf::Keyboard::W && jogador1->pulo) 
+                    jogador1->pControle.notifyReleased("W");
+                else if (event.key.code == sf::Keyboard::Num1)
+                    jogador1->pControle.notifyReleased("1");
+                break;*/
             default:
                 break;
             }
