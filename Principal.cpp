@@ -1,20 +1,14 @@
 #include "Principal.h"
 
-using namespace Entidades;
-
 void Principal::Inicializar(){
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
 
-    GerenciadorColisao *gC = new GerenciadorColisao();
-
     Coord<float> tamanho(50,120);
-
-    Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(30,50), tamanho);
-    Plataforma* plataforma = new Plataforma(Coord<float>(200, 450), Coord<float>(200,50));
-    Plataforma* plataforma2 = new Plataforma(Coord<float>(350, 350), Coord<float>(100, 50));
-    Plataforma* plataforma3 = new Plataforma(Coord<float>(600, 300), Coord<float>(80, 50));
-    Plataforma* chao = new Plataforma(Coord<float>(0, 500), Coord<float>(850, 50));
+    //Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(30,50), tamanho);
+    Personagem* personagem = new  Personagem(Coord<float>(30,50), tamanho);
+    fase1.player = personagem;
+    fase1.lista.push_back(personagem);
     
     while (window.isOpen()) {
         sf::Event event;
@@ -25,6 +19,7 @@ void Principal::Inicializar(){
                 break;
             case sf::Event::KeyPressed:
 
+/*
                 if (event.key.code == sf::Keyboard::D)
                     jogador1->pControle.notifyPressed("D");
                 else if (event.key.code == sf::Keyboard::A)
@@ -33,9 +28,17 @@ void Principal::Inicializar(){
                     jogador1->pControle.notifyPressed("W");
                 else if (event.key.code == sf::Keyboard::Num1)
                     jogador1->pControle.notifyPressed("1");
-
+*/
+                if (event.key.code == sf::Keyboard::D)
+                    personagem->velocidade.x = 0.2f;
+                if (event.key.code == sf::Keyboard::A)
+                    personagem->velocidade.x = -0.2f;
+                if (event.key.code == sf::Keyboard::W && personagem->pulo) {
+                    personagem->velocidade.y = -0.7;
+                    personagem->pulo = false;
+                }
                 break;
-            case sf::Event::KeyReleased:
+            /*case sf::Event::KeyReleased:
 
                 if (event.key.code == sf::Keyboard::D)
                     jogador1->pControle.notifyReleased("D");
@@ -45,20 +48,20 @@ void Principal::Inicializar(){
                     jogador1->pControle.notifyReleased("W");
                 else if (event.key.code == sf::Keyboard::Num1)
                     jogador1->pControle.notifyReleased("1");
+                break;*/
             default:
                 break;
             }
         }
         window.clear();
 
-        jogador1->Mover();
+        personagem->Mover();
 
-        gC->Colisoes();
+        fase1.gC.Colisoes(fase1.lista);
 
-        std::list<Entidade*>::iterator iterador = Entidade::lista.begin();;
-        while (iterador != Entidade::lista.end()) {
-            Entidade* entidade = NULL;
-            entidade = *iterador;
+        std::list<Entidade*>::iterator iterador = fase1.lista.begin();
+        while (iterador != fase1.lista.end()) {
+            Entidade* entidade = *iterador;
             window.draw(*entidade->getShape());
             iterador++;
         }

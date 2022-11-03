@@ -4,8 +4,5 @@
 int main()
 {
     Principal principal;
-
-    principal.Inicializar();
-
     return 0;
 }

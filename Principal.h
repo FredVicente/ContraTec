@@ -2,23 +2,25 @@
 #include <SFML/Graphics.hpp>
 #include <list>
 #include <Math/Coord.h>
-#include <Listas/ListaEntidades.h>
 #include <Entidades/Personagem.h>
 #include <Entidades/Plataforma.h>
 #include <Entidades/Personagens/Jogador.h>
 #include <Gerenciadores/GerenciadorColisao.h>
 #include <Personagens/Jogador.h>
 #include <iostream>
+#include <Fases/Fase1.h>
 
-using namespace Listas;
 using namespace Gerenciadores;
 using namespace Entidades;
 using namespace Math;
+using namespace Fases;
 
 using namespace std;
 
 class Principal
 {
+private:
+	Fase1 fase1;
 public:
 	Principal() { Inicializar(); };
 	~Principal() {};

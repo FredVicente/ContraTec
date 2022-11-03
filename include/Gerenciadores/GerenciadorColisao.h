@@ -1,8 +1,8 @@
 #pragma once
-#include <Listas/ListaEntidades.h>
+#include "Entidades/Entidade.h"
 #include <list>
 
-using namespace Listas;
+using namespace Entidades;
 
 namespace Gerenciadores {
 	class GerenciadorColisao
@@ -15,7 +15,7 @@ namespace Gerenciadores {
 		~GerenciadorColisao() {};
 
 		// Testa a colisao entre todas a entidades do jogo.
-		void Colisoes();
+		void Colisoes(std::list<Entidade*> l);
 
 		// Testa a colisao entre duas entidades diretamente.
 		int TestaColisao(Entidade* e1, Entidade* e2);

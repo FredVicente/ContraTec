@@ -1,6 +1,5 @@
 #pragma once
 #include "Ente.h"
-#include <list> 
 #define NAO_COLIDINDO 0
 #define BAIXO 1
 #define CIMA 2
@@ -16,28 +15,26 @@ namespace Entidades {
 		projetil,
 		imagem
 	};
-	class Entidade : public Ente {
+
+	class Entidade : public Ente{
 	protected:
-		ID id;
-		sf::RectangleShape* shape;
+    ID id;
 		Coord<float> posicao;
 		Coord<float> tamanho;
+		sf::RectangleShape* shape;
 	public:
-		static std::list<Entidade*> lista;
-
+		Entidade() { id = vazio; shape = NULL; };
 		Entidade(ID id, Coord<float> posicao, Coord<float> tamanho);
-		~Entidade() { free(shape); };
+		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };
 		Coord<float> getTamanho() { return tamanho; };
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
-
 		void setPosicao(Coord<float> posicao);
 		void setTamanho(Coord<float> tamanho);
 
-		void virtual Executar() = 0;
-
+		void virtual Executar() {};
 		void virtual Colisao(Entidade* e, int dir) = 0;
 	};
 }
