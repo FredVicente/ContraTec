@@ -16,11 +16,7 @@ namespace Entidades {
 		projetil,
 		imagem
 	};
-<<<<<<< Updated upstream
-	class Entidade : public Ente{
-=======
 	class Entidade : public Ente {
->>>>>>> Stashed changes
 	protected:
 		ID id;
 		sf::RectangleShape* shape;

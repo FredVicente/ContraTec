@@ -20,7 +20,7 @@ using namespace std;
 class Principal
 {
 public:
-	Principal() { Inicializar() };
+	Principal() { Inicializar(); };
 	~Principal() {};
 	void Inicializar();
 };
