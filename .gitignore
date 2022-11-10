@@ -4,5 +4,6 @@ Debug
 JogoUML.mdj
 uml(Monitor).mdj
 DiagramaJogoModelo.jpg
-Project1.*
 lib
+*.vcxproj
+
