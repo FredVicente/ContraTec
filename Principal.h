@@ -8,6 +8,7 @@
 #include <Gerenciadores/GerenciadorColisao.h>
 #include <iostream>
 #include <Fases/Fase1.h>
+#include <Controles/ControleJogador.h>
 
 using namespace Gerenciadores;
 using namespace Entidades;

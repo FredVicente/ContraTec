@@ -4,10 +4,10 @@
 using namespace Entidades;
 using namespace Listas;
 
-Personagem::Personagem(ID id, Coord<float> posicao, Coord<float> tamanho) : Entidade(id, posicao, tamanho) {
+Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, ID id) : Entidade(posicao, tamanho, id) {
 	velocidade = Coord<float>(0, 0);
 	aceleracao = Coord<float>(0, 0.001f);
-	shape->setFillColor(sf::Color::Green);
+	getShape()->setFillColor(sf::Color::Green);
 }
 
 void Personagem::Mover() {

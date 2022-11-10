@@ -3,7 +3,7 @@
 
 using namespace Entidades;
 
-Entidade::Entidade(ID id, Coord<float> posicao, Coord<float> tamanho) {
+Entidade::Entidade(Coord<float> posicao, Coord<float> tamanho, ID id) {
 	this->posicao = posicao;
 	this->tamanho = tamanho;
 	this->id = id;

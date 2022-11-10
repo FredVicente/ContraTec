@@ -6,6 +6,7 @@ using namespace Math;
 
 class Ente
 {
+protected:
 public:
 	Ente() {};
 	~Ente() {};

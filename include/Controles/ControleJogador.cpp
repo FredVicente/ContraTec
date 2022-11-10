@@ -12,6 +12,36 @@ ControleJogador::ControleJogador(Entidades::Jogador* pJ) :
 {
     return;
 }
+
+void ControleJogador::eventController(sf::Event event) {
+    switch (event.type) {
+        case sf::Event::KeyPressed:
+            if (event.key.code == sf::Keyboard::D)
+                notifyPressed("D");
+            else if (event.key.code == sf::Keyboard::A)
+                notifyPressed("A");
+            else if (event.key.code == sf::Keyboard::W && pJogador->pulo)
+                notifyPressed("W");
+            else if (event.key.code == sf::Keyboard::Num1)
+                notifyPressed("1");
+            break;
+
+        case sf::Event::KeyReleased:
+            if (event.key.code == sf::Keyboard::D)
+                notifyReleased("D");
+            else if (event.key.code == sf::Keyboard::A)
+                notifyReleased("A");
+            else if (event.key.code == sf::Keyboard::W && pJogador->pulo)
+                notifyReleased("W");
+            else if (event.key.code == sf::Keyboard::Num1)
+                notifyReleased("1");
+            break;
+
+        default:
+            break;
+    }
+}
+
 void ControleJogador::notifyPressed(std::string tecla) {
     if (pJogador == nullptr) {
         std::cout << "ERRO: ponteiro para jogador nullptr." << std::endl;

@@ -1,9 +1,8 @@
 #pragma once
-
 #include <Entidades/Personagem.h>
 #include <Controles/ControleJogador.h>
-
 #include <iostream>
+
 using namespace std;
 
 namespace Entidades{

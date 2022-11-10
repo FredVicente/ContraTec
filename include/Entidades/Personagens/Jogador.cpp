@@ -1,9 +1,9 @@
 #include "Jogador.h"
 
-namespace Entidades{
+using namespace Entidades;
 
-    Jogador::Jogador(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho) :
-    Personagem(jogador, tamanho, posicao),
+Jogador::Jogador(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho) :
+    Personagem(posicao, tamanho, jogador),
     direcao(dir),
     pControle(this) {
         velocidade = Coord<float>(0.2 * dir.x, -0.7*dir.y);
@@ -34,5 +34,3 @@ namespace Entidades{
         // Diminuir altura
         agachado = valor;
     }
-
-}
