@@ -6,4 +6,4 @@ uml(Monitor).mdj
 DiagramaJogoModelo.jpg
 lib
 *.vcxproj
-
+.gitignore
