@@ -1,9 +1,9 @@
-.git
 .vs
 Debug
 JogoUML.mdj
 uml(Monitor).mdj
 DiagramaJogoModelo.jpg
 lib
-*.vcxproj
+Project1.*
+.git
 .gitignore

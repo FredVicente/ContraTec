@@ -1,5 +1,5 @@
 #pragma once
-#include <list>
+#include "Lista.h"
 #include "Entidades/Entidade.h"
 
 using namespace Entidades;
@@ -8,7 +8,7 @@ using namespace Entidades;
 namespace Listas {
 	class ListaEntidades {
 	public:
-		std::list<Entidade*> lista;
+		Lista<Entidade> lista;
 
 		ListaEntidades() {};
 		~ListaEntidades() {};

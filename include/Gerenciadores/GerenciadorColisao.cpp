@@ -3,23 +3,20 @@
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::Colisoes(std::list<Entidade*> l) {
+void GerenciadorColisao::Colisoes(Lista<Entidade> lista) {
     // Entidades de comparação.
-    Entidade* e1;
+    int i = 0, j;
+    Entidade* e1 = lista[i];
     Entidade* e2;
 
     // Começa o loop entre as entidades.
-    iterador1 = l.begin();
-    while (iterador1 != l.end()) {
-        e1 = *iterador1;
-        iterador1++;
-        
-        iterador2 = iterador1;
-
-        while (iterador2 != l.end()) {
-            Entidade* e2 = *iterador2;
-            iterador2++;
-
+    while (i < lista.getTamanho() - 1) {
+        e1 = lista[i];
+        i++;
+        j = i;
+        while (j < lista.getTamanho()) {
+            e2 = lista[j];
+            j++;
             // Apenas testa se não são dois objetos do mesmo tipo.
             if (e1->getID() != e2->getID()) {
                 // Direção de colisão.

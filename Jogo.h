@@ -1,6 +1,5 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <list>
 #include <Math/Coord.h>
 #include <Entidades/Personagem.h>
 #include <Entidades/Plataforma.h>
@@ -17,12 +16,12 @@ using namespace Fases;
 
 using namespace std;
 
-class Principal
+class Jogo
 {
 private:
 	Fase1 fase1;
 public:
-	Principal() { Inicializar(); };
-	~Principal() {};
+	Jogo() { Inicializar(); };
+	~Jogo() {};
 	void Inicializar();
 };
