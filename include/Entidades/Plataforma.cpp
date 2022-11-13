@@ -2,10 +2,7 @@
 
 using namespace Entidades;
 
-void Plataforma::Executar(Coord<float> pos, Coord<float> tam, sf::Color cor) {
-	posicao = pos;
-	tamanho = tam;
-	shape = new sf::RectangleShape(sf::Vector2f(tamanho.x, tamanho.y));
+Plataforma::Plataforma(Coord<float> pos) : 
+	Entidade(pos, Math::Coord<float>(50,50), plataforma) {
 	shape->setFillColor(sf::Color::White);
-	setPosicao(pos);
 }

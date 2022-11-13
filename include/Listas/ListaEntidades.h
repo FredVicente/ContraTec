@@ -4,7 +4,6 @@
 
 using namespace Entidades;
 
-// Sem uso por enquanto.
 namespace Listas {
 	class ListaEntidades {
 	public:
@@ -12,5 +11,27 @@ namespace Listas {
 
 		ListaEntidades() {};
 		~ListaEntidades() {};
+		
+		void adicionarEntidade(Entidade* pEntidade) {
+			lista.adicionar(pEntidade);
+		}
+		
+		void removerEntidade(Entidade* pEntidade) {
+			lista.remover(pEntidade);
+		}
+		
+		void removerEntidade(int posicao) {
+			lista.remover((int)posicao);
+		}
+
+		int getTamanho() {
+			return lista.getTamanho();
+		}
+
+		Entidade* operator[](int posicao) {
+			return lista[posicao];
+		}
+		
 	};
 }
+

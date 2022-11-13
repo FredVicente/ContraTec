@@ -2,7 +2,7 @@
 #include "Entidades/Plataforma.h"
 #include "Entidades/Personagem.h"
 #include "Gerenciadores/GerenciadorColisao.h"
-#include "Listas/ListaEntidades.h"
+#include "Math/Coord.h"
 
 using namespace Gerenciadores;
 using namespace Listas;
@@ -12,11 +12,23 @@ namespace Fases {
 	class Fase : public Ente {
 	public:
 		GerenciadorColisao gC;
-		ListaEntidades listaEntidades;
+		ListaEntidades *listaEntidades;
 
 		Fase() {};
 		~Fase() {};
 
-		void virtual Executar() = 0;
+		void virtual Executar() {};
+
+		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio) {
+			switch (id) {
+			case (plataforma): {
+				Plataforma* p = new Plataforma(pos);
+				return p;
+			}
+			default:
+				break;
+			}
+			return NULL;
+		}
 	};
 }

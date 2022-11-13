@@ -3,19 +3,19 @@
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::Colisoes(Lista<Entidade> lista) {
+void GerenciadorColisao::Colisoes(ListaEntidades lista) {
     // Entidades de comparação.
     int i = 0, j;
-    Entidade* e1 = lista[i];
+    Entidade* e1 = lista.lista[i];
     Entidade* e2;
 
     // Começa o loop entre as entidades.
-    while (i < lista.getTamanho() - 1) {
-        e1 = lista[i];
+    while (i < lista.lista.getTamanho() - 1) {
+        e1 = lista.lista[i];
         i++;
         j = i;
-        while (j < lista.getTamanho()) {
-            e2 = lista[j];
+        while (j < lista.lista.getTamanho()) {
+            e2 = lista.lista[j];
             j++;
             // Apenas testa se não são dois objetos do mesmo tipo.
             if (e1->getID() != e2->getID()) {

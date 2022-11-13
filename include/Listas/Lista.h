@@ -35,14 +35,14 @@ namespace Listas {
     private:
         Elemento<TL>* pPrimeiro;
         Elemento<TL>* pUltimo;
-        unsigned int tamanho;
+        int tamanho;
 
     public:
         Lista();
         ~Lista();
 
         void clear();
-        unsigned int getTamanho() { return tamanho; }
+        int getTamanho() { return tamanho; }
         TL* operator[](int x);
         void adicionar(TL* pInfo);
         TL* remover(TL* pInfo);
@@ -150,8 +150,9 @@ namespace Listas {
              tamanho--;
              return pInfo;
         }
+        
         while (pAux->getProximo() != nullptr){
-            if(pAux->getProximo() == pInfo)
+            if(pAux->getProximo()->getInfo() == pInfo)
             {
                 if (pAux->getProximo() == pUltimo)
                     pUltimo = pAux;
@@ -163,6 +164,7 @@ namespace Listas {
 
             pAux = pAux->getProximo();
         }
+        
         return nullptr;
     }
 

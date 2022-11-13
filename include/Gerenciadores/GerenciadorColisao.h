@@ -12,7 +12,7 @@ namespace Gerenciadores {
 		~GerenciadorColisao() {};
 
 		// Testa a colisao entre todas a entidades do jogo.
-		void Colisoes(Lista<Entidade> lista);
+		void Colisoes(ListaEntidades lista);
 
 		// Testa a colisao entre duas entidades diretamente.
 		int TestaColisao(Entidade* e1, Entidade* e2);

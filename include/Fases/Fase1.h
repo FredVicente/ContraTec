@@ -3,17 +3,18 @@
 #include "Fase.h"
 
 using namespace Entidades;
+using namespace Fases;
+using namespace Listas;
 
 namespace Fases {
 	class Fase1 : public Fase {
 	public:
 		Personagem* player;
-		Plataforma p1, p2, p3, p4;
 	public:
 		Fase1();
 		~Fase1() {};
 
-		void Executar() {};
+		void Executar();
 	};
 }
 

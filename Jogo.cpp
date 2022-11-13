@@ -6,9 +6,10 @@ void Jogo::Inicializar(){
     sf::View view1(sf::FloatRect(janela.x / 2, 0, janela.x, janela.y));
 
     Coord<float> tamanho(50,120);
-    Entidades::Jogador* jogador1 = new Entidades::Jogador(Coord<int>(0,0), Coord<float>(50,80), tamanho);
+    Jogador* jogador1 = new Jogador(Coord<int>(0,0), Coord<float>(50,80), tamanho);
     fase1.player = jogador1;
-    fase1.listaEntidades.lista.adicionar(jogador1);
+    fase1.listaEntidades->adicionarEntidade(jogador1);
+    fase1.Executar();
     
     while (window.isOpen()) {
         sf::Event event;
@@ -26,14 +27,14 @@ void Jogo::Inicializar(){
 
         // Gerenciador Grafico
         view1.setCenter(jogador1->getPosicao().x + jogador1->getTamanho().x / 2, view1.getCenter().y);
-
-        fase1.gC.Colisoes(fase1.listaEntidades.lista);
+        
+        fase1.gC.Colisoes(*fase1.listaEntidades);
 
         // Gerenciador Grafico
         int i = 0;
         Entidade* e;
-        for (i = 0; i < fase1.listaEntidades.lista.getTamanho(); i++) {
-            e = fase1.listaEntidades.lista[i];
+        for (i = 0; i < fase1.listaEntidades->getTamanho(); i++) {
+            e = (*fase1.listaEntidades)[i];
             window.draw(*e->getShape());
         }
 

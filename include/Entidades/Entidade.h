@@ -23,7 +23,7 @@ namespace Entidades {
 		ID id;
 	public:
 		Entidade() { id = vazio; shape = NULL; };
-		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
+		Entidade(Coord<float> pos, Coord<float> tam, ID id);
 		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };
