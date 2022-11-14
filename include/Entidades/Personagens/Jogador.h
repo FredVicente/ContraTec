@@ -12,11 +12,12 @@ namespace Entidades{
         bool atacando;
         bool agachado;
     public:
-
-        Jogador(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho);
-        ~Jogador();
+        Jogador(Coord<float> posicao, Coord<float> tamanho);
+        ~Jogador() {};
 
         void setDirecao(std::string coordenada, int valor);
+
+        void mover();
 
         void setAtacando(bool valor);
 

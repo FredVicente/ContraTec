@@ -6,11 +6,11 @@ using namespace Listas;
 
 Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, ID id) : Entidade(posicao, tamanho, id) {
 	velocidade = Coord<float>(0, 0);
-	aceleracao = Coord<float>(0, 0.001f);
+	aceleracao = Coord<float>(0, 0.5f);
 	getShape()->setFillColor(sf::Color::Green);
 }
 
-void Personagem::Mover() {
+void Personagem::mover() {
 	velocidade += aceleracao;
 	Coord<float> pos = getPosicao();
 	setPosicao(pos + velocidade);

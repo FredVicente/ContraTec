@@ -68,7 +68,7 @@ void ControleJogador::notifyReleased(std::string tecla) {
     
     if(tecla == up)
         pJogador->setDirecao("y", 0);
-    else if(tecla == right || tecla == left)
+    else if(tecla == right && pJogador->velocidade.x > 0 || tecla == left && pJogador->velocidade.x < 0)
         pJogador->setDirecao("x", 0);
     else if(tecla == down)
         pJogador->setAgachado(false);

@@ -22,8 +22,9 @@ namespace Entidades {
 		sf::RectangleShape* shape;
 		ID id;
 	public:
-		Entidade() { id = vazio; shape = NULL; };
+		Entidade() { id = vazio; shape = nullptr; };
 		Entidade(Coord<float> pos, Coord<float> tam, ID id);
+
 		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };

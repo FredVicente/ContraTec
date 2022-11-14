@@ -3,48 +3,59 @@
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::Colisoes(ListaEntidades lista) {
-    // Entidades de comparação.
+void GerenciadorColisao::Colisoes(ListaEntidades listaEstatica, ListaEntidades listaMoveis) {
+    // Entidades de comparaï¿½ï¿½o.
     int i = 0, j;
-    Entidade* e1 = lista.lista[i];
+    Entidade* e1;
     Entidade* e2;
 
-    // Começa o loop entre as entidades.
-    while (i < lista.lista.getTamanho() - 1) {
-        e1 = lista.lista[i];
+    // Comeï¿½a o loop entre as entidades moveis e estï¿½ticas.
+    while (i < listaMoveis.getTamanho()) {
+        e1 = listaMoveis[i];
         i++;
         j = i;
-        while (j < lista.lista.getTamanho()) {
-            e2 = lista.lista[j];
+        while (j < listaEstatica.getTamanho()) {
+            e2 = listaEstatica.lista[j];
             j++;
-            // Apenas testa se não são dois objetos do mesmo tipo.
-            if (e1->getID() != e2->getID()) {
-                // Direção de colisão.
-                int dir = TestaColisao(e1, e2);
+            // Direï¿½ï¿½o de colisï¿½o.
+            int dir = TestaColisao(e1, e2);
 
-                if (dir != NAO_COLIDINDO) {
-                    // Não precisa testar efeito de colisão na plataforma, pois ela se manterá igual.
-                    if (e1->getID() != plataforma)
-                        e1->Colisao(e2, dir);
-                    // Inverte a direção de colisão do objeto.
-                    if (dir % 2)
-                        dir++;
-                    else
-                        dir--;
-                    // Colisao do segundo objeto.
-                    if (e2->getID() != plataforma)
-                        e2->Colisao(e1, dir);
-                }
+            if (dir != NAO_COLIDINDO) {
+                e1->Colisao(e2, dir);
+            }
+        }
+    }
+
+    // Comeï¿½a o loop entre as entidades mï¿½veis.
+    while (i < listaMoveis.getTamanho() - 1) {
+        e1 = listaMoveis[i];
+        i++;
+        j = i;
+        while (j < listaMoveis.getTamanho()) {
+            e2 = listaMoveis.lista[j];
+            j++;
+            // Direï¿½ï¿½o de colisï¿½o.
+            int dir = TestaColisao(e1, e2);
+
+            if (dir != NAO_COLIDINDO) {
+                e1->Colisao(e2, dir);
+                // Inverte a direï¿½ï¿½o de colisï¿½o do objeto.
+                if (dir % 2)
+                    dir++;
+                else
+                    dir--;
+                // Colisao do segundo objeto.
+                e2->Colisao(e1, dir);
             }
         }
     }
 }
 
 int GerenciadorColisao::TestaColisao(Entidade* e1, Entidade* e2) {
-    // Essa funçao apenas testa se o objeto está colidindo, o efeito da colisao é feito dentro da entidade.
-    // A função so retorna a direção de colisão! Retorna 0 caso não esteja colidindo.
+    // Essa funï¿½ao apenas testa se o objeto estï¿½ colidindo, o efeito da colisao ï¿½ feito dentro da entidade.
+    // A funï¿½ï¿½o so retorna a direï¿½ï¿½o de colisï¿½o! Retorna 0 caso nï¿½o esteja colidindo.
 
-    // A interseção é usada para saber em qual coordenada exatamente o objeto está colidindo.
+    // A interseï¿½ï¿½o ï¿½ usada para saber em qual coordenada exatamente o objeto estï¿½ colidindo.
     Coord<float> intersecao;
     intersecao.x = e1->getPosicao().x + e1->getTamanho().x - e2->getPosicao().x;
     intersecao.y = e1->getPosicao().y + e1->getTamanho().y - e2->getPosicao().y;

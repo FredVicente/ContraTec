@@ -3,32 +3,30 @@
 #include "Entidades/Personagem.h"
 #include "Gerenciadores/GerenciadorColisao.h"
 #include "Math/Coord.h"
+#include <fstream>
+#include <iostream>
+#include "Math/Coord.h"
 
 using namespace Gerenciadores;
 using namespace Listas;
 using namespace Entidades;
+using namespace std;
 
 namespace Fases {
 	class Fase : public Ente {
 	public:
 		GerenciadorColisao gC;
+		ListaEntidades *listaEntidadesEstaticas;
+		ListaEntidades *listaEntidadesMoveis;
 		ListaEntidades *listaEntidades;
 
-		Fase() {};
+		Fase();
 		~Fase() {};
 
-		void virtual Executar() {};
+		void virtual Executar() = 0;
 
-		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio) {
-			switch (id) {
-			case (plataforma): {
-				Plataforma* p = new Plataforma(pos);
-				return p;
-			}
-			default:
-				break;
-			}
-			return NULL;
-		}
+		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
+
+		void criarFase(const char* path);
 	};
 }

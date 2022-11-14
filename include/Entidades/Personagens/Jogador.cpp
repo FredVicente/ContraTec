@@ -2,11 +2,11 @@
 
 using namespace Entidades;
 
-Jogador::Jogador(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho) :
+Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
     Personagem(posicao, tamanho, jogador),
-    direcao(dir),
+    direcao(Coord<int>(0,0)),
     pControle(this) {
-        velocidade = Coord<float>(0.2 * dir.x, -0.7*dir.y);
+        velocidade = Coord<float>(0, 0);
 }
 
 void Jogador::setDirecao(std::string coordenada, int valor){
@@ -14,8 +14,13 @@ void Jogador::setDirecao(std::string coordenada, int valor){
             direcao.x = valor;
         else
             direcao.y = valor;
-        
-        velocidade.x = 0.2 * direcao.x;
+}
+
+void Jogador::mover() {
+    velocidade.x = 4 * direcao.x;
+    velocidade += aceleracao;
+    Coord<float> pos = getPosicao();
+    setPosicao(pos + velocidade);
 }
 
 void Jogador::setAtacando(bool valor){
@@ -26,7 +31,7 @@ void Jogador::setAtacando(bool valor){
 }
 
 void Jogador::pular(){
-    velocidade.y = -0.7;
+    velocidade.y = -15;
     pulo = false;
 }
 

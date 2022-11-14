@@ -2,7 +2,7 @@
 
 using namespace Entidades;
 
-Plataforma::Plataforma(Coord<float> pos) : 
-	Entidade(pos, Math::Coord<float>(50,50), plataforma) {
+Plataforma::Plataforma(Coord<float> pos, Coord<float> tam) : 
+	Entidade(pos, tam, plataforma) {
 	shape->setFillColor(sf::Color::White);
 }
