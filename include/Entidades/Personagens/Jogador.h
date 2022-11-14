@@ -12,7 +12,6 @@ namespace Entidades{
         bool atacando;
         bool agachado;
     public:
-
         Jogador(Coord<float> posicao, Coord<float> tamanho);
         ~Jogador() {};
 

@@ -22,13 +22,9 @@ namespace Entidades {
 		sf::RectangleShape* shape;
 		ID id;
 	public:
-<<<<<<< Updated upstream
-		Entidade() { id = vazio; shape = NULL; };
-		Entidade(Coord<float> posicao, Coord<float> tamanho, ID id);
-=======
 		Entidade() { id = vazio; shape = nullptr; };
 		Entidade(Coord<float> pos, Coord<float> tam, ID id);
->>>>>>> Stashed changes
+
 		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };

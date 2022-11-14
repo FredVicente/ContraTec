@@ -10,7 +10,7 @@ void Jogo::Inicializar(){
     fase1.player = jogador1;
     fase1.Executar();
 
-    // Variáveis de tempo.
+    // Variï¿½veis de tempo.
     float dT = 0;
     float tAnt = 0;
 

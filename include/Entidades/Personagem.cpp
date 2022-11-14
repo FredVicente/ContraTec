@@ -4,7 +4,7 @@
 using namespace Entidades;
 using namespace Listas;
 
-Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho) : Entidade(posicao, tamanho, jogador) {
+Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, ID id) : Entidade(posicao, tamanho, id) {
 	velocidade = Coord<float>(0, 0);
 	aceleracao = Coord<float>(0, 0.5f);
 	getShape()->setFillColor(sf::Color::Green);
