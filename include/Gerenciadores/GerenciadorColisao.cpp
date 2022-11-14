@@ -3,6 +3,7 @@
 
 using namespace Gerenciadores;
 
+<<<<<<< Updated upstream
 void GerenciadorColisao::Colisoes(std::list<Entidade*> l) {
     // Entidades de comparação.
     Entidade* e1;
@@ -24,20 +25,51 @@ void GerenciadorColisao::Colisoes(std::list<Entidade*> l) {
             if (e1->getID() != e2->getID()) {
                 // Direção de colisão.
                 int dir = TestaColisao(e1, e2);
+=======
+void GerenciadorColisao::Colisoes(ListaEntidades listaEstatica, ListaEntidades listaMoveis) {
+    // Entidades de comparação.
+    int i = 0, j;
+    Entidade* e1;
+    Entidade* e2;
 
-                if (dir != NAO_COLIDINDO) {
-                    // Não precisa testar efeito de colisão na plataforma, pois ela se manterá igual.
-                    if (e1->getID() != plataforma)
-                        e1->Colisao(e2, dir);
-                    // Inverte a direção de colisão do objeto.
-                    if (dir % 2)
-                        dir++;
-                    else
-                        dir--;
-                    // Colisao do segundo objeto.
-                    if (e2->getID() != plataforma)
-                        e2->Colisao(e1, dir);
-                }
+    // Começa o loop entre as entidades moveis e estáticas.
+    while (i < listaMoveis.getTamanho()) {
+        e1 = listaMoveis[i];
+        i++;
+        j = i;
+        while (j < listaEstatica.getTamanho()) {
+            e2 = listaEstatica.lista[j];
+            j++;
+            // Direção de colisão.
+            int dir = TestaColisao(e1, e2);
+>>>>>>> Stashed changes
+
+            if (dir != NAO_COLIDINDO) {
+                e1->Colisao(e2, dir);
+            }
+        }
+    }
+
+    // Começa o loop entre as entidades móveis.
+    while (i < listaMoveis.getTamanho() - 1) {
+        e1 = listaMoveis[i];
+        i++;
+        j = i;
+        while (j < listaMoveis.getTamanho()) {
+            e2 = listaMoveis.lista[j];
+            j++;
+            // Direção de colisão.
+            int dir = TestaColisao(e1, e2);
+
+            if (dir != NAO_COLIDINDO) {
+                e1->Colisao(e2, dir);
+                // Inverte a direção de colisão do objeto.
+                if (dir % 2)
+                    dir++;
+                else
+                    dir--;
+                // Colisao do segundo objeto.
+                e2->Colisao(e1, dir);
             }
         }
     }

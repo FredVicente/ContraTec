@@ -15,7 +15,11 @@ namespace Gerenciadores {
 		~GerenciadorColisao() {};
 
 		// Testa a colisao entre todas a entidades do jogo.
+<<<<<<< Updated upstream
 		void Colisoes(std::list<Entidade*> l);
+=======
+		void Colisoes(ListaEntidades listaEstatica, ListaEntidades listaMoveis);
+>>>>>>> Stashed changes
 
 		// Testa a colisao entre duas entidades diretamente.
 		int TestaColisao(Entidade* e1, Entidade* e2);
