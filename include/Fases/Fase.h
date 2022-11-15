@@ -18,7 +18,6 @@ namespace Fases {
 		GerenciadorColisao gC;
 		ListaEntidades *listaEntidadesEstaticas;
 		ListaEntidades *listaEntidadesMoveis;
-		ListaEntidades *listaEntidades;
 
 		Fase();
 		~Fase() {};
