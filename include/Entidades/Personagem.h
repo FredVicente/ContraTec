@@ -16,6 +16,6 @@ namespace Entidades {
 
 		virtual void mover();
 
-		void colisao(Entidade* e, int dir) = 0;
+		void colisao(Entidade* e, int dir);
 	};
 }
