@@ -11,9 +11,9 @@ public:
 	Ente() {};
 	~Ente() {};
 
-	void virtual Executar() = 0;
+	void virtual executar() = 0;
 
-	void imprimir();
+	void imprimir() {};
 };
 
 

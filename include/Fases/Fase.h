@@ -1,6 +1,6 @@
 #pragma once
 #include "Entidades/Plataforma.h"
-#include "Entidades/Personagem.h"
+#include "Entidades/Personagens/Jogador.h"
 #include "Gerenciadores/GerenciadorColisao.h"
 #include "Math/Coord.h"
 #include <fstream>
@@ -22,7 +22,7 @@ namespace Fases {
 		Fase();
 		~Fase() {};
 
-		void virtual Executar() = 0;
+		void virtual executar() = 0;
 
 		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
 

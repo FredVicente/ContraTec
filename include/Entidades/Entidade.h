@@ -33,7 +33,7 @@ namespace Entidades {
 		int getID() { return id; };
 		void setPosicao(Coord<float> posicao);
 
-		void virtual Executar() = 0;
-		void virtual Colisao(Entidade* e, int dir) = 0;
+		void virtual executar() = 0;
+		void virtual colisao(Entidade* e, int dir) = 0;
 	};
 }

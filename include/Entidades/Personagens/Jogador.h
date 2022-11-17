@@ -25,6 +25,10 @@ namespace Entidades{
 
         void setAgachado(bool valor);
 
+        void colisao(Entidade* e, int dir);
+
+        void executar() {};
+
         ControleJogador pControle;
     };
 }

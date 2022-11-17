@@ -3,55 +3,55 @@
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::Colisoes(ListaEntidades listaEstatica, ListaEntidades listaMoveis) {
+void GerenciadorColisao::colisoes(ListaEntidades* listaEstatica, ListaEntidades* listaMoveis) {
     // Entidades de compara��o.
     int i = 0, j;
     Entidade* e1;
     Entidade* e2;
 
     // Come�a o loop entre as entidades moveis e est�ticas.
-    while (i < listaMoveis.getTamanho()) {
-        e1 = listaMoveis[i];
+    while (i < listaMoveis->getTamanho()) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaEstatica.getTamanho()) {
-            e2 = listaEstatica.lista[j];
+        while (j < listaEstatica->getTamanho()) {
+            e2 = (*listaEstatica)[j];
             j++;
             // Dire��o de colis�o.
-            int dir = TestaColisao(e1, e2);
+            int dir = testaColisao(e1, e2);
 
             if (dir != NAO_COLIDINDO) {
-                e1->Colisao(e2, dir);
+                e1->colisao(e2, dir);
             }
         }
     }
-
+    i = 0;
     // Come�a o loop entre as entidades m�veis.
-    while (i < listaMoveis.getTamanho() - 1) {
-        e1 = listaMoveis[i];
+    while (i < listaMoveis->getTamanho() - 1) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaMoveis.getTamanho()) {
-            e2 = listaMoveis.lista[j];
+        while (j < listaMoveis->getTamanho()) {
+            e2 = (*listaMoveis)[j];
             j++;
             // Dire��o de colis�o.
-            int dir = TestaColisao(e1, e2);
+            int dir = testaColisao(e1, e2);
 
             if (dir != NAO_COLIDINDO) {
-                e1->Colisao(e2, dir);
+                e1->colisao(e2, dir);
                 // Inverte a dire��o de colis�o do objeto.
                 if (dir % 2)
                     dir++;
                 else
                     dir--;
                 // Colisao do segundo objeto.
-                e2->Colisao(e1, dir);
+                e2->colisao(e1, dir);
             }
         }
     }
 }
 
-int GerenciadorColisao::TestaColisao(Entidade* e1, Entidade* e2) {
+int GerenciadorColisao::testaColisao(Entidade* e1, Entidade* e2) {
     // Essa fun�ao apenas testa se o objeto est� colidindo, o efeito da colisao � feito dentro da entidade.
     // A fun��o so retorna a dire��o de colis�o! Retorna 0 caso n�o esteja colidindo.
 

@@ -12,10 +12,10 @@ namespace Entidades {
 		Personagem(Coord<float> posicao = Coord<float>(0.f, 0.f), Coord<float> tamanho = Coord<float>(0.f, 0.f), ID id = vazio);
 		~Personagem() {};
 
-		void Executar() {};
+		void executar() = 0;
 
 		virtual void mover();
 
-		void Colisao(Entidade* e, int dir);
+		void colisao(Entidade* e, int dir) = 0;
 	};
 }

@@ -9,12 +9,12 @@ using namespace Listas;
 namespace Fases {
 	class Fase1 : public Fase {
 	public:
-		Personagem* player;
+		Jogador* player;
 	public:
 		Fase1();
 		~Fase1() {};
 
-		void Executar();
+		void executar();
 	};
 }
 

@@ -27,6 +27,6 @@ Entidade* ListaEntidades::operator[](int posicao) {
 void ListaEntidades::atualizaTodos() {
 	int i, tam = getTamanho();
 	for (i = 0; i < tam; i++) {
-		lista[i]->Executar();
+		lista[i]->executar();
 	}
 }
