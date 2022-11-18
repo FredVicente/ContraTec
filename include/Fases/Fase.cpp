@@ -19,9 +19,9 @@ Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
 	return nullptr;
 }
 
-void Fase::criarFase(const char* path) {
+void Fase::criarFase(const char* path, Jogador* player) {
 	ifstream file;
-	const int y = 13, x = 30;
+	const int y = 12, x = 176;
 	char fase[y][x];
 
 	file.open(path);
@@ -39,6 +39,8 @@ void Fase::criarFase(const char* path) {
 
 				if (fase[i][j] == 'P')
 					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
+				else if (fase[i][j] == 'J')
+					player->setPosicao(Coord<float>(j * 50, i * 50));
 			}
 		}
 	}

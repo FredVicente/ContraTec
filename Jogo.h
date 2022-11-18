@@ -8,20 +8,28 @@
 #include <iostream>
 #include <Fases/Fase1.h>
 #include <Controles/ControleJogador.h>
+#include <Menu.h>
 
 using namespace Gerenciadores;
 using namespace Entidades;
 using namespace Math;
 using namespace Fases;
-
 using namespace std;
+
+enum State {
+	pause = 0,
+	playing
+};
 
 class Jogo
 {
 private:
+	State state;
+	Menu menu;
 	Fase1 fase1;
+	Jogador jogador;
 public:
-	Jogo() { Inicializar(); };
+	Jogo();
 	~Jogo() {};
 	void Inicializar();
 };

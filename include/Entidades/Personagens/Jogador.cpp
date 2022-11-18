@@ -17,7 +17,7 @@ void Jogador::setDirecao(std::string coordenada, int valor){
 }
 
 void Jogador::mover() {
-    velocidade.x = 4 * direcao.x;
+    velocidade.x = 6 * direcao.x;
     velocidade += aceleracao;
     Coord<float> pos = getPosicao();
     setPosicao(pos + velocidade);
@@ -31,7 +31,7 @@ void Jogador::setAtacando(bool valor){
 }
 
 void Jogador::pular(){
-    velocidade.y = -15;
+    velocidade.y = -20;
     pulo = false;
 }
 

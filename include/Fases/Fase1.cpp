@@ -7,7 +7,6 @@ Fase1::Fase1(){
 void Fase1::executar() {
 	listaEntidadesEstaticas = new ListaEntidades;
 	listaEntidadesMoveis = new ListaEntidades;
-	criarFase("Fase1.txt");
+	criarFase("Fase1.txt", player);
 	listaEntidadesMoveis->adicionarEntidade(player);
-	player->setPosicao(Coord<float>(400, 200));
 }

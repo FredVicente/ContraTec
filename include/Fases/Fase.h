@@ -26,6 +26,6 @@ namespace Fases {
 
 		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
 
-		void criarFase(const char* path);
+		void criarFase(const char* path, Jogador* player);
 	};
 }
