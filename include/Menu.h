@@ -12,16 +12,16 @@ private:
     int selected;
     sf::Font font;
 
-    vector<const char*> opcoes;
+    vector<string> opcoes;
     vector<sf::Vector2f> posicoes;
     vector<sf::Text> textos;
 public:
-    Menu();
+    Menu(vector<std::string> opMenu);
     ~Menu() {};
 
-    void executar() {};
+    void executar();
 
-    void executar(sf::RenderWindow* window);
+    void atualizar(sf::RenderWindow* window);
 
     int alterar(sf::Event e);
 };

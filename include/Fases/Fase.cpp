@@ -2,7 +2,7 @@
 
 using namespace Fases;
 
-int Fase::faseAtual = 0;
+int Fase::faseAtual = 1;
 
 Fase::Fase() {
 	player = nullptr;
@@ -10,11 +10,36 @@ Fase::Fase() {
 	listaEntidadesEstaticas = nullptr;
 }
 
-void Fase::clear() {
-	if (listaEntidadesEstaticas) {
-		listaEntidadesEstaticas->lista.clear();
-		listaEntidadesMoveis->lista.clear();
+Fase::~Fase() {
+	listaEntidadesMoveis->removerEntidade(player);
+	if (listaEntidadesEstaticas)
+		delete(listaEntidadesEstaticas);
+	if (listaEntidadesMoveis)
+		delete(listaEntidadesMoveis);
+}
+
+void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
+	window->clear();
+
+	int i = 0;
+	Entidade* e;
+	for (i = 0; i < listaEntidadesMoveis->getTamanho(); i++) {
+		e = (*listaEntidadesMoveis)[i];
+		window->draw(*e->getShape());
 	}
+	for (i = 0; i < listaEntidadesEstaticas->getTamanho(); i++) {
+		e = (*listaEntidadesEstaticas)[i];
+		window->draw(*e->getShape());
+	}
+
+	vidas.setString("Vidas: " + to_string(player->vidas));
+	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+
+	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);
+
+	window->draw(vidas);
+	window->setView(*view);
+	window->display();
 }
 
 Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
@@ -22,11 +47,6 @@ Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
 	case (plataforma): {
 		Plataforma* p = new Plataforma(pos);
 		return p;
-	}
-	case(jogador):	{
-		Jogador* j = new Jogador(pos, Coord<float>(50,80));
-		player = j;
-		return j;
 	}
 	default:
 		break;
@@ -57,8 +77,11 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 
 				if (fase[i][j] == 'P')
 					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
-				else if (fase[i][j] == 'J')
-					listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), jogador));
+				else if (fase[i][j] == 'J') {
+					listaEntidadesMoveis->adicionarEntidade(player);
+					player->setPosicao(Coord<float>(j * 50, i * 50));
+					player->setPosicao(Coord<float>(j * 50, i * 50));
+				}
 			}
 		}
 	}

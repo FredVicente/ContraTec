@@ -1,7 +1,28 @@
 #include "Jogo.h"
 
-Jogo::Jogo()
+Jogo::Jogo() :
+    jogador(Coord<float>(50,90))
 {
+    fase1 = nullptr;
+    fase2 = nullptr;
+    pFaseAtual = nullptr;
+
+    vector<std::string> opMenu;
+    opMenu.push_back("Jogar");
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Sair");
+    menu = new Menu(opMenu);
+    menu->executar();
+
+    /* Sistema pra salvar
+    vector<std::string> opPause;
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Salvar");
+    opMenu.push_back("Sair");
+    pauseMenu = new Menu(opMenu);
+    pauseMenu->executar();
+    */
+
     Inicializar();
 }
 
@@ -11,16 +32,6 @@ void Jogo::Inicializar(){
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
     sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
-    fase1 = new Fase1();
-    pFaseAtual = fase1;
-    pFaseAtual->executar();
-    jogador = fase1->player;
-    fase2 = nullptr;
-
-    // Vari�veis de tempo.
-    float dT = 0;
-    float tAnt = 0;
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -28,12 +39,12 @@ void Jogo::Inicializar(){
                 window.close();
 
             if (state == playing) {
-                jogador->pControle.eventController(event);
+                jogador.pControle.eventController(event);
                 if (event.KeyPressed && event.key.code == sf::Keyboard::P)
                     state = pause;
             }
             else {
-                switch (menu.alterar(event)) {
+                switch (menu->alterar(event)) {
                     case 1:
                         state = playing;
                         break;
@@ -48,37 +59,32 @@ void Jogo::Inicializar(){
 
         if (state == playing) {
             // Gerenciador geral para update.
-            dT += (clock() - tAnt) / CLOCKS_PER_SEC;
-            if (dT > 100) {
-                dT = 0;
-                tAnt = clock();
+            if (Fase::faseAtual != faseAtual) {
+                if(pFaseAtual)
+                    delete(pFaseAtual);
+                faseAtual = Fase::faseAtual;
 
-                if (Fase::faseAtual != faseAtual) {
-                    pFaseAtual->clear();
-                    faseAtual = Fase::faseAtual;
-
-                    switch (faseAtual) {
-                    case(0):
-                        fase1 = new Fase1();
-                        pFaseAtual = fase1;
-                        break;
-                    case(1):
-                        fase2 = new Fase2();
-                        pFaseAtual = fase2;
-                        break;
-                    default:
-                        break;
-                    }
-                    pFaseAtual->executar();
-                    jogador = pFaseAtual->player;
+                switch (faseAtual) {
+                case(1):
+                    fase1 = new Fase1(&jogador);
+                    pFaseAtual = fase1;
+                    break;
+                case(2):
+                    fase2 = new Fase2(&jogador);
+                    pFaseAtual = fase2;
+                    break;
+                default:
+                    break;
                 }
-                
-                pFaseAtual->atualizar(&view, &window);
+                pFaseAtual->executar();
             }
+
+            pFaseAtual->atualizar();
+            pFaseAtual->imprimir(&view, &window);
         }
         else {
             window.clear();
-            menu.executar(&window);
+            menu->atualizar(&window);
             view.setCenter(janela.x/2, janela.y/2);
             window.setView(view);
             window.display();

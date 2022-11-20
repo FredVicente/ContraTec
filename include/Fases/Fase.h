@@ -18,17 +18,16 @@ namespace Fases {
 		sf::Font font;
 		sf::Text vidas;
 		GerenciadorColisao gC;
-		ListaEntidades *listaEntidadesEstaticas;
-		ListaEntidades *listaEntidadesMoveis;
+		ListaEntidades* listaEntidadesEstaticas;
+		ListaEntidades* listaEntidadesMoveis;
 		static int faseAtual;
 		Jogador* player;
 
 		Fase();
-		~Fase() {};
+		~Fase();
 
-		void clear();
-		void virtual executar() = 0;
-		void virtual atualizar(sf::View* view, sf::RenderWindow* window) = 0;
+		void imprimir(sf::View* view, sf::RenderWindow* window);
+		void virtual atualizar() = 0;
 
 		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
 

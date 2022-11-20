@@ -3,7 +3,7 @@
 
 using namespace Gerenciadores;
 
-void GerenciadorColisao::colisoes(ListaEntidades* listaEstatica, ListaEntidades* listaMoveis) {
+void GerenciadorColisao::colisoes() {
     // Entidades de compara��o.
     int i = 0, j;
     Entidade* e1;
@@ -86,4 +86,9 @@ int GerenciadorColisao::testaColisao(Entidade* e1, Entidade* e2) {
     }
 
     return NAO_COLIDINDO;
+}
+
+void GerenciadorColisao::setLista(ListaEntidades* lM, ListaEntidades* lE) {
+    listaMoveis = lM;
+    listaEstatica = lE;
 }

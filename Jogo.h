@@ -24,12 +24,15 @@ class Jogo
 private:
 	int faseAtual = 0;
 	State state;
-	Menu menu;
+	Menu* menu;
+	// Menu* pauseMenu;
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
-	Jogador* jogador;
+	Jogador jogador;
 public:
+	float static dT;
+
 	Jogo();
 	~Jogo() {};
 	void Inicializar();

@@ -12,7 +12,7 @@ namespace Entidades{
         bool atacando;
         bool agachado;
     public:
-        Jogador(Coord<float> posicao, Coord<float> tamanho);
+        Jogador(Coord<float> tamanho = Coord<float>(50,90));
         ~Jogador() {};
 
         void setDirecao(std::string coordenada, int valor);

@@ -7,11 +7,11 @@ using namespace Fases;
 namespace Fases {
 	class Fase1 : public Fase {
 	public:
-		Fase1();
+		Fase1(Jogador* p = nullptr);
 		~Fase1() {};
 
 		void executar();
-		void atualizar(sf::View* view, sf::RenderWindow* window);
+		void atualizar();
 	};
 }
 
