@@ -1,14 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Math/Coord.h>
-#include <Entidades/Personagem.h>
-#include <Entidades/Plataforma.h>
 #include <Entidades/Personagens/Jogador.h>
-#include <Gerenciadores/GerenciadorColisao.h>
 #include <iostream>
 #include <Fases/Fase1.h>
-#include <Controles/ControleJogador.h>
+#include <Fases/Fase2.h>
 #include <Menu.h>
+#include <vector>
 
 using namespace Gerenciadores;
 using namespace Entidades;
@@ -24,10 +22,13 @@ enum State {
 class Jogo
 {
 private:
+	int faseAtual = 0;
 	State state;
 	Menu menu;
-	Fase1 fase1;
-	Jogador jogador;
+	Fase1* fase1;
+	Fase2* fase2;
+	Fase* pFaseAtual;
+	Jogador* jogador;
 public:
 	Jogo();
 	~Jogo() {};

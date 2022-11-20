@@ -5,10 +5,10 @@
 using namespace Fases;
 
 namespace Fases {
-	class Fase1 : public Fase {
+	class Fase2 : public Fase {
 	public:
-		Fase1();
-		~Fase1() {};
+		Fase2();
+		~Fase2() {};
 
 		void executar();
 		void atualizar(sf::View* view, sf::RenderWindow* window);

@@ -35,7 +35,6 @@ namespace Entidades {
 		void setPosicao(Coord<float> posicao);
 		void setTexture(const char* path) { };
 
-		void virtual executar() = 0;
 		void virtual colisao(Entidade* e, int dir) = 0;
 	};
 }

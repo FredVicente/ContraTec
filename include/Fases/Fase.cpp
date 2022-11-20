@@ -2,9 +2,19 @@
 
 using namespace Fases;
 
+int Fase::faseAtual = 0;
+
 Fase::Fase() {
+	player = nullptr;
 	listaEntidadesMoveis = nullptr;
 	listaEntidadesEstaticas = nullptr;
+}
+
+void Fase::clear() {
+	if (listaEntidadesEstaticas) {
+		listaEntidadesEstaticas->lista.clear();
+		listaEntidadesMoveis->lista.clear();
+	}
 }
 
 Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
@@ -13,16 +23,25 @@ Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
 		Plataforma* p = new Plataforma(pos);
 		return p;
 	}
+	case(jogador):	{
+		Jogador* j = new Jogador(pos, Coord<float>(50,80));
+		player = j;
+		return j;
+	}
 	default:
 		break;
 	}
 	return nullptr;
 }
 
-void Fase::criarFase(const char* path, Jogador* player) {
+void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 	ifstream file;
-	const int y = 12, x = 176;
-	char fase[y][x];
+	char** fase = (char**) malloc(tamanho.y * sizeof(char*));
+
+	int i, j;
+	for (i = 0; i < tamanho.y; i++) {
+		fase[i] = (char*)malloc(tamanho.x * sizeof(char));
+	}
 
 	file.open(path);
 
@@ -31,19 +50,23 @@ void Fase::criarFase(const char* path, Jogador* player) {
 		exit(54);
 	}
 
-	int i, j;
 	while (!file.eof()) {
-		for (i = 0; i < y; i++) {
-			for (j = 0; j < x; j++) {
+		for (i = 0; i < tamanho.y; i++) {
+			for (j = 0; j < tamanho.x; j++) {
 				file >> fase[i][j];
 
 				if (fase[i][j] == 'P')
 					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
 				else if (fase[i][j] == 'J')
-					player->setPosicao(Coord<float>(j * 50, i * 50));
+					listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), jogador));
 			}
 		}
 	}
+
+	for (i = 0; i < tamanho.y; i++) {
+		free(fase[i]);
+	}
+	free(fase);
 
 	file.close();
 }

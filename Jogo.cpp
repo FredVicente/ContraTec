@@ -1,8 +1,6 @@
 #include "Jogo.h"
 
-Jogo::Jogo() : 
-    jogador(Coord<float>(0,0), Coord<float>(50,90)),
-    fase1()
+Jogo::Jogo()
 {
     Inicializar();
 }
@@ -11,20 +9,17 @@ void Jogo::Inicializar(){
     // Gerenciador grafico.
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
-    sf::View view1(sf::FloatRect(0, 0, janela.x, janela.y));
+    sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
-    fase1.player = &jogador;
-    fase1.executar();
+    fase1 = new Fase1();
+    pFaseAtual = fase1;
+    pFaseAtual->executar();
+    jogador = fase1->player;
+    fase2 = nullptr;
 
     // Vari�veis de tempo.
     float dT = 0;
     float tAnt = 0;
-
-    sf::Font font;
-    sf::Text vidas;
-    font.loadFromFile("Fonts/PixelFont2.ttf");
-    vidas.setFont(font);
-    vidas.setCharacterSize(28);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -33,7 +28,7 @@ void Jogo::Inicializar(){
                 window.close();
 
             if (state == playing) {
-                jogador.pControle.eventController(event);
+                jogador->pControle.eventController(event);
                 if (event.KeyPressed && event.key.code == sf::Keyboard::P)
                     state = pause;
             }
@@ -58,41 +53,34 @@ void Jogo::Inicializar(){
                 dT = 0;
                 tAnt = clock();
 
-                // Gerenciador Grafico
-                window.clear();
+                if (Fase::faseAtual != faseAtual) {
+                    pFaseAtual->clear();
+                    faseAtual = Fase::faseAtual;
 
-                jogador.mover();
-
-                fase1.gC.colisoes(fase1.listaEntidadesEstaticas, fase1.listaEntidadesMoveis);
-
-                // Gerenciador Grafico
-                int i = 0;
-                Entidade* e;
-                for (i = 0; i < fase1.listaEntidadesMoveis->getTamanho(); i++) {
-                    e = (*fase1.listaEntidadesMoveis)[i];
-                    window.draw(*e->getShape());
-                }
-                for (i = 0; i < fase1.listaEntidadesEstaticas->getTamanho(); i++) {
-                    e = (*fase1.listaEntidadesEstaticas)[i];
-                    window.draw(*e->getShape());
+                    switch (faseAtual) {
+                    case(0):
+                        fase1 = new Fase1();
+                        pFaseAtual = fase1;
+                        break;
+                    case(1):
+                        fase2 = new Fase2();
+                        pFaseAtual = fase2;
+                        break;
+                    default:
+                        break;
+                    }
+                    pFaseAtual->executar();
+                    jogador = pFaseAtual->player;
                 }
                 
-                vidas.setString("Vidas: " + to_string(jogador.vidas));
-                vidas.setPosition(view1.getCenter() - sf::Vector2f(janela.x / 2 - 10, janela.y / 2));
-                window.draw(vidas);
-
-                // Gerenciador Grafico.
-                view1.setCenter(jogador.getPosicao().x + jogador.getTamanho().x / 2, view1.getCenter().y);
-
-                window.setView(view1);
-                window.display();
+                pFaseAtual->atualizar(&view, &window);
             }
         }
         else {
             window.clear();
             menu.executar(&window);
-            view1.setCenter(janela.x/2, janela.y/2);
-            window.setView(view1);
+            view.setCenter(janela.x/2, janela.y/2);
+            window.setView(view);
             window.display();
         }
     }
