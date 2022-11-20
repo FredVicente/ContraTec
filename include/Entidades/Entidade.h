@@ -20,6 +20,7 @@ namespace Entidades {
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		sf::RectangleShape* shape;
+		sf::Sprite* sprite;
 		ID id;
 	public:
 		Entidade() { id = vazio; shape = nullptr; };
@@ -32,8 +33,8 @@ namespace Entidades {
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
 		void setPosicao(Coord<float> posicao);
+		void setTexture(const char* path) { };
 
-		void virtual executar() = 0;
 		void virtual colisao(Entidade* e, int dir) = 0;
 	};
 }

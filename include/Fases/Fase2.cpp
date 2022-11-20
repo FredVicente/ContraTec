@@ -1,13 +1,13 @@
-#include "Fase1.h"
+#include "Fase2.h"
 
-Fase1::Fase1(Jogador* p){
+Fase2::Fase2(Jogador* p) {
     listaEntidadesEstaticas = new ListaEntidades;
     listaEntidadesMoveis = new ListaEntidades;
     player = p;
 }
 
-void Fase1::executar() {
-    criarFase("Fase1.txt", player, Coord<int>(176, 12));
+void Fase2::executar() {
+    criarFase("Fase2.txt", player, Coord<int>(176, 12));
 
     gC.setLista(listaEntidadesMoveis, listaEntidadesEstaticas);
 
@@ -16,12 +16,8 @@ void Fase1::executar() {
     vidas.setCharacterSize(28);
 }
 
-void Fase1::atualizar() {
+void Fase2::atualizar() {
     player->mover();
 
     gC.colisoes();
-
-    if (player->getPosicao().x > 2200) {
-        Fase::faseAtual = 2;
-    }
 }

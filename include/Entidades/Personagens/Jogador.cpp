@@ -2,8 +2,8 @@
 
 using namespace Entidades;
 
-Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
-    Personagem(posicao, tamanho, jogador),
+Jogador::Jogador(Coord<float> tamanho) :
+    Personagem(Coord<float>(0,0), tamanho, jogador),
     direcao(Coord<int>(0,0)),
     pControle(this) {
         velocidade = Coord<float>(0, 0);
@@ -17,7 +17,7 @@ void Jogador::setDirecao(std::string coordenada, int valor){
 }
 
 void Jogador::mover() {
-    velocidade.x = 10 * direcao.x;
+    velocidade.x = direcao.x * 2;
     velocidade += aceleracao;
     Coord<float> pos = getPosicao();
     setPosicao(pos + velocidade);
@@ -31,7 +31,7 @@ void Jogador::setAtacando(bool valor){
 }
 
 void Jogador::pular(){
-    velocidade.y = -20;
+    velocidade.y = -8;
     pulo = false;
 }
 

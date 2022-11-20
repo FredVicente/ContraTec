@@ -1,9 +1,28 @@
 #include "Jogo.h"
 
-Jogo::Jogo() : 
-    jogador(Coord<float>(0,0), Coord<float>(50,120)),
-    fase1()
+Jogo::Jogo() :
+    jogador(Coord<float>(50,90))
 {
+    fase1 = nullptr;
+    fase2 = nullptr;
+    pFaseAtual = nullptr;
+
+    vector<std::string> opMenu;
+    opMenu.push_back("Jogar");
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Sair");
+    menu = new Menu(opMenu);
+    menu->executar();
+
+    /* Sistema pra salvar
+    vector<std::string> opPause;
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Salvar");
+    opMenu.push_back("Sair");
+    pauseMenu = new Menu(opMenu);
+    pauseMenu->executar();
+    */
+
     Inicializar();
 }
 
@@ -11,22 +30,7 @@ void Jogo::Inicializar(){
     // Gerenciador grafico.
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
-    sf::View view1(sf::FloatRect(janela.x / 2, 0, janela.x, janela.y));
-
-    fase1.player = &jogador;
-    fase1.executar();
-
-    // Vari�veis de tempo.
-    float dT = 0;
-    float tAnt = 0;
-
-    Menu menu;
-    sf::Font font;
-    sf::Text vidas;
-    font.loadFromFile("Fonts/PixelFont2.ttf");
-    vidas.setFont(font);
-    vidas.setCharacterSize(24);
-    vidas.setString("Vidas: 3");
+    sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
     while (window.isOpen()) {
         sf::Event event;
@@ -34,51 +38,56 @@ void Jogo::Inicializar(){
             if(event.type == sf::Event::Closed)
                 window.close();
 
-            if(state == playing)
+            if (state == playing) {
                 jogador.pControle.eventController(event);
+                if (event.KeyPressed && event.key.code == sf::Keyboard::P)
+                    state = pause;
+            }
+            else {
+                switch (menu->alterar(event)) {
+                    case 1:
+                        state = playing;
+                        break;
+                    case 3:
+                        exit(0);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
-        if(state == playing){
-        // Gerenciador geral para update.
-        dT += (clock() - tAnt) / CLOCKS_PER_SEC;
-        if (dT > 40) {
-            dT = 0;
-            tAnt = clock();
+        if (state == playing) {
+            // Gerenciador geral para update.
+            if (Fase::faseAtual != faseAtual) {
+                if(pFaseAtual)
+                    delete(pFaseAtual);
+                faseAtual = Fase::faseAtual;
 
-            // Gerenciador Grafico
-            window.clear();
-
-            jogador.mover();
-
-            fase1.gC.colisoes(fase1.listaEntidadesEstaticas, fase1.listaEntidadesMoveis);
-
-            // Gerenciador Grafico
-            int i = 0;
-            Entidade* e;
-            for (i = 0; i < fase1.listaEntidadesMoveis->getTamanho(); i++) {
-                e = (*fase1.listaEntidadesMoveis)[i];
-                window.draw(*e->getShape());
-            }
-            for (i = 0; i < fase1.listaEntidadesEstaticas->getTamanho(); i++) {
-                e = (*fase1.listaEntidadesEstaticas)[i];
-                window.draw(*e->getShape());
+                switch (faseAtual) {
+                case(1):
+                    fase1 = new Fase1(&jogador);
+                    pFaseAtual = fase1;
+                    break;
+                case(2):
+                    fase2 = new Fase2(&jogador);
+                    pFaseAtual = fase2;
+                    break;
+                default:
+                    break;
+                }
+                pFaseAtual->executar();
             }
 
-            //
-            vidas.setPosition(view1.getCenter() - sf::Vector2f(janela.x / 2, janela.y / 2));
-            window.draw(vidas);
-            // Gerenciador Grafico
-            view1.setCenter(jogador.getPosicao().x + jogador.getTamanho().x / 2, view1.getCenter().y);
-
-            window.setView(view1);
-            window.display();
+            pFaseAtual->atualizar();
+            pFaseAtual->imprimir(&view, &window);
         }
         else {
             window.clear();
-            menu.executar(&window);
-            window.setView(view1);
+            menu->atualizar(&window);
+            view.setCenter(janela.x/2, janela.y/2);
+            window.setView(view);
             window.display();
-        }
         }
     }
 

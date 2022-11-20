@@ -5,10 +5,10 @@
 using namespace Fases;
 
 namespace Fases {
-	class Fase1 : public Fase {
+	class Fase2 : public Fase {
 	public:
-		Fase1(Jogador* p = nullptr);
-		~Fase1() {};
+		Fase2(Jogador* p = nullptr);
+		~Fase2() {};
 
 		void executar();
 		void atualizar();

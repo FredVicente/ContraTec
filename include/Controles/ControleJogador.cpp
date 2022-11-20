@@ -22,7 +22,7 @@ void ControleJogador::eventController(sf::Event event) {
                 notifyPressed("A");
             else if (event.key.code == sf::Keyboard::W && pJogador->pulo)
                 notifyPressed("W");
-            else if (event.key.code == sf::Keyboard::Num1)
+            else if (event.key.code == sf::Keyboard::J)
                 notifyPressed("1");
             break;
 
@@ -33,7 +33,7 @@ void ControleJogador::eventController(sf::Event event) {
                 notifyReleased("A");
             else if (event.key.code == sf::Keyboard::W && pJogador->pulo)
                 notifyReleased("W");
-            else if (event.key.code == sf::Keyboard::Num1)
+            else if (event.key.code == sf::Keyboard::J)
                 notifyReleased("1");
             break;
 
