@@ -10,9 +10,7 @@ namespace Fases {
 		Fase1(Jogador* p);
 		~Fase1() {};
 
-		void executar();
-		void atualizar();
+		void Executar();
+		void Atualizar();
 	};
 }
-
-

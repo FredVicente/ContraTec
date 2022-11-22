@@ -16,6 +16,8 @@ private:
     std::string up;
     std::string down;
 
+    std::string fromKtoS(const sf::Keyboard::Key& k);
+
 public:
     ControleJogador(Entidades::Jogador* pJ = nullptr);
 

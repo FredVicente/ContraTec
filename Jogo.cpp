@@ -36,7 +36,9 @@ void Jogo::Inicializar(){
         cout << "ERROR: Texture";
     }
     
-    
+    // Vari�veis de tempo.
+    float dT = 0;
+    float tAnt = 0;
 
     sprite.setTexture(textura);
 
@@ -87,10 +89,14 @@ void Jogo::Inicializar(){
                 default:
                     break;
                 }
-                pFaseAtual->executar();
+                pFaseAtual->Executar();
             }
 
-            pFaseAtual->atualizar();
+            tAnt = dt;
+            dT = 0;
+            dT += (clock() - tAnt) / CLOCKS_PER_SEC;
+
+            pFaseAtual->Atualizar(dt);
             pFaseAtual->imprimir(&view, &window);
         }
         else {

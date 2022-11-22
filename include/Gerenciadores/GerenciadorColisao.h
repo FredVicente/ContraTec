@@ -15,12 +15,15 @@ namespace Gerenciadores {
 		~GerenciadorColisao() {};
 
 		// Testa a colisao entre todas a entidades do jogo.
-		void colisoes();
+		void Colisoes();
 
 		// Testa a colisao entre duas entidades diretamente.
-		int testaColisao(Entidade* e1, Entidade* e2);
+		int TestaColisao(Entidade* e1, Entidade* e2);
 
-		void setLista(ListaEntidades* lM, ListaEntidades* lE);
+		void ColisaoJogadorInimigo(Entidade* e1, Entidade* e2);
+		void ColisaoJogadorProjetil(Entidade* e1, Entidade* e2);
+		void ColisaoInimigoProjetil(Entidade* e1, Entidade* e2);
+		void ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir);
 	};
 }
 

@@ -32,7 +32,7 @@ void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
 		window->draw(*e->getShape());
 	}
 
-	vidas.setString("Vidas: " + to_string(player->vidas));
+	vidas.setString("Vidas: " + to_string(player->getVidas()));
 	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
 
 	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);
@@ -60,6 +60,15 @@ Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
 	case (plataforma): {
 		Plataforma* p = new Plataforma(pos);
 		return p;
+	}
+	case (bombeta):{
+		Bombeta* b = new Bombeta(Coord<int>(-1,0), pos, player);
+		return b;
+	}
+	case(torreta):{
+		Torreta* t = new Torreta(Coord<int>(-1,0), pos, player);
+		t->setFase(this);
+		return t;
 	}
 	default:
 		break;
@@ -93,8 +102,13 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 				else if (fase[i][j] == 'J') {
 					listaEntidadesMoveis->adicionarEntidade(player);
 					player->setPosicao(Coord<float>(j * 50, i * 50));
-					player->setPosicao(Coord<float>(j * 50, i * 50));
 				}
+				else if (fase[i][j] == 'P')
+					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
+				else if(fase[i][j] == 'B')
+					listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), bombeta));
+				else if(fase[i][j] == 'T')
+					listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreta));
 			}
 		}
 	}

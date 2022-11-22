@@ -1,6 +1,10 @@
 #pragma once
 #include "Entidades/Plataforma.h"
+#include "Entidades/Personagem.h"
+#include "Entidades/Personagens/Inimigos/Bombeta.h"
+#include "Entidades/Personagens/Inimigos/Torreta.h"
 #include "Entidades/Personagens/Jogador.h"
+#include "Entidades/Projetil.h"
 #include "Gerenciadores/GerenciadorColisao.h"
 #include "Math/Coord.h"
 #include <fstream>

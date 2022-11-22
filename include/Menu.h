@@ -19,10 +19,10 @@ public:
     Menu(vector<std::string> opMenu);
     ~Menu() {};
 
-    void executar();
+    void Executar();
 
-    void atualizar(sf::RenderWindow* window);
+    void Atualizar(sf::RenderWindow* window);
 
-    int alterar(sf::Event e);
+    int Alterar(sf::Event e);
 };
 

@@ -3,7 +3,7 @@
 
 using namespace Entidades;
 
-Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) {
+Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) : ativo(true) {
 	this->posicao = pos;
 	this->tamanho = tam;
 	this->id = id;
@@ -14,4 +14,11 @@ Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) {
 void Entidade::setPosicao(Coord<float> posicao) {
 	this->posicao = posicao;
 	(*shape).setPosition(posicao.x, posicao.y);
+}
+
+void Entidade::setDirecao(std::string coordenada, int valor) {
+	if (coordenada == "x")
+		direcao.x = valor;
+	else
+		direcao.y = valor;
 }

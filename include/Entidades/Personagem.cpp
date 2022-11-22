@@ -1,32 +1,33 @@
 #include "Personagem.h"
 #include "Listas/ListaEntidades.h"
+#include <Fases/Fase.h>
 
 using namespace Entidades;
 using namespace Listas;
+using namespace Fases;
 
-Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, ID id) : Entidade(posicao, tamanho, id) {
+Personagem::Personagem(ID id, Coord<float> posicao, Coord<float> tamanho) : Entidade(id, posicao, tamanho) {
 	velocidade = Coord<float>(0, 0);
-	aceleracao = Coord<float>(0, 0.2);
-	getShape()->setFillColor(sf::Color::Green);
+	aceleracao = Coord<float>(0, 0.001f);
+	shape->setFillColor(sf::Color::Green);
 }
 
-void Personagem::mover() {
+void Personagem::Mover() {
 	velocidade += aceleracao;
 	Coord<float> pos = getPosicao();
 	setPosicao(pos + velocidade);
 }
 
-void Personagem::colisao(Entidade* e, int dir) {
-	int id = e->getID();
-	if (id == inimigo) {
-		// Implementar com inimigo.
+void Personagem::Colisao(Entidade* e, int dir) {
+	if (e->getID() == inimigo) {
+		// Implementar depois
 	}
 
 	Coord<float> p1 = getPosicao();
 	Coord<float> p2 = e->getPosicao();
 	Coord<float> t1 = getTamanho();
 	Coord<float> t2 = e->getTamanho();
-	if (id == plataforma) {
+	if(e->getID() == plataforma){
 		if (dir == DIREITA) {
 			setPosicao(Coord<float>(p2.x - t1.x, p1.y));
 			velocidade.x = 0;
@@ -45,4 +46,23 @@ void Personagem::colisao(Entidade* e, int dir) {
 			velocidade.y = 0;
 		}
 	}
+}
+
+void Personagem::mover() {
+	Coord<float> dv;
+	velocidade += aceleracao;
+	dv.x = velocidade.x * direcao.x;
+	dv.y = velocidade.y;
+    setPosicao(posicao + dv);
+}
+
+void Personagem::setFase(Fase* f) {
+	faseAtual = f;
+};
+
+void Personagem::setVelocidade(std::string coordenada, int valor) {
+	if (coordenada == "x")
+		velocidade.x = valor;
+	else
+		velocidade.y = valor;
 }

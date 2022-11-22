@@ -4,7 +4,7 @@ Menu::Menu(vector<std::string> op) {
     opcoes = { op[0], op[1], op[2] };
 }
 
-void Menu::executar() {
+void Menu::Executar() {
     if (!font.loadFromFile("Fonts/PixelFont2.ttf")) {
         cout << "ERROR: Could not load font.";
         exit(1);

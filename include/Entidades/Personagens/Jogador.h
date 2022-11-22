@@ -8,24 +8,24 @@ using namespace std;
 namespace Entidades{
     class Jogador : public Personagem{
     private:
-        Coord<int> direcao;
-        bool atacando;
         bool agachado;
+        bool atacando;
+        bool andando;
+        bool podePular;
+        bool invencivel;
+        float tempoInvencivel;
     public:
-        int pontos;
-
-        Jogador(Coord<float> tamanho = Coord<float>(50,90));
+        Jogador(Coord<float> posicao, Coord<float> tamanho);
         ~Jogador() {};
 
-        void setDirecao(std::string coordenada, int valor);
-
-        void mover();
-
-        void setAtacando(bool valor);
-
+        void Executar();
+        void Atualizar(float dt);
         void pular();
-
-        void setAgachado(bool valor);
+        void setAtacando(bool valor){atacando = valor;};
+        void setAndando(bool valor){ andando = valor; };
+        void setAgachado(bool valor){ agachado = valor; };
+        void setPulo(bool valor){ podePular = valor; }
+        void setVelocidade(std::string coordenada, int valor);
 
         void executar() {};
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Lista.h"
+#include <list>
 #include "Entidades/Entidade.h"
 
 using namespace Entidades;

@@ -1,19 +1,35 @@
 #pragma once
-#include "Entidade.h"
+#include "Projetil.h"
+
+namespace Fases {
+	class Fase;
+}
 
 namespace Entidades {
 	class Personagem : public Entidade{
-	public:
+	protected:
 		Coord<float> velocidade;
 		Coord<float> aceleracao;
-		int vidas = 3;
-		bool pulo = false;
+		int vidas;
 
-		Personagem(Coord<float> posicao = Coord<float>(0.f, 0.f), Coord<float> tamanho = Coord<float>(0.f, 0.f), ID id = vazio);
+		Fases::Fase* faseAtual;
+		float dT;
+	public:
+		Personagem(Coord<float> posicao = Coord<float>(0, 0), Coord<float> tamanho = Coord<float>(0, 0), Coord<int> dir = Coord<int>(0, 0), ID id = vazio);
 		~Personagem() {};
 
-		virtual void mover();
+		virtual void Executar() = 0;
+		virtual void Atualizar(float dt) = 0;
 
-		void colisao(Entidade* e, int dir);
+		void setFase(Fases::Fase* f);
+
+		void setVelocidade(std::string coordenada, int valor);
+
+	 	void mover();
+		void receberDano(){
+			vidas--;
+			std::cout << id << " Vidas: " << vidas << std::endl;
+		}
+		void ColisaoPlataforma(Entidade* e, int dir);
 	};
 }

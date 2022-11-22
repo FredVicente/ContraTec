@@ -10,8 +10,8 @@ protected:
 public:
 	Ente() {};
 	~Ente() {};
-
-	void virtual executar() = 0;
+	
+	void virtual Executar() = 0;
 
 	void imprimir() {};
 };
