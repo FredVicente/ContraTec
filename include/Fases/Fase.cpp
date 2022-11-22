@@ -4,10 +4,10 @@ using namespace Fases;
 
 int Fase::faseAtual = 1;
 
-Fase::Fase() {
-	player = nullptr;
-	listaEntidadesMoveis = nullptr;
-	listaEntidadesEstaticas = nullptr;
+Fase::Fase(Jogador* p) {
+	listaEntidadesEstaticas = new ListaEntidades;
+	listaEntidadesMoveis = new ListaEntidades;
+	player = p;
 }
 
 Fase::~Fase() {
@@ -36,6 +36,19 @@ void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
 	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
 
 	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);
+
+	sf::Font fonte;
+	fonte.loadFromFile("Fonts/PixelFont2.ttf");
+
+	sf::Text t;
+	t.setFont(fonte);
+	t.setCharacterSize(30);
+	t.setPosition(800, 200);
+
+	if (player->pontos < (int)player->getPosicao().x)
+		player->pontos = (int)player->getPosicao().x;
+	t.setString("Pontos: " + to_string(player->pontos));
+	window->draw(t);
 
 	window->draw(vidas);
 	window->setView(*view);
@@ -86,9 +99,8 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 		}
 	}
 
-	for (i = 0; i < tamanho.y; i++) {
+	for (i = 0; i < tamanho.y; i++)
 		free(fase[i]);
-	}
 	free(fase);
 
 	file.close();

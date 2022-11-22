@@ -23,7 +23,7 @@ namespace Fases {
 		static int faseAtual;
 		Jogador* player;
 
-		Fase();
+		Fase(Jogador* p = nullptr);
 		~Fase();
 
 		void imprimir(sf::View* view, sf::RenderWindow* window);

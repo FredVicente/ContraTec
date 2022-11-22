@@ -30,10 +30,13 @@ private:
 	Fase2* fase2;
 	Fase* pFaseAtual;
 	Jogador jogador;
+	sf::Texture textura;
+	sf::Sprite sprite;
 public:
-	float static dT;
-
 	Jogo();
 	~Jogo() {};
+
 	void Inicializar();
+
+	void salvar();
 };

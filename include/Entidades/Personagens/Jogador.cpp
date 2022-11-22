@@ -5,8 +5,9 @@ using namespace Entidades;
 Jogador::Jogador(Coord<float> tamanho) :
     Personagem(Coord<float>(0,0), tamanho, jogador),
     direcao(Coord<int>(0,0)),
-    pControle(this) {
-        velocidade = Coord<float>(0, 0);
+    pControle(this)
+{
+    velocidade = Coord<float>(0, 0);
 }
 
 void Jogador::setDirecao(std::string coordenada, int valor){

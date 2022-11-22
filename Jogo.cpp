@@ -32,6 +32,14 @@ void Jogo::Inicializar(){
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
     sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
+    if (!textura.loadFromFile("assets/Biker/Biker_attack1.png")) {
+        cout << "ERROR: Texture";
+    }
+    
+    
+
+    sprite.setTexture(textura);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -47,6 +55,9 @@ void Jogo::Inicializar(){
                 switch (menu->alterar(event)) {
                     case 1:
                         state = playing;
+                        break;
+                    case 2:
+                        salvar();
                         break;
                     case 3:
                         exit(0);
@@ -87,9 +98,17 @@ void Jogo::Inicializar(){
             menu->atualizar(&window);
             view.setCenter(janela.x/2, janela.y/2);
             window.setView(view);
+            window.draw(sprite);
             window.display();
         }
     }
 
     return;
+}
+
+void Jogo::salvar() {
+    fstream file;
+    file.open("save.txt", ios::out);
+    file.write("pontos", 10);
+    file.close();
 }

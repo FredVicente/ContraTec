@@ -1,10 +1,6 @@
 #include "Fase2.h"
 
-Fase2::Fase2(Jogador* p) {
-    listaEntidadesEstaticas = new ListaEntidades;
-    listaEntidadesMoveis = new ListaEntidades;
-    player = p;
-}
+Fase2::Fase2(Jogador* p) : Fase(p) {}
 
 void Fase2::executar() {
     criarFase("Fase2.txt", player, Coord<int>(176, 12));
