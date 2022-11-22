@@ -3,15 +3,22 @@
 
 using namespace Entidades;
 
-Entidade::Entidade(ID id, Coord<float> posicao, Coord<float> tamanho) {
-	this->posicao = posicao;
-	this->tamanho = tamanho;
+Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) : ativo(true) {
+	this->posicao = pos;
+	this->tamanho = tam;
 	this->id = id;
 	shape = new sf::RectangleShape(sf::Vector2f(tamanho.x, tamanho.y));
-	setPosicao(posicao);
+	setPosicao(pos);
 }
 
 void Entidade::setPosicao(Coord<float> posicao) {
 	this->posicao = posicao;
 	(*shape).setPosition(posicao.x, posicao.y);
+}
+
+void Entidade::setDirecao(std::string coordenada, int valor) {
+	if (coordenada == "x")
+		direcao.x = valor;
+	else
+		direcao.y = valor;
 }

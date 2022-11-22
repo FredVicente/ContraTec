@@ -6,11 +6,14 @@ using namespace Math;
 
 class Ente
 {
+protected:
 public:
 	Ente() {};
 	~Ente() {};
 
 	void virtual Executar() = 0;
+
+	void imprimir() {};
 };
 
 

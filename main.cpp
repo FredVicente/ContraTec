@@ -1,8 +1,9 @@
 #include <stdio.h>
-#include "Principal.h"
+#include "Jogo.h"
 
 int main()
 {
-    Principal principal;
+    Jogo principal;
+
     return 0;
 }

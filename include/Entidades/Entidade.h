@@ -11,30 +11,36 @@ namespace Entidades {
 		vazio = 0,
 		jogador,
 		plataforma,
-		inimigo,
 		projetil,
-		imagem
+		imagem,
+		bombeta,
+		torreta,
+		obstaculo
 	};
-
 	class Entidade : public Ente{
 	protected:
-    ID id;
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		sf::RectangleShape* shape;
+		Coord<int> direcao;
+		ID id;
+		bool ativo = true;
 	public:
-		Entidade() { id = vazio; shape = NULL; };
-		Entidade(ID id, Coord<float> posicao, Coord<float> tamanho);
+		Entidade(Coord<float> pos, Coord<float> tam, ID id);
+		Entidade() { id = vazio; shape = nullptr; };
+
 		~Entidade() { delete(shape); };
 
 		Coord<float> getPosicao() { return posicao; };
 		Coord<float> getTamanho() { return tamanho; };
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
+		bool getEstado(){ return ativo; };
+		void setEstado(bool valor){ ativo = valor; };
 		void setPosicao(Coord<float> posicao);
-		void setTamanho(Coord<float> tamanho);
+		void setDirecao(std::string coordenada, int valor);
 
-		void virtual Executar() {};
-		void virtual Colisao(Entidade* e, int dir) = 0;
+		virtual void Executar() = 0;
+		virtual void Atualizar(float dt) = 0;
 	};
 }

@@ -1,5 +1,5 @@
 #pragma once
-
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <map>
 
@@ -16,10 +16,14 @@ private:
     std::string up;
     std::string down;
 
+    std::string fromKtoS(const sf::Keyboard::Key& k);
+
 public:
     ControleJogador(Entidades::Jogador* pJ = nullptr);
 
     ~ControleJogador() { pJogador = nullptr; };
+
+    void eventController(sf::Event event);
 
     void notifyPressed(std::string tecla);
 

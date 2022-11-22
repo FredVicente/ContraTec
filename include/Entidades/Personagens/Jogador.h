@@ -1,29 +1,31 @@
 #pragma once
-
 #include <Entidades/Personagem.h>
 #include <Controles/ControleJogador.h>
-
 #include <iostream>
+
 using namespace std;
 
 namespace Entidades{
     class Jogador : public Personagem{
     private:
-        Coord<int> direcao;
-        bool atacando;
         bool agachado;
+        bool atacando;
+        bool andando;
+        bool podePular;
+        bool invencivel;
+        float tempoInvencivel;
     public:
+        Jogador(Coord<float> posicao, Coord<float> tamanho);
+        ~Jogador() {};
 
-        Jogador(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho);
-        ~Jogador();
-
-        void setDirecao(std::string coordenada, int valor);
-
-        void setAtacando(bool valor);
-
+        void Executar();
+        void Atualizar(float dt);
         void pular();
-
-        void setAgachado(bool valor);
+        void setAtacando(bool valor){atacando = valor;};
+        void setAndando(bool valor){ andando = valor; };
+        void setAgachado(bool valor){ agachado = valor; };
+        void setPulo(bool valor){ podePular = valor; }
+        void setVelocidade(std::string coordenada, int valor);
 
         ControleJogador pControle;
     };
