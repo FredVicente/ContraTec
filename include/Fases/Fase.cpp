@@ -5,9 +5,12 @@ using namespace Fases;
 int Fase::faseAtual = 1;
 
 Fase::Fase(Jogador* p) {
+	dT = 0;
 	listaEntidadesEstaticas = new ListaEntidades;
 	listaEntidadesMoveis = new ListaEntidades;
+	listaPlataformas = new ListaEntidades;
 	player = p;
+	player->setFase(this);
 }
 
 Fase::~Fase() {
@@ -16,24 +19,27 @@ Fase::~Fase() {
 		delete(listaEntidadesEstaticas);
 	if (listaEntidadesMoveis)
 		delete(listaEntidadesMoveis);
+	if (listaPlataformas)
+		delete(listaPlataformas);
 }
 
-void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
-	window->clear();
+void Fase::Atualizar(float dt) {
+	listaEntidadesMoveis->atualizaTodos(dt, player);
+	listaEntidadesEstaticas->atualizaTodos(dt, player);
+	listaPlataformas->atualizaTodos(dt, player);
+	Fase::faseAtual += PassarFase();
 
-	int i = 0;
-	Entidade* e;
-	for (i = 0; i < listaEntidadesMoveis->getTamanho(); i++) {
-		e = (*listaEntidadesMoveis)[i];
-		window->draw(*e->getShape());
-	}
-	for (i = 0; i < listaEntidadesEstaticas->getTamanho(); i++) {
-		e = (*listaEntidadesEstaticas)[i];
-		window->draw(*e->getShape());
-	}
+	gC.Colisoes();
+
+	imprimir();
+}
+
+void Fase::imprimir() {
+	sf::RenderWindow* window = gGrafico->getJanela();
+	sf::View* view = gGrafico->getView();
 
 	vidas.setString("Vidas: " + to_string(player->getVidas()));
-	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2 + 50));
 
 	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);
 
@@ -49,8 +55,8 @@ void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
 		player->pontos = (int)player->getPosicao().x;
 	t.setString("Pontos: " + to_string(player->pontos));
 	window->draw(t);
-
 	window->draw(vidas);
+	
 	window->setView(*view);
 	window->display();
 }
@@ -98,13 +104,13 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 				file >> fase[i][j];
 
 				if (fase[i][j] == 'P')
+					listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
+				else if(fase[i][j] == 'p')
 					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
 				else if (fase[i][j] == 'J') {
 					listaEntidadesMoveis->adicionarEntidade(player);
 					player->setPosicao(Coord<float>(j * 50, i * 50));
 				}
-				else if (fase[i][j] == 'P')
-					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
 				else if(fase[i][j] == 'B')
 					listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), bombeta));
 				else if(fase[i][j] == 'T')

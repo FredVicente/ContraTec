@@ -2,6 +2,7 @@
 #include "Listas/ListaEntidades.h"
 
 using namespace Entidades;
+using namespace Fases;
 
 Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) : ativo(true) {
 	this->posicao = pos;
@@ -14,11 +15,4 @@ Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) : ativo(true) {
 void Entidade::setPosicao(Coord<float> posicao) {
 	this->posicao = posicao;
 	(*shape).setPosition(posicao.x, posicao.y);
-}
-
-void Entidade::setDirecao(std::string coordenada, int valor) {
-	if (coordenada == "x")
-		direcao.x = valor;
-	else
-		direcao.y = valor;
 }

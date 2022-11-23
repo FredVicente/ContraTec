@@ -15,7 +15,8 @@ using namespace Fases;
 using namespace std;
 
 enum State {
-	pause = 0,
+	menu = 0,
+	pause,
 	playing
 };
 
@@ -23,15 +24,15 @@ class Jogo
 {
 private:
 	int faseAtual = 0;
+	int menuAtual = 0;
 	State state;
 	Menu* menu;
-	// Menu* pauseMenu;
+	Menu* pauseMenu;
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
 	Jogador jogador;
-	sf::Texture textura;
-	sf::Sprite sprite;
+	GerenciadorGrafico* gGrafico;
 public:
 	Jogo();
 	~Jogo() {};
@@ -39,4 +40,5 @@ public:
 	void Inicializar();
 
 	void salvar();
+	void carregar();
 };

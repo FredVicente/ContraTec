@@ -8,7 +8,7 @@ ControleJogador::ControleJogador(Entidades::Jogador* pJ) :
     right("D"),
     up("W"),
     down("S"),
-    attack("Numpad1")
+    attack("J")
 {
     return;
 }
@@ -36,11 +36,11 @@ void ControleJogador::notifyPressed(std::string tecla) {
 
     if (tecla == right){
         pJogador->setDirecao("x", 1);
-        pJogador->setVelocidade("x", 4);
+        pJogador->andando = 1;
     }
     else if (tecla == left){
         pJogador->setDirecao("x", -1);
-        pJogador->setVelocidade("x", 4);
+        pJogador->andando = 1;
     }
     else if (tecla == up)
         pJogador->setDirecao("y", -1);
@@ -58,10 +58,10 @@ void ControleJogador::notifyReleased(std::string tecla) {
         exit(7);
     }
     
-    if(tecla == up)
+    if (tecla == up)
         pJogador->setDirecao("y", 0);
-    else if(tecla == right || tecla == left)
-        pJogador->setVelocidade("x", 0);
+    else if (tecla == right && pJogador->getDirecao().x != -1 || tecla == left && pJogador->getDirecao().x != 1)
+        pJogador->andando = 0;
     else if(tecla == down)
         pJogador->setAgachado(false);
     else if(tecla == attack)

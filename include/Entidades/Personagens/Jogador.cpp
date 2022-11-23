@@ -4,8 +4,8 @@
 using namespace Entidades;
 using namespace Fases;
 
-Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
-    Personagem(posicao, tamanho, Coord<int>(1, 0), jogador),
+Jogador::Jogador(Coord<float> tamanho) :
+    Personagem( Coord<float>(0,0), tamanho, Coord<int>(1, 0), jogador),
     tempoInvencivel(0),
     invencivel(false),
     pControle(this) {
@@ -16,7 +16,7 @@ Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
 
 void Jogador::pular(){
     if (podePular) {
-        velocidade.y = -15;
+        velocidade.y = -8;
         podePular = false;
     }
 }
@@ -40,9 +40,9 @@ void Jogador::Atualizar(float dt) {
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
-                    p = new Projetil(12, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
+                    p = new Projetil(16, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
                 else
-                    p = new Projetil(12, direcao, posicao, Coord<float>(20, 20), jogador);
+                    p = new Projetil(16, direcao, posicao, Coord<float>(20, 20), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
@@ -57,7 +57,8 @@ void Jogador::Atualizar(float dt) {
                 tempoInvencivel = 0;
             }
         }
-
+        
+        setVelocidade("x", andando * 4);
         mover();
     }
 }

@@ -1,7 +1,8 @@
 #include "Jogo.h"
 
 Jogo::Jogo() :
-    jogador(Coord<float>(50,90))
+    jogador(Coord<float>(50,90)),
+    gGrafico(gGrafico->getInstancia())
 {
     fase1 = nullptr;
     fase2 = nullptr;
@@ -12,7 +13,7 @@ Jogo::Jogo() :
     opMenu.push_back("Continuar");
     opMenu.push_back("Sair");
     menu = new Menu(opMenu);
-    menu->executar();
+    menu->Executar();
 
     /* Sistema pra salvar
     vector<std::string> opPause;
@@ -27,26 +28,24 @@ Jogo::Jogo() :
 }
 
 void Jogo::Inicializar(){
-    // Gerenciador grafico.
-    sf::Vector2f janela(800, 600);
-    sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
-    sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
-
+    /*
     if (!textura.loadFromFile("assets/Biker/Biker_attack1.png")) {
         cout << "ERROR: Texture";
     }
-    
+    sprite.setTexture(textura);
+    */
+    sf::RenderWindow* window = gGrafico->getJanela();
+    window->setView(*(gGrafico->getView()));
+    carregar();
     // Vari�veis de tempo.
-    float dT = 0;
+    float dt = 0;
     float tAnt = 0;
 
-    sprite.setTexture(textura);
-
-    while (window.isOpen()) {
+    while (gGrafico->janelaAberta()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             if(event.type == sf::Event::Closed)
-                window.close();
+                gGrafico->fecharJanela();
 
             if (state == playing) {
                 jogador.pControle.eventController(event);
@@ -54,7 +53,7 @@ void Jogo::Inicializar(){
                     state = pause;
             }
             else {
-                switch (menu->alterar(event)) {
+                switch (menu->Alterar(event)) {
                     case 1:
                         state = playing;
                         break;
@@ -70,6 +69,7 @@ void Jogo::Inicializar(){
             }
         }
 
+        gGrafico->clear();
         if (state == playing) {
             // Gerenciador geral para update.
             if (Fase::faseAtual != faseAtual) {
@@ -92,20 +92,24 @@ void Jogo::Inicializar(){
                 pFaseAtual->Executar();
             }
 
-            tAnt = dt;
-            dT = 0;
-            dT += (clock() - tAnt) / CLOCKS_PER_SEC;
+            dt += (clock() - tAnt) / CLOCKS_PER_SEC;
 
-            pFaseAtual->Atualizar(dt);
-            pFaseAtual->imprimir(&view, &window);
+            if (dt > 20) {
+                pFaseAtual->Atualizar(dt);
+                tAnt = dt;
+                dt = 0;
+            }
         }
         else {
-            window.clear();
-            menu->atualizar(&window);
-            view.setCenter(janela.x/2, janela.y/2);
-            window.setView(view);
-            window.draw(sprite);
-            window.display();
+            switch (menuAtual) {
+            case 0:
+                menu->Atualizar();
+                window->display();
+                break;
+            //case 1:
+
+            }
+            
         }
     }
 
@@ -113,8 +117,17 @@ void Jogo::Inicializar(){
 }
 
 void Jogo::salvar() {
-    fstream file;
-    file.open("save.txt", ios::out);
-    file.write("pontos", 10);
+    ofstream file;
+    file.open("save.txt");
+    file << to_string(jogador.pontos);
+    file.close();
+}
+
+void Jogo::carregar() {
+    ifstream file;
+    file.open("save.txt");
+    if(!file)
+        return;
+    file >> jogador.pontos;
     file.close();
 }

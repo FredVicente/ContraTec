@@ -21,7 +21,7 @@ public:
 
     void Executar();
 
-    void Atualizar(sf::RenderWindow* window);
+    void Atualizar();
 
     int Alterar(sf::Event e);
 };

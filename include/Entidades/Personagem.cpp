@@ -4,48 +4,13 @@
 
 using namespace Entidades;
 using namespace Listas;
-using namespace Fases;
 
-Personagem::Personagem(ID id, Coord<float> posicao, Coord<float> tamanho) : Entidade(id, posicao, tamanho) {
+Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> dir, ID id) :
+	Entidade(posicao, tamanho, id) {
+	direcao = dir;
 	velocidade = Coord<float>(0, 0);
-	aceleracao = Coord<float>(0, 0.001f);
+	aceleracao = Coord<float>(0, 0.2f);
 	shape->setFillColor(sf::Color::Green);
-}
-
-void Personagem::Mover() {
-	velocidade += aceleracao;
-	Coord<float> pos = getPosicao();
-	setPosicao(pos + velocidade);
-}
-
-void Personagem::Colisao(Entidade* e, int dir) {
-	if (e->getID() == inimigo) {
-		// Implementar depois
-	}
-
-	Coord<float> p1 = getPosicao();
-	Coord<float> p2 = e->getPosicao();
-	Coord<float> t1 = getTamanho();
-	Coord<float> t2 = e->getTamanho();
-	if(e->getID() == plataforma){
-		if (dir == DIREITA) {
-			setPosicao(Coord<float>(p2.x - t1.x, p1.y));
-			velocidade.x = 0;
-		}
-		else if (dir == ESQUERDA) {
-			setPosicao(Coord<float>(p2.x + t2.x, p1.y));
-			velocidade.x = 0;
-		}
-		if (dir == BAIXO) {
-			setPosicao(Coord<float>(p1.x, p2.y - t1.y));
-			velocidade.y = 0;
-			pulo = true;
-		}
-		else if (dir == CIMA) {
-			setPosicao(Coord<float>(p1.x, p2.y + t2.y));
-			velocidade.y = 0;
-		}
-	}
 }
 
 void Personagem::mover() {
@@ -56,9 +21,12 @@ void Personagem::mover() {
     setPosicao(posicao + dv);
 }
 
-void Personagem::setFase(Fase* f) {
-	faseAtual = f;
-};
+void Personagem::setDirecao(std::string coordenada, int valor) {
+	if (coordenada == "x")
+		direcao.x = valor;
+	else
+		direcao.y = valor;
+}
 
 void Personagem::setVelocidade(std::string coordenada, int valor) {
 	if (coordenada == "x")

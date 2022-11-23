@@ -7,12 +7,14 @@ using namespace Listas;
 namespace Gerenciadores {
 	class GerenciadorColisao
 	{
-	public:
+	private:
 		ListaEntidades* listaMoveis;
 		ListaEntidades* listaEstatica;
-
+	public:
 		GerenciadorColisao() { listaMoveis = nullptr; listaEstatica = nullptr; };
 		~GerenciadorColisao() {};
+
+		void setLista(ListaEntidades* lE, ListaEntidades* lM);
 
 		// Testa a colisao entre todas a entidades do jogo.
 		void Colisoes();
@@ -24,6 +26,7 @@ namespace Gerenciadores {
 		void ColisaoJogadorProjetil(Entidade* e1, Entidade* e2);
 		void ColisaoInimigoProjetil(Entidade* e1, Entidade* e2);
 		void ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir);
+		void ColisaoProjetilPlataforma(Entidade* e1);
 	};
 }
 

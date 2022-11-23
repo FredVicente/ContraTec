@@ -24,9 +24,23 @@ Entidade* ListaEntidades::operator[](int posicao) {
 	return lista[posicao];
 }
 
-void ListaEntidades::atualizaTodos() {
+void ListaEntidades::atualizaTodos(float dt, Entidade* jogador) {
 	int i, tam = getTamanho();
+	Coord<float> pos, posJogador = jogador->getPosicao();
 	for (i = 0; i < tam; i++) {
-		lista[i]->executar();
+		Entidade* e = lista[i];
+		pos = e->getPosicao();
+		if (abs(pos.x - posJogador.x) < 500 && abs(pos.y - posJogador.y) < 400) {
+			e->setRange(true);
+			if (e->getEstado()) {
+				e->Atualizar(dt);
+				e->imprimir();
+			}
+		}
+		else {
+			e->setRange(false);
+			if (e->getID() == projetil)
+				e->setEstado(false);
+		}
 	}
 }

@@ -10,7 +10,7 @@ void Menu::Executar() {
         exit(1);
     }
     
-    posicoes = { {350, 150}, {350, 300}, {350, 450} };
+    posicoes = { {0, 150}, {0, 300}, {0, 450} };
 
     textos.resize(3);
     int i;
@@ -21,7 +21,10 @@ void Menu::Executar() {
     }
 }
 
-void Menu::atualizar(sf::RenderWindow* window) {
+void Menu::Atualizar() {
+    sf::RenderWindow* window = gGrafico->getJanela();
+    sf::View* view = gGrafico->getView();
+
     int i;
     for (i = 0; i < opcoes.size(); i++) {
         window->draw(textos[i]);
@@ -30,9 +33,12 @@ void Menu::atualizar(sf::RenderWindow* window) {
         else
             textos[i].setCharacterSize(28);
     }
+
+    view->setCenter(0, view->getCenter().y);
+    window->setView(*view);
 }
 
-int Menu::alterar(sf::Event e) {
+int Menu::Alterar(sf::Event e) {
     int i = 0;
     if (e.type == sf::Event::KeyPressed) {
         if (e.key.code == sf::Keyboard::S || e.key.code == sf::Keyboard::Down)

@@ -1,30 +1,45 @@
 #include "GerenciadorColisao.h"
 #include "Entidades/Personagens/Jogador.h"
+#include "Fases/Fase.h"
 
 using namespace Gerenciadores;
+using namespace Fases;
 
-void GerenciadorColisao::colisoes() {
+void GerenciadorColisao::setLista(ListaEntidades* lE, ListaEntidades* lM) {
+    listaEstatica = lE;
+    listaMoveis = lM;
+}
+
+void GerenciadorColisao::Colisoes() {
     // Entidades de compara��o.
     int i = 0, j;
     Entidade* e1;
     Entidade* e2;
 
     // Come�a o loop entre as entidades moveis e est�ticas.
-    while (i < listaMoveis.getTamanho()) {
-        e1 = (*listaEstatica)[i];
+    while (i < listaMoveis->getTamanho()) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaEstatica.getTamanho()) {
-            e2 = (*listaEstatica)[j];
-            j++;
-            // Dire��o de colis�o.
-            int dir = TestaColisao(e1, e2);
+        if (e1->getEstado() && e1->getRange()){
+            while (j < listaEstatica->getTamanho()) {
+                e2 = (*listaEstatica)[j];
+                j++;
 
-            if (dir != NAO_COLIDINDO) {
-                int id1 = e1->getID();
-                int id2 = e2->getID();
-                if(((id1 == bombeta || id1 == torreta || id1 == jogador) || (id2 == bombeta || id2 == torreta || id2 == jogador)) && (id1 == plataforma || id2 == plataforma)){
-                    ColisaoPersonagemPlataforma(e1, e2, dir);
+                if (e2->getRange()) {
+                    // Dire��o de colis�o.
+                    int dir = TestaColisao(e1, e2);
+
+                    if (dir != NAO_COLIDINDO) {
+                        int id1 = e1->getID();
+                        int id2 = e2->getID();
+                        if (((id1 == bombeta || id1 == torreta || id1 == jogador)) && id2 == plataforma) {
+                            ColisaoPersonagemPlataforma(e1, e2, dir);
+                        }
+                        else if (id1 == projetil && id2 == plataforma) {
+                            ColisaoProjetilPlataforma(e1);
+                        }
+                    }
                 }
             }
         }
@@ -32,29 +47,31 @@ void GerenciadorColisao::colisoes() {
 
     i = 0;
     // Come�a o loop entre as entidades m�veis.
-    while (i < listaMoveis.getTamanho() - 1) {
-        e1 = (*listaEstatica)[i];
+    while (i < listaMoveis->getTamanho() - 1) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaMoveis.getTamanho()) {
-            e2 = (*listaMoveis)[j];
-            j++;
-            // Dire��o de colis�o.
-            if(e1->getEstado() && e2->getEstado()){
-                int dir = TestaColisao(e1, e2);
+        if(e1->getEstado() && e1->getRange()){
+            while (j < listaMoveis->getTamanho()) {
+                e2 = (*listaMoveis)[j];
+                j++;
+                // Dire��o de colis�o.
+                if (e2->getEstado() && e1->getRange()) {
+                    int dir = TestaColisao(e1, e2);
 
-                if (dir != NAO_COLIDINDO) {
-                    int id1 = e1->getID();
-                    int id2 = e2->getID();
+                    if (dir != NAO_COLIDINDO) {
+                        int id1 = e1->getID();
+                        int id2 = e2->getID();
 
-                    if(((id1 == jogador) || (id2 == jogador)) && ((id1 == torreta || id1 == bombeta) || (id2 == torreta || id2 == bombeta))){
-                        ColisaoJogadorInimigo(e1, e2);
-                    }
-                    if((id1 == jogador || id2 == jogador) && (id1 == projetil || id2 == projetil)){
-                        ColisaoJogadorProjetil(e1, e2);
-                    }
-                    if(((id1 == bombeta || id1 == torreta) || (id2 == bombeta || id2 == torreta)) && (id1 == projetil || id2 == projetil)){
-                        ColisaoInimigoProjetil(e1, e2);
+                        if (((id1 == jogador) || (id2 == jogador)) && ((id1 == torreta || id1 == bombeta) || (id2 == torreta || id2 == bombeta))) {
+                            ColisaoJogadorInimigo(e1, e2);
+                        }
+                        if ((id1 == jogador || id2 == jogador) && (id1 == projetil || id2 == projetil)) {
+                            ColisaoJogadorProjetil(e1, e2);
+                        }
+                        if (((id1 == bombeta || id1 == torreta) || (id2 == bombeta || id2 == torreta)) && (id1 == projetil || id2 == projetil)) {
+                            ColisaoInimigoProjetil(e1, e2);
+                        }
                     }
                 }
             }
@@ -193,4 +210,7 @@ void GerenciadorColisao::ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2,
 		per->setPosicao(Coord<float>(p1.x, p2.y + t2.y));
 		per->setVelocidade("y", 0);
 	}
+}
+void GerenciadorColisao::ColisaoProjetilPlataforma(Entidade* e1) {
+    e1->setEstado(false);
 }

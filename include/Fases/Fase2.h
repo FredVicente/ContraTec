@@ -10,8 +10,8 @@ namespace Fases {
 		Fase2(Jogador* p = nullptr);
 		~Fase2() {};
 
-		void executar();
-		void atualizar();
+		void Executar();
+		int PassarFase();
 	};
 }
 

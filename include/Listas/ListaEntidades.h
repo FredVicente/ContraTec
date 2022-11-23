@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include "Entidades/Entidade.h"
+#include "Lista.h"
 
 using namespace Entidades;
 using namespace Listas;
@@ -23,7 +24,7 @@ namespace Listas {
 
 		Entidade* operator[](int posicao);
 
-		void atualizaTodos();
+		void atualizaTodos(float dt, Entidade* jogador);
 	};
 }
 

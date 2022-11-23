@@ -6,6 +6,10 @@
 #define DIREITA 3
 #define ESQUERDA 4
 
+namespace Fases {
+	class Fase;
+}
+
 namespace Entidades {
 	enum ID {
 		vazio = 0,
@@ -25,6 +29,8 @@ namespace Entidades {
 		Coord<int> direcao;
 		ID id;
 		bool ativo = true;
+		bool range = true;
+		Fases::Fase* faseAtual;
 	public:
 		Entidade(Coord<float> pos, Coord<float> tam, ID id);
 		Entidade() { id = vazio; shape = nullptr; };
@@ -36,10 +42,15 @@ namespace Entidades {
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
 		bool getEstado(){ return ativo; };
+		bool getRange(){ return range; };
 		void setEstado(bool valor){ ativo = valor; };
+		void setRange(bool valor){ range = valor; };
 		void setPosicao(Coord<float> posicao);
-		void setDirecao(std::string coordenada, int valor);
+		void setFase(Fases::Fase* f) { faseAtual = f; };
+		Fases::Fase* getFase() { return faseAtual; };
 
-		void virtual Executar() {};
+		void virtual Executar() = 0;
+		void virtual Atualizar(float dt) = 0;
+		void imprimir() { GerenciadorGrafico::getInstancia()->renderizar(shape); }
 	};
 }

@@ -5,7 +5,7 @@ namespace Entidades {
 	class Bombeta : public Inimigo {
 	public:
 		Bombeta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
-		: Inimigo(dir, posicao, Coord<float>(50.f, 200.f), pJ, bombeta)
+		: Inimigo(dir, posicao, Coord<float>(50.f, 150.f), pJ, bombeta)
 		{
 			velocidade = Coord<float>(2, 0);
 			getShape()->setFillColor(sf::Color::Cyan);
