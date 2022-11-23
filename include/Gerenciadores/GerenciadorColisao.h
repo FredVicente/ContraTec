@@ -7,9 +7,6 @@ using namespace Listas;
 namespace Gerenciadores {
 	class GerenciadorColisao
 	{
-	private:
-		std::list<Entidade*>::iterator iterador1;
-		std::list<Entidade*>::iterator iterador2;
 	public:
 		ListaEntidades* listaMoveis;
 		ListaEntidades* listaEstatica;
@@ -28,7 +25,10 @@ namespace Gerenciadores {
 		void ColisaoInimigoProjetil(Entidade* e1, Entidade* e2);
 		void ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir);
 
-		void setLista(ListaEntidades* lM, ListaEntidades* lE);
+		void setLista(ListaEntidades* lM, ListaEntidades* lE){
+			listaMoveis = lM;
+			listaEstatica = lE;
+		};
 	};
 }
 

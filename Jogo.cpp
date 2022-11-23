@@ -1,7 +1,7 @@
 #include "Jogo.h"
 
 Jogo::Jogo() :
-    jogador(Coord<float>(50,90))
+    jogador(Coord<float>(50,90), Coord<float>(50, 90))
 {
     fase1 = nullptr;
     fase2 = nullptr;
@@ -12,7 +12,7 @@ Jogo::Jogo() :
     opMenu.push_back("Continuar");
     opMenu.push_back("Sair");
     menu = new Menu(opMenu);
-    menu->executar();
+    menu->Executar();
 
     /* Sistema pra salvar
     vector<std::string> opPause;
@@ -27,6 +27,8 @@ Jogo::Jogo() :
 }
 
 void Jogo::Inicializar(){
+    float tAnt = 0;
+    float dt = 0;
     // Gerenciador grafico.
     sf::Vector2f janela(800, 600);
     sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
@@ -76,15 +78,20 @@ void Jogo::Inicializar(){
                 default:
                     break;
                 }
-                pFaseAtual->executar();
+                jogador.setFase(pFaseAtual);
+                pFaseAtual->Executar();
             }
-
-            pFaseAtual->atualizar();
-            pFaseAtual->imprimir(&view, &window);
+            tAnt = dt;
+            dt += (clock() - tAnt) / CLOCKS_PER_SEC;
+            if(dt > 40){
+                pFaseAtual->Atualizar(dt);
+                pFaseAtual->imprimir(&view, &window);
+                dt = 0;
+            }
         }
         else {
             window.clear();
-            menu->atualizar(&window);
+            menu->Atualizar(&window);
             view.setCenter(janela.x/2, janela.y/2);
             window.setView(view);
             window.display();

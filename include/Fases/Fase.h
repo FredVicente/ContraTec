@@ -13,6 +13,7 @@
 
 using namespace Gerenciadores;
 using namespace Entidades;
+using namespace Listas;
 
 namespace Fases {
 	class Fase : public Ente {
@@ -29,7 +30,7 @@ namespace Fases {
 		~Fase();
 
 		void imprimir(sf::View* view, sf::RenderWindow* window);
-		void virtual Atualizar() = 0;
+		void virtual Atualizar(float dt) = 0;
 		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
 		void criarFase(const char* path, Jogador* player, Coord<int> tamanho);
 	};

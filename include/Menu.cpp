@@ -4,7 +4,7 @@ Menu::Menu(vector<std::string> op) {
     opcoes = { op[0], op[1], op[2] };
 }
 
-void Menu::executar() {
+void Menu::Executar() {
     if (!font.loadFromFile("Fonts/PixelFont2.ttf")) {
         cout << "ERROR: Could not load font.";
         exit(1);
@@ -21,7 +21,7 @@ void Menu::executar() {
     }
 }
 
-void Menu::atualizar(sf::RenderWindow* window) {
+void Menu::Atualizar(sf::RenderWindow* window) {
     int i;
     for (i = 0; i < opcoes.size(); i++) {
         window->draw(textos[i]);

@@ -14,12 +14,6 @@ Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> di
 }
 
 void Personagem::mover() {
-	velocidade += aceleracao;
-	Coord<float> pos = getPosicao();
-	setPosicao(pos + velocidade);
-}
-
-void Personagem::mover() {
 	Coord<float> dv;
 	velocidade += aceleracao;
 	dv.x = velocidade.x * direcao.x;

@@ -16,8 +16,12 @@ void Fase1::Executar() {
     vidas.setCharacterSize(28);
 }
 
-void Fase1::Atualizar() {
-    player->mover();
+void Fase1::Atualizar(float dt) {
+    int i;
+    for(i = 0; i < listaEntidadesMoveis->getTamanho(); i++){
+        Entidade* e = (*listaEntidadesMoveis)[i];
+        e->Atualizar(dt);
+    }
 
     gC.colisoes();
 }

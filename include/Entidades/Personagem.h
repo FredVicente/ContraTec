@@ -21,6 +21,8 @@ namespace Entidades {
 		virtual void Executar() = 0;
 		virtual void Atualizar(float dt) = 0;
 
+		int getVidas(){ return vidas; };
+
 		void setFase(Fases::Fase* f);
 
 		void setVelocidade(std::string coordenada, int valor);
@@ -30,6 +32,5 @@ namespace Entidades {
 			vidas--;
 			std::cout << id << " Vidas: " << vidas << std::endl;
 		}
-		void ColisaoPlataforma(Entidade* e, int dir);
 	};
 }

@@ -34,7 +34,7 @@ private:
 	Fase* pFaseAtual;
 	Jogador jogador;
 public:
-	float static dT;
+	static float dT;
 
 	Jogo();
 	~Jogo() {};

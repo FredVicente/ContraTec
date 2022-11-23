@@ -32,7 +32,7 @@ void Fase::imprimir(sf::View* view, sf::RenderWindow* window) {
 		window->draw(*e->getShape());
 	}
 
-	vidas.setString("Vidas: " + to_string(player->vidas));
+	vidas.setString("Vidas: " + to_string(player->getVidas()));
 	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
 
 	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);

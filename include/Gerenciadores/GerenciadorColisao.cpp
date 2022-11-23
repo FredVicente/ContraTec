@@ -2,6 +2,7 @@
 #include "Entidades/Personagens/Jogador.h"
 
 using namespace Gerenciadores;
+using namespace Listas;
 
 void GerenciadorColisao::colisoes() {
     // Entidades de compara��o.
@@ -10,12 +11,12 @@ void GerenciadorColisao::colisoes() {
     Entidade* e2;
 
     // Come�a o loop entre as entidades moveis e est�ticas.
-    while (i < listaMoveis.getTamanho()) {
-        e1 = listaMoveis[i];
+    while (i < listaMoveis->getTamanho()) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaEstatica.getTamanho()) {
-            e2 = listaEstatica.lista[j];
+        while (j < listaEstatica->getTamanho()) {
+            e2 = (*listaEstatica)[j];
             j++;
             // Dire��o de colis�o.
             int dir = testaColisao(e1, e2);
@@ -32,12 +33,12 @@ void GerenciadorColisao::colisoes() {
 
     i = 0;
     // Come�a o loop entre as entidades m�veis.
-    while (i < listaMoveis.getTamanho() - 1) {
-        e1 = listaMoveis[i];
+    while (i < listaMoveis->getTamanho() - 1) {
+        e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaMoveis.getTamanho()) {
-            e2 = listaMoveis.lista[j];
+        while (j < listaMoveis->getTamanho()) {
+            e2 = (*listaMoveis)[j];
             j++;
             // Dire��o de colis�o.
             if(e1->getEstado() && e2->getEstado()){
@@ -97,4 +98,100 @@ int GerenciadorColisao::testaColisao(Entidade* e1, Entidade* e2) {
     }
 
     return NAO_COLIDINDO;
+}
+
+void GerenciadorColisao::ColisaoJogadorInimigo(Entidade* e1, Entidade* e2){
+    int id1 = e1->getID();
+
+    if((id1 == jogador)){
+        Personagem* per = dynamic_cast<Personagem*>(e1);
+        per->receberDano();
+    }
+    else{
+        Personagem* per = dynamic_cast<Personagem*>(e2);
+        per->receberDano();
+    }
+}
+void GerenciadorColisao::ColisaoJogadorProjetil(Entidade* e1, Entidade* e2){
+    int id1 = e1->getID();
+    Personagem* per;
+    Projetil* proj;
+
+    if((id1 == jogador)){
+        per = dynamic_cast<Personagem*>(e1);
+        proj = dynamic_cast<Projetil*>(e2);
+    }
+    else{
+        per = dynamic_cast<Personagem*>(e2);
+        proj = dynamic_cast<Projetil*>(e1);
+    }
+
+    if(proj->getEstado() && proj->getAtirador() != jogador){
+        per->receberDano();
+        proj->setEstado(false);
+    }
+}
+void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
+    int id1 = e1->getID();
+    Personagem* per;
+    Projetil* proj;
+
+    if((id1 == torreta || id1 == bombeta)){
+        per = dynamic_cast<Personagem*>(e1);
+        proj = dynamic_cast<Projetil*>(e2);
+    }
+    else{
+        per = dynamic_cast<Personagem*>(e2);
+        proj = dynamic_cast<Projetil*>(e1);
+    }
+    
+    if(proj->getEstado() && proj->getAtirador() == jogador){
+        per->receberDano();
+        proj->setEstado(false);
+    }
+}
+void GerenciadorColisao::ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir){
+    Personagem* per;
+    int id2 = e2->getID();
+    Coord<float> p1;
+	Coord<float> p2;
+	Coord<float> t1;
+	Coord<float> t2;
+
+    if((id2 == plataforma)){
+        per = dynamic_cast<Personagem*>(e1);
+        p1 = e1->getPosicao();
+        p2 = e2->getPosicao();
+        t1 = e1->getTamanho();
+        t2 = e2->getTamanho();
+    }
+    else{
+        per = dynamic_cast<Personagem*>(e2);
+        p1 = e2->getPosicao();
+        p2 = e1->getPosicao();
+        t1 = e2->getTamanho();
+        t2 = e1->getTamanho();
+    }
+	
+	if (dir == DIREITA) {
+		per->setPosicao(Coord<float>(p2.x - t1.x, p1.y));
+		per->setVelocidade("x", 0);
+	}
+	else if (dir == ESQUERDA) {
+		per->setPosicao(Coord<float>(p2.x + t2.x, p1.y));
+		per->setVelocidade("x", 0);
+	}
+	if (dir == BAIXO) {
+		per->setPosicao(Coord<float>(p1.x, p2.y - t1.y));
+		per->setVelocidade("y", 0);
+        if(per->getID() == jogador){
+            Jogador* jog = dynamic_cast<Jogador*>(per);
+            jog->setPulo(true);
+        }
+
+	}
+	else if (dir == CIMA) {
+		per->setPosicao(Coord<float>(p1.x, p2.y + t2.y));
+		per->setVelocidade("y", 0);
+	}
 }

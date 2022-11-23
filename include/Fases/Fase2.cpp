@@ -6,7 +6,7 @@ Fase2::Fase2(Jogador* p) {
     player = p;
 }
 
-void Fase2::executar() {
+void Fase2::Executar() {
     criarFase("Fase2.txt", player, Coord<int>(176, 12));
 
     gC.setLista(listaEntidadesMoveis, listaEntidadesEstaticas);
@@ -16,7 +16,7 @@ void Fase2::executar() {
     vidas.setCharacterSize(28);
 }
 
-void Fase2::atualizar() {
+void Fase2::Atualizar(float dt) {
     player->mover();
 
     gC.colisoes();
