@@ -1,14 +1,17 @@
 #include "Menu.h"
 
-Menu::Menu() {
+Menu::Menu(vector<std::string> op) { 
+    opcoes = { op[0], op[1], op[2] };
+}
+
+void Menu::executar() {
     if (!font.loadFromFile("Fonts/PixelFont2.ttf")) {
         cout << "ERROR: Could not load font.";
         exit(1);
     }
-
-    opcoes = { "Jogar", "Op��es", "Sair" };
-    posicoes = {{350, 150}, {350, 300}, {350, 450}};
     
+    posicoes = { {350, 150}, {350, 300}, {350, 450} };
+
     textos.resize(3);
     int i;
     for (i = 0; i < textos.size(); i++) {
@@ -18,11 +21,11 @@ Menu::Menu() {
     }
 }
 
-void Menu::Executar(sf::RenderWindow* window) {
+void Menu::atualizar(sf::RenderWindow* window) {
     int i;
     for (i = 0; i < opcoes.size(); i++) {
         window->draw(textos[i]);
-        if(i == selected)
+        if (i == selected)
             textos[i].setCharacterSize(36);
         else
             textos[i].setCharacterSize(28);

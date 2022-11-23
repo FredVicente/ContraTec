@@ -1,6 +1,7 @@
 #pragma once
 #include <Entidades/Personagem.h>
 #include <Controles/ControleJogador.h>
+
 #include <iostream>
 
 using namespace std;
@@ -26,6 +27,8 @@ namespace Entidades{
         void setAgachado(bool valor){ agachado = valor; };
         void setPulo(bool valor){ podePular = valor; }
         void setVelocidade(std::string coordenada, int valor);
+
+        void executar() {};
 
         ControleJogador pControle;
     };

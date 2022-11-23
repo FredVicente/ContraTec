@@ -1,84 +1,93 @@
 #include "Jogo.h"
 
+Jogo::Jogo() :
+    jogador(Coord<float>(50,90))
+{
+    fase1 = nullptr;
+    fase2 = nullptr;
+    pFaseAtual = nullptr;
+
+    vector<std::string> opMenu;
+    opMenu.push_back("Jogar");
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Sair");
+    menu = new Menu(opMenu);
+    menu->executar();
+
+    /* Sistema pra salvar
+    vector<std::string> opPause;
+    opMenu.push_back("Continuar");
+    opMenu.push_back("Salvar");
+    opMenu.push_back("Sair");
+    pauseMenu = new Menu(opMenu);
+    pauseMenu->executar();
+    */
+
+    Inicializar();
+}
+
 void Jogo::Inicializar(){
+    // Gerenciador grafico.
+    sf::Vector2f janela(800, 600);
+    sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
+    sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
-    pGrafico = pGrafico->getInstancia();
-    Jogador* jogador1 = new Jogador(Coord<float>(400,100), Coord<float>(50,120));
-    jogador1->setFase(&fase1);
-    fase1.player = jogador1;
-    fase1.Executar();
-
-    // Vari�veis de tempo.
-    float dT = 0;
-    float tAnt = 0;
-
-    // Menu
-    sf::Font font;
-    sf::Text vidas;
-    font.loadFromFile("Fonts/PixelFont2.ttf");
-    vidas.setFont(font);
-    vidas.setCharacterSize(24);
-    vidas.setString("Vidas: 3");
-
-    while (pGrafico->janelaAberta()) {
+    while (window.isOpen()) {
         sf::Event event;
-        while (pGrafico->getJanela()->pollEvent(event)) {
+        while (window.pollEvent(event)) {
             if(event.type == sf::Event::Closed)
-                pGrafico->fecharJanela();
+                window.close();
 
             if (state == playing) {
+                jogador.pControle.eventController(event);
                 if (event.KeyPressed && event.key.code == sf::Keyboard::P)
                     state = pause;
-                else
-                    jogador1->pControle.eventController(event);
             }
-            else if(menu.alterar(event) == 1)
-                state = playing;
-        }
-
-        // Gerenciador geral para update.
-        if(state == playing){
-            dT += (clock() - tAnt) / CLOCKS_PER_SEC;
-            if (dT > 40) {
-                int i = 0;
-                Entidade* e;
-                for (i = 0; i < fase1.listaEntidadesMoveis->getTamanho(); i++) {
-                    e = (*fase1.listaEntidadesMoveis)[i];
-                    if(e->getEstado())
-                        e->Atualizar(dT);
+            else {
+                switch (menu->alterar(event)) {
+                    case 1:
+                        state = playing;
+                        break;
+                    case 3:
+                        exit(0);
+                        break;
+                    default:
+                        break;
                 }
-
-                dT = 0;
-                tAnt = clock();
-                
-                // Gerenciador Grafico
-                pGrafico->clear();
-
-                // Gerenciador Grafico
-                pGrafico->centralizarView(jogador1->getPosicao().x + jogador1->getTamanho().x / 2);
-
-                fase1.gC.Colisoes(*fase1.listaEntidadesEstaticas, *fase1.listaEntidadesMoveis);
-
-                // Gerenciador Grafico
-                for (i = 0; i < fase1.listaEntidadesMoveis->getTamanho(); i++) {
-                    e = (*fase1.listaEntidadesMoveis)[i];
-                    if(e->getEstado())
-                        pGrafico->renderizar(e->getShape());
-                }
-                for (i = 0; i < fase1.listaEntidadesEstaticas->getTamanho(); i++) {
-                    e = (*fase1.listaEntidadesEstaticas)[i];
-                    pGrafico->renderizar(e->getShape());
-                }
-
-                // Gerenciador Grafico
-                pGrafico->display();
             }
         }
-        else{
-            pGrafico->clear();
-            menu.Executar(pGrafico->getJanela());
-            pGrafico->centralizarView();
-            pGrafico->display();
+
+        if (state == playing) {
+            // Gerenciador geral para update.
+            if (Fase::faseAtual != faseAtual) {
+                if(pFaseAtual)
+                    delete(pFaseAtual);
+                faseAtual = Fase::faseAtual;
+
+                switch (faseAtual) {
+                case(1):
+                    fase1 = new Fase1(&jogador);
+                    pFaseAtual = fase1;
+                    break;
+                case(2):
+                    fase2 = new Fase2(&jogador);
+                    pFaseAtual = fase2;
+                    break;
+                default:
+                    break;
+                }
+                pFaseAtual->executar();
+            }
+
+            pFaseAtual->atualizar();
+            pFaseAtual->imprimir(&view, &window);
+        }
+        else {
+            window.clear();
+            menu->atualizar(&window);
+            view.setCenter(janela.x/2, janela.y/2);
+            window.setView(view);
+            window.display();
         }
     }
 

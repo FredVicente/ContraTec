@@ -3,6 +3,7 @@
 #include "Entidades/Entidade.h"
 
 using namespace Entidades;
+using namespace Listas;
 
 namespace Listas {
 	class ListaEntidades {
@@ -10,28 +11,18 @@ namespace Listas {
 		Lista<Entidade> lista;
 
 		ListaEntidades() {};
-		~ListaEntidades() {};
+		~ListaEntidades();
 		
-		void adicionarEntidade(Entidade* pEntidade) {
-			lista.adicionar(pEntidade);
-		};
+		void adicionarEntidade(Entidade* pEntidade);
 		
-		void removerEntidade(Entidade* pEntidade) {
-			lista.remover(pEntidade);
-		};
+		void removerEntidade(Entidade* pEntidade);
 		
-		void removerEntidade(int posicao) {
-			lista.remover((int)posicao);
-		};
+		void removerEntidade(int posicao);
 
-		int getTamanho() {
-			return lista.getTamanho();
-		};
+		int getTamanho();
 
-		Entidade* operator[](int posicao) {
-			return lista[posicao];
-		};
-		
+		Entidade* operator[](int posicao);
+
+		void atualizaTodos();
 	};
 }
-

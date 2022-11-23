@@ -2,7 +2,7 @@
 #include <vector>
 #include "Ente.h"
 #include "Math/Coord.h"
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp";
 
 using namespace std;
 using namespace Math;
@@ -12,16 +12,16 @@ private:
     int selected;
     sf::Font font;
 
-    vector<const char*> opcoes;
+    vector<string> opcoes;
     vector<sf::Vector2f> posicoes;
     vector<sf::Text> textos;
 public:
-    Menu();
+    Menu(vector<std::string> opMenu);
     ~Menu() {};
 
-    void Executar() {};
+    void executar();
 
-    void Executar(sf::RenderWindow* window);
+    void atualizar(sf::RenderWindow* window);
 
     int alterar(sf::Event e);
 };

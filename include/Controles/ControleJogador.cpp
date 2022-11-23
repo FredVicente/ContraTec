@@ -1,5 +1,5 @@
 #include "ControleJogador.h"
-#include "Entidades/Personagens/Jogador.h"
+#include <Entidades/Personagens/Jogador.h>
 
 ControleJogador::ControleJogador(Entidades::Jogador* pJ) :
     pJogador(pJ),

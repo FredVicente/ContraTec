@@ -9,5 +9,9 @@ namespace Entidades {
 			shape->setFillColor(sf::Color::White);
 		};
 		~Plataforma() {};
+
+		void Inicializa(Coord<float> pos, Coord<float> tam, sf::Color cor);
+
+		void Executar() {};
 	};
 }
