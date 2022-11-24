@@ -9,28 +9,10 @@ Jogo::Jogo() :
     fase2 = nullptr;
     pFaseAtual = nullptr;
 
-    // Menu principal
-    vector<std::string> opMenu1;
-    opMenu1.push_back("Jogar");
-    opMenu1.push_back("Ranking");
-    opMenu1.push_back("Sair");
-    pMenuPrincipal = new MenuPrincipal(opMenu1);
-    pMenuPrincipal->Executar();
-
-    vector<std::string> opMenu2;
-    opMenu2.push_back("Fase 1");
-    opMenu2.push_back("Fase 2");
-    opMenu2.push_back("Voltar");
-    pMenuFase = new MenuFase(opMenu2);
-    pMenuFase->Executar();
-
-    // Menu de pausa
-    vector<std::string> opMenu3;
-    opMenu3.push_back("Continuar");
-    opMenu3.push_back("Salvar");
-    opMenu3.push_back("Tela inicial");
-    pMenuPause = new MenuPause(opMenu3);
-    pMenuPause->Executar();
+    // Menus
+    pMenuPrincipal = new MenuPrincipal();
+    pMenuFase = new MenuFase();
+    pMenuPause = new MenuPause();
 
     Inicializar();
 }

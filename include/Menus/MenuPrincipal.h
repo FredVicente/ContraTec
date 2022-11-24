@@ -3,24 +3,26 @@
 #include <Menu.h>
 
 class MenuPrincipal : public Menu{
+private:
+    vector<int> acoes;
 public:
-    MenuPrincipal(vector<std::string> opMenu) : Menu(opMenu){};
+    MenuPrincipal() : Menu(){
+        opcoes.push_back("Jogar");
+        opcoes.push_back("Ranking");
+        opcoes.push_back("Sair");
+
+        acoes.push_back(menu2);
+        acoes.push_back(salvarJogo);
+        acoes.push_back(sairJogo);
+
+        Executar();
+    };
     ~MenuPrincipal() {};
 
     int menuEvent(int i){
-        switch (i)
-        {
-        case 1:
-            return menu2;
-            break;
-        case 2:
-            return salvarJogo;
-            break;
-        case 3:
-            return sairJogo;
-            break;
-        default:
-            break;
-        }
+        if(i < acoes.size())
+            return acoes[i];
+        else
+            return -1;
     };
 };

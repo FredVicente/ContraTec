@@ -46,7 +46,7 @@ int Menu::Alterar(sf::Event e) {
         else if (e.key.code == sf::Keyboard::W || e.key.code == sf::Keyboard::Up)
             i = -1;
         else if (e.key.code == sf::Keyboard::Enter || e.key.code == sf::Keyboard::Space)
-            return menuEvent(selected+1);
+            return menuEvent(selected);
     }
     
     selected += i;

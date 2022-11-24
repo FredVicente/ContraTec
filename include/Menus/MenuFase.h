@@ -3,24 +3,26 @@
 #include <Menu.h>
 
 class MenuFase : public Menu{
+private:
+    vector<int> acoes;
 public:
-    MenuFase(vector<std::string> opMenu) : Menu(opMenu){};
+    MenuFase() : Menu(){
+        opcoes.push_back("Fase 1");
+        opcoes.push_back("Fase 2");
+        opcoes.push_back("Voltar");
+
+        acoes.push_back(entrarFase1);
+        acoes.push_back(entrarFase2);
+        acoes.push_back(menu1);
+
+        Executar();
+    };
     ~MenuFase() {};
 
     int menuEvent(int i){
-        switch (i)
-        {
-        case 1:
-            return entrarFase1;
-            break;
-        case 2:
-            return entrarFase2;
-            break;
-        case 3:
-            return menu1;
-            break;
-        default:
-            break;
-        }
+        if(i < acoes.size())
+            return acoes[i];
+        else
+            return -1;
     };
 };

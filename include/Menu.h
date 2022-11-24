@@ -30,6 +30,7 @@ protected:
     vector<sf::Text> textos;
 public:
     Menu(vector<std::string> opMenu);
+    Menu(){};
     ~Menu() {};
 
     void Executar();
