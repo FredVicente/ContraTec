@@ -2,42 +2,47 @@
 
 Jogo::Jogo() :
     jogador(Coord<float>(50,90)),
-    gGrafico(gGrafico->getInstancia())
+    gGrafico(gGrafico->getInstancia()),
+    pMenuAtual(nullptr)
 {
     fase1 = nullptr;
     fase2 = nullptr;
     pFaseAtual = nullptr;
 
-    vector<std::string> opMenu;
-    opMenu.push_back("Jogar");
-    opMenu.push_back("Continuar");
-    opMenu.push_back("Sair");
-    menu = new Menu(opMenu);
-    menu->Executar();
+    // Menu principal
+    vector<std::string> opMenu1;
+    opMenu1.push_back("Jogar");
+    opMenu1.push_back("Ranking");
+    opMenu1.push_back("Sair");
+    pMenuPrincipal = new MenuPrincipal(opMenu1);
+    pMenuPrincipal->Executar();
 
-    /* Sistema pra salvar
-    vector<std::string> opPause;
-    opMenu.push_back("Continuar");
-    opMenu.push_back("Salvar");
-    opMenu.push_back("Sair");
-    pauseMenu = new Menu(opMenu);
-    pauseMenu->executar();
-    */
+    vector<std::string> opMenu2;
+    opMenu2.push_back("Fase 1");
+    opMenu2.push_back("Fase 2");
+    opMenu2.push_back("Voltar");
+    pMenuFase = new MenuFase(opMenu2);
+    pMenuFase->Executar();
+
+    // Menu de pausa
+    vector<std::string> opMenu3;
+    opMenu3.push_back("Continuar");
+    opMenu3.push_back("Salvar");
+    opMenu3.push_back("Tela inicial");
+    pMenuPause = new MenuPause(opMenu3);
+    pMenuPause->Executar();
 
     Inicializar();
 }
 
 void Jogo::Inicializar(){
-    /*
-    if (!textura.loadFromFile("assets/Biker/Biker_attack1.png")) {
-        cout << "ERROR: Texture";
-    }
-    sprite.setTexture(textura);
-    */
+
+    pMenuAtual = pMenuPrincipal;
+    
     sf::RenderWindow* window = gGrafico->getJanela();
     window->setView(*(gGrafico->getView()));
     carregar();
-    // Vari�veis de tempo.
+
     float dt = 0;
     float tAnt = 0;
 
@@ -49,18 +54,35 @@ void Jogo::Inicializar(){
 
             if (state == playing) {
                 jogador.pControle.eventController(event);
-                if (event.KeyPressed && event.key.code == sf::Keyboard::P)
+                if (event.KeyPressed && event.key.code == sf::Keyboard::P){
                     state = pause;
+                    pMenuAtual = pMenuPause;
+                }
+                    
             }
             else {
-                switch (menu->Alterar(event)) {
-                    case 1:
+                switch (pMenuAtual->Alterar(event)) {
+                    case menu1:
+                        pMenuAtual = pMenuPrincipal;
+                        break;
+                    case menu2:
+                        pMenuAtual = pMenuFase;
+                        break;
+                    case entrarFase1:
+                        state = playing;
+                        faseAtual = 1;
+                        break;
+                    case entrarFase2:
+                        state = playing;
+                        faseAtual = 2;
+                        break;
+                    case entrarFaseAtual:
                         state = playing;
                         break;
-                    case 2:
+                    case salvarJogo:
                         salvar();
                         break;
-                    case 3:
+                    case sairJogo:
                         exit(0);
                         break;
                     default:
@@ -71,8 +93,7 @@ void Jogo::Inicializar(){
 
         gGrafico->clear();
         if (state == playing) {
-            // Gerenciador geral para update.
-            if (Fase::faseAtual != faseAtual) {
+            if (Fase::faseAtual != faseAtual || !pFaseAtual) {
                 if(pFaseAtual)
                     delete(pFaseAtual);
                 faseAtual = Fase::faseAtual;
@@ -101,15 +122,8 @@ void Jogo::Inicializar(){
             }
         }
         else {
-            switch (menuAtual) {
-            case 0:
-                menu->Atualizar();
-                window->display();
-                break;
-            //case 1:
-
-            }
-            
+            pMenuAtual->Atualizar();
+            window->display();
         }
     }
 

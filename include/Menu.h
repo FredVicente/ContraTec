@@ -7,8 +7,21 @@
 using namespace std;
 using namespace Math;
 
+enum MenuReturn {
+	menu1 = 0,
+    menu2,
+    menu3,
+    entrarFase1,
+    entrarFase2,
+    menuPausa,
+    salvarJogo,
+    sairJogo,
+    entrarFaseAtual
+};
+
+
 class Menu : public Ente{
-private:
+protected:
     int selected;
     sf::Font font;
 
@@ -24,5 +37,7 @@ public:
     void Atualizar();
 
     int Alterar(sf::Event e);
+
+    virtual int menuEvent(int i) = 0;
 };
 

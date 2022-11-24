@@ -7,7 +7,7 @@ namespace Entidades {
 		Bombeta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
 		: Inimigo(dir, posicao, Coord<float>(50.f, 150.f), pJ, bombeta)
 		{
-			velocidade = Coord<float>(2, 0);
+			velocidade = Coord<float>(1, 0);
 			getShape()->setFillColor(sf::Color::Cyan);
 			vidas = 3;
 		};

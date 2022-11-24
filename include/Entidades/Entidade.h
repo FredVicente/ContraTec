@@ -41,7 +41,7 @@ namespace Entidades {
 		Coord<float> getTamanho() { return tamanho; };
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
-		bool getEstado(){ return ativo; };
+		bool estaAtivo(){ return ativo; };
 		bool getRange(){ return range; };
 		void setEstado(bool valor){ ativo = valor; };
 		void setRange(bool valor){ range = valor; };

@@ -30,9 +30,9 @@ void ListaEntidades::atualizaTodos(float dt, Entidade* jogador) {
 	for (i = 0; i < tam; i++) {
 		Entidade* e = lista[i];
 		pos = e->getPosicao();
-		if (abs(pos.x - posJogador.x) < 500 && abs(pos.y - posJogador.y) < 400) {
+		if (abs(pos.x - posJogador.x) < 700 && abs(pos.y - posJogador.y) < 600) {
 			e->setRange(true);
-			if (e->getEstado()) {
+			if (e->estaAtivo()) {
 				e->Atualizar(dt);
 				e->imprimir();
 			}

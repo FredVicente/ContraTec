@@ -21,7 +21,7 @@ void GerenciadorColisao::Colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        if (e1->getEstado() && e1->getRange()){
+        if (e1->estaAtivo() && e1->getRange()){
             while (j < listaEstatica->getTamanho()) {
                 e2 = (*listaEstatica)[j];
                 j++;
@@ -51,12 +51,12 @@ void GerenciadorColisao::Colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        if(e1->getEstado() && e1->getRange()){
+        if(e1->estaAtivo() && e1->getRange()){
             while (j < listaMoveis->getTamanho()) {
                 e2 = (*listaMoveis)[j];
                 j++;
                 // Dire��o de colis�o.
-                if (e2->getEstado() && e1->getRange()) {
+                if (e2->estaAtivo() && e1->getRange()) {
                     int dir = TestaColisao(e1, e2);
 
                     if (dir != NAO_COLIDINDO) {
@@ -142,7 +142,7 @@ void GerenciadorColisao::ColisaoJogadorProjetil(Entidade* e1, Entidade* e2){
         proj = dynamic_cast<Projetil*>(e1);
     }
 
-    if(proj->getEstado() && proj->getAtirador() != jogador){
+    if(proj->estaAtivo() && proj->getAtirador() != jogador){
         per->receberDano();
         proj->setEstado(false);
     }
@@ -161,7 +161,7 @@ void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
         proj = dynamic_cast<Projetil*>(e1);
     }
     
-    if(proj->getEstado() && proj->getAtirador() == jogador){
+    if(proj->estaAtivo() && proj->getAtirador() == jogador){
         per->receberDano();
         proj->setEstado(false);
     }

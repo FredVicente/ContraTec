@@ -5,7 +5,9 @@
 #include <iostream>
 #include <Fases/Fase1.h>
 #include <Fases/Fase2.h>
-#include <Menu.h>
+#include <Menus/MenuPrincipal.h>
+#include <Menus/MenuFase.h>
+#include <Menus/MenuPause.h>
 #include <vector>
 
 using namespace Gerenciadores;
@@ -24,10 +26,13 @@ class Jogo
 {
 private:
 	int faseAtual = 0;
-	int menuAtual = 0;
 	State state;
-	Menu* menu;
-	Menu* pauseMenu;
+
+	Menu* pMenuAtual;
+	Menu* pMenuPrincipal;
+	Menu* pMenuPause;
+	Menu* pMenuFase;
+
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
