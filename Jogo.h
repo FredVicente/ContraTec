@@ -24,14 +24,13 @@ class Jogo
 {
 private:
 	int faseAtual = 0;
-	int menuAtual = 0;
 	State state;
-	Menu* menu;
+	Menu* startMenu;
 	Menu* pauseMenu;
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
-	Jogador jogador;
+	Jogador* jogador;
 	GerenciadorGrafico* gGrafico;
 public:
 	Jogo();
@@ -39,6 +38,8 @@ public:
 
 	void Inicializar();
 
-	void salvar();
-	void carregar();
+	void setFase(int fase, string path = "");
+
+	void Salvar();
+	void Carregar();
 };

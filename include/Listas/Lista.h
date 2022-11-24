@@ -154,11 +154,16 @@ namespace Listas {
         while (pAux->getProximo() != nullptr){
             if(pAux->getProximo()->getInfo() == pInfo)
             {
+                Elemento<TL>* pAux2 = nullptr;
                 if (pAux->getProximo() == pUltimo)
                     pUltimo = pAux;
+                else
+                    pAux2 = pAux->getProximo()->getProximo();
 
                 delete (pAux->getProximo());
                 tamanho--;
+                if(pAux2)
+                    pAux->setProximo(pAux2);
                 return pInfo;
             }
 

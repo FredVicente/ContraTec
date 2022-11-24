@@ -9,7 +9,7 @@ Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> di
 	Entidade(posicao, tamanho, id) {
 	direcao = dir;
 	velocidade = Coord<float>(0, 0);
-	aceleracao = Coord<float>(0, 0.2f);
+	aceleracao = Coord<float>(0, 0.1f);
 	shape->setFillColor(sf::Color::Green);
 }
 

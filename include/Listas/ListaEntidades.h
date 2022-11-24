@@ -24,7 +24,7 @@ namespace Listas {
 
 		Entidade* operator[](int posicao);
 
-		void atualizaTodos(float dt, Entidade* jogador);
+		void atualizaTodos(float dt, Coord<float> range = Coord<float>(1000,800));
 	};
 }
 

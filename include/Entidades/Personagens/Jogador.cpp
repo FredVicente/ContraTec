@@ -16,7 +16,7 @@ Jogador::Jogador(Coord<float> tamanho) :
 
 void Jogador::pular(){
     if (podePular) {
-        velocidade.y = -8;
+        velocidade.y = -6;
         podePular = false;
     }
 }
@@ -36,13 +36,13 @@ void Jogador::Atualizar(float dt) {
     else{
         dT += dt;
 
-        if(dT > 500){
+        if(dT > 4000){
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
-                    p = new Projetil(16, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
+                    p = new Projetil(6, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
                 else
-                    p = new Projetil(16, direcao, posicao, Coord<float>(20, 20), jogador);
+                    p = new Projetil(6, direcao, posicao, Coord<float>(20, 20), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
@@ -58,7 +58,7 @@ void Jogador::Atualizar(float dt) {
             }
         }
         
-        setVelocidade("x", andando * 4);
+        setVelocidade("x", andando * 2);
         mover();
     }
 }

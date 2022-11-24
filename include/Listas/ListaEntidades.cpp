@@ -24,13 +24,14 @@ Entidade* ListaEntidades::operator[](int posicao) {
 	return lista[posicao];
 }
 
-void ListaEntidades::atualizaTodos(float dt, Entidade* jogador) {
+void ListaEntidades::atualizaTodos(float dt, Coord<float> range) {
 	int i, tam = getTamanho();
-	Coord<float> pos, posJogador = jogador->getPosicao();
+	Coord<float> pos, posView = Coord<float>(GerenciadorGrafico::getInstancia()->getView()->getCenter().x, 
+											GerenciadorGrafico::getInstancia()->getView()->getCenter().y);
 	for (i = 0; i < tam; i++) {
 		Entidade* e = lista[i];
 		pos = e->getPosicao();
-		if (abs(pos.x - posJogador.x) < 500 && abs(pos.y - posJogador.y) < 400) {
+		if (abs(pos.x - posView.x) < range.x && abs(pos.y - posView.y) < range.y) {
 			e->setRange(true);
 			if (e->getEstado()) {
 				e->Atualizar(dt);
