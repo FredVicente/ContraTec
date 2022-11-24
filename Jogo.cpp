@@ -20,7 +20,50 @@ void Jogo::Inicializar(){
             if(event.type == sf::Event::Closed)
                 window.close();
 
+<<<<<<< Updated upstream
             jogador1->pControle.eventController(event);
+=======
+            if (state == playing) {
+                jogador->pControle.eventController(event);
+                if (event.KeyPressed && event.key.code == sf::Keyboard::P)
+                    state = pause;
+            }
+            else {
+                if (state == menu) {
+                    switch (startMenu->Alterar(event)) {
+                    case 1:
+                        Fase::faseAtual = 1;
+                        setFase(1);
+                        state = playing;
+                        break;
+                    case 2:
+                        state = playing;
+                        Carregar();
+                        break;
+                    case 3:
+                        exit(0);
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                else if (state == pause) {
+                    switch (pauseMenu->Alterar(event)) {
+                    case 1:
+                        state = playing;
+                        break;
+                    case 2:
+                        Salvar();
+                        break;
+                    case 3:
+                        state = menu;
+                        break;
+                    default:
+                        break;
+                    }
+                }
+            }
+>>>>>>> Stashed changes
         }
 
         // Gerenciador geral para update.
@@ -35,7 +78,15 @@ void Jogo::Inicializar(){
             // Gerenciador Grafico
             view1.setCenter(jogador1->getPosicao().x + jogador1->getTamanho().x / 2, view1.getCenter().y);
 
+<<<<<<< Updated upstream
             jogador1->mover();
+=======
+            if (dt > 40) {
+                pFaseAtual->Atualizar(dt);
+                tAnt = dt;
+                dt = 0;
+            }
+>>>>>>> Stashed changes
 
             fase1.gC.Colisoes(*fase1.listaEntidadesEstaticas, *fase1.listaEntidadesMoveis);
 
@@ -58,4 +109,66 @@ void Jogo::Inicializar(){
     }
 
     return;
+<<<<<<< Updated upstream
+=======
+}
+
+void Jogo::setFase(int fase, string path) {
+    if (pFaseAtual)
+        delete(pFaseAtual);
+
+    faseAtual = fase;
+
+    jogador = new Jogador(Coord<float>(50, 90));
+
+    switch (faseAtual) {
+    case(1):
+        fase1 = new Fase1(jogador, path);
+        pFaseAtual = fase1;
+        break;
+    case(2):
+        fase2 = new Fase2(jogador, path);
+        pFaseAtual = fase2;
+        break;
+    default:
+        break;
+    }
+    pFaseAtual->Executar();
+}
+
+void Jogo::Salvar() {
+    ofstream file;
+    file.open("save.txt");
+    int i, tam = pFaseAtual->listaEntidadesMoveis->getTamanho();
+
+    file << to_string(faseAtual) + "\n";
+
+    for (i = 0; i < tam; i++) {
+        Entidade* e = (*(pFaseAtual->listaEntidadesMoveis))[i];
+        char estado = '0';
+        if (e->getEstado())
+            estado = '1';
+        if(e->getID() != projetil)
+            file << to_string(e->getID()) + estado + ": " + to_string((int)e->getPosicao().x) + "-" + to_string((int)e->getPosicao().y) + "_" + "\n";
+    }
+    //file << to_string(jogador->pontos);
+    file.close();
+}
+
+void Jogo::Carregar() {
+    ifstream file;
+    file.open("save.txt");
+    if(!file)
+        return;
+
+    string valor;
+    file >> valor;
+    Fase::faseAtual = stoi(valor);
+
+    // Sem refencira para o jogador!
+    //file >> jogador->pontos;
+    file.close();
+
+    setFase(Fase::faseAtual, "save.txt");
+>>>>>>> Stashed changes
 }

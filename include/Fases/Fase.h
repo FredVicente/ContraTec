@@ -20,13 +20,24 @@ namespace Fases {
 		ListaEntidades *listaEntidadesMoveis;
 		ListaEntidades *listaEntidades;
 
+<<<<<<< Updated upstream
 		Fase();
 		~Fase() {};
+=======
+		Fase(Jogador* p, string pathS = "");
+		~Fase();
+>>>>>>> Stashed changes
 
 		void virtual Executar() = 0;
 
 		Entidade* instanciaEntidade(Coord<float> pos, ID id = vazio);
 
+<<<<<<< Updated upstream
 		void criarFase(const char* path);
+=======
+		void criarFase(const char* path, Jogador* player, Coord<int> tamanho);
+		void carregarFase(Jogador* player);
+		bool chanceInimigo();
+>>>>>>> Stashed changes
 	};
 }
