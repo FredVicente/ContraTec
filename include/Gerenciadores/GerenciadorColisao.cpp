@@ -1,10 +1,16 @@
 #include "GerenciadorColisao.h"
 #include "Entidades/Personagens/Jogador.h"
+#include "Fases/Fase.h"
 
 using namespace Gerenciadores;
-using namespace Listas;
+using namespace Fases;
 
-void GerenciadorColisao::colisoes() {
+void GerenciadorColisao::setLista(ListaEntidades* lE, ListaEntidades* lM) {
+    listaEstatica = lE;
+    listaMoveis = lM;
+}
+
+void GerenciadorColisao::Colisoes() {
     // Entidades de compara��o.
     int i = 0, j;
     Entidade* e1;
@@ -15,17 +21,25 @@ void GerenciadorColisao::colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaEstatica->getTamanho()) {
-            e2 = (*listaEstatica)[j];
-            j++;
-            // Dire��o de colis�o.
-            int dir = testaColisao(e1, e2);
+        if (e1->estaAtivo() && e1->getRange()){
+            while (j < listaEstatica->getTamanho()) {
+                e2 = (*listaEstatica)[j];
+                j++;
 
-            if (dir != NAO_COLIDINDO) {
-                int id1 = e1->getID();
-                int id2 = e2->getID();
-                if(((id1 == bombeta || id1 == torreta || id1 == jogador) || (id2 == bombeta || id2 == torreta || id2 == jogador)) && (id1 == plataforma || id2 == plataforma)){
-                    ColisaoPersonagemPlataforma(e1, e2, dir);
+                if (e2->getRange()) {
+                    // Dire��o de colis�o.
+                    int dir = TestaColisao(e1, e2);
+
+                    if (dir != NAO_COLIDINDO) {
+                        int id1 = e1->getID();
+                        int id2 = e2->getID();
+                        if ((id1 == bombeta || id1 == torreta || id1 == reiRobo || id1 == jogador)) {
+                            ColisaoPersonagemObstaculo(e1, e2, dir);
+                        }
+                        else if (id1 == projetil) {
+                            ColisaoProjetilObstaculo(e1);
+                        }
+                    }
                 }
             }
         }
@@ -37,25 +51,27 @@ void GerenciadorColisao::colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        while (j < listaMoveis->getTamanho()) {
-            e2 = (*listaMoveis)[j];
-            j++;
-            // Dire��o de colis�o.
-            if(e1->getEstado() && e2->getEstado()){
-                int dir = testaColisao(e1, e2);
+        if(e1->estaAtivo() && e1->getRange()){
+            while (j < listaMoveis->getTamanho()) {
+                e2 = (*listaMoveis)[j];
+                j++;
+                // Dire��o de colis�o.
+                if (e2->estaAtivo() && e1->getRange()) {
+                    int dir = TestaColisao(e1, e2);
 
-                if (dir != NAO_COLIDINDO) {
-                    int id1 = e1->getID();
-                    int id2 = e2->getID();
+                    if (dir != NAO_COLIDINDO) {
+                        int id1 = e1->getID();
+                        int id2 = e2->getID();
 
-                    if(((id1 == jogador) || (id2 == jogador)) && ((id1 == torreta || id1 == bombeta) || (id2 == torreta || id2 == bombeta))){
-                        ColisaoJogadorInimigo(e1, e2);
-                    }
-                    if((id1 == jogador || id2 == jogador) && (id1 == projetil || id2 == projetil)){
-                        ColisaoJogadorProjetil(e1, e2);
-                    }
-                    if(((id1 == bombeta || id1 == torreta) || (id2 == bombeta || id2 == torreta)) && (id1 == projetil || id2 == projetil)){
-                        ColisaoInimigoProjetil(e1, e2);
+                        if (((id1 == jogador) || (id2 == jogador)) && ((id1 == torreta || id1 == bombeta || id1 == reiRobo) || (id2 == torreta || id2 == bombeta || id2 == reiRobo))) {
+                            ColisaoJogadorInimigo(e1, e2);
+                        }
+                        if ((id1 == jogador || id2 == jogador) && (id1 == projetil || id2 == projetil)) {
+                            ColisaoJogadorProjetil(e1, e2);
+                        }
+                        if (((id1 == bombeta || id1 == torreta || id1 == reiRobo) || (id2 == bombeta || id2 == torreta || id2 == reiRobo)) && (id1 == projetil || id2 == projetil)) {
+                            ColisaoInimigoProjetil(e1, e2);
+                        }
                     }
                 }
             }
@@ -63,11 +79,11 @@ void GerenciadorColisao::colisoes() {
     }
 }
 
-int GerenciadorColisao::testaColisao(Entidade* e1, Entidade* e2) {
+int GerenciadorColisao::TestaColisao(Entidade* e1, Entidade* e2) {
     // Essa fun�ao apenas testa se o objeto est� colidindo, o efeito da colisao � feito dentro da entidade.
     // A fun��o so retorna a dire��o de colis�o! Retorna 0 caso n�o esteja colidindo.
 
-    // A interseÃ§Ã£o Ã© usada para saber em qual coordenada exatamente o objeto estÃ¡ colidindo.
+    // A interse��o � usada para saber em qual coordenada exatamente o objeto est� colidindo.
     Coord<float> intersecao;
     intersecao.x = e1->getPosicao().x + e1->getTamanho().x - e2->getPosicao().x;
     intersecao.y = e1->getPosicao().y + e1->getTamanho().y - e2->getPosicao().y;
@@ -102,41 +118,40 @@ int GerenciadorColisao::testaColisao(Entidade* e1, Entidade* e2) {
 
 void GerenciadorColisao::ColisaoJogadorInimigo(Entidade* e1, Entidade* e2){
     int id1 = e1->getID();
+    Jogador* per;
 
-    if((id1 == jogador)){
-        Personagem* per = dynamic_cast<Personagem*>(e1);
-        per->receberDano();
-    }
-    else{
-        Personagem* per = dynamic_cast<Personagem*>(e2);
-        per->receberDano();
-    }
+    if((id1 == jogador))
+        per = dynamic_cast<Jogador*>(e1);
+    else
+        per = dynamic_cast<Jogador*>(e2);
+    
+    per->receberDano();
 }
 void GerenciadorColisao::ColisaoJogadorProjetil(Entidade* e1, Entidade* e2){
     int id1 = e1->getID();
-    Personagem* per;
+    Jogador* jog;
     Projetil* proj;
 
     if((id1 == jogador)){
-        per = dynamic_cast<Personagem*>(e1);
+        jog = dynamic_cast<Jogador*>(e1);
         proj = dynamic_cast<Projetil*>(e2);
     }
     else{
-        per = dynamic_cast<Personagem*>(e2);
+        jog = dynamic_cast<Jogador*>(e2);
         proj = dynamic_cast<Projetil*>(e1);
     }
 
-    if(proj->getEstado() && proj->getAtirador() != jogador){
-        per->receberDano();
+    if(proj->estaAtivo() && proj->getAtirador() != jogador){
+        jog->receberDano();
         proj->setEstado(false);
     }
 }
 void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
     int id1 = e1->getID();
-    Personagem* per;
-    Projetil* proj;
+    Personagem* per = nullptr;
+    Projetil* proj = nullptr;
 
-    if((id1 == torreta || id1 == bombeta)){
+    if((id1 == torreta || id1 == bombeta || id1 == reiRobo)){
         per = dynamic_cast<Personagem*>(e1);
         proj = dynamic_cast<Projetil*>(e2);
     }
@@ -145,53 +160,49 @@ void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
         proj = dynamic_cast<Projetil*>(e1);
     }
     
-    if(proj->getEstado() && proj->getAtirador() == jogador){
+    if(proj->estaAtivo() && proj->getAtirador() == jogador){
         per->receberDano();
         proj->setEstado(false);
     }
 }
-void GerenciadorColisao::ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir){
-    Personagem* per;
-    int id2 = e2->getID();
-    Coord<float> p1;
-	Coord<float> p2;
-	Coord<float> t1;
-	Coord<float> t2;
+void GerenciadorColisao::ColisaoPersonagemObstaculo(Entidade* e1, Entidade* e2, int dir){
 
-    if((id2 == plataforma)){
-        per = dynamic_cast<Personagem*>(e1);
-        p1 = e1->getPosicao();
-        p2 = e2->getPosicao();
-        t1 = e1->getTamanho();
-        t2 = e2->getTamanho();
-    }
-    else{
-        per = dynamic_cast<Personagem*>(e2);
-        p1 = e2->getPosicao();
-        p2 = e1->getPosicao();
-        t1 = e2->getTamanho();
-        t2 = e1->getTamanho();
-    }
-	
-	if (dir == DIREITA) {
-		per->setPosicao(Coord<float>(p2.x - t1.x, p1.y));
-		per->setVelocidade("x", 0);
-	}
-	else if (dir == ESQUERDA) {
-		per->setPosicao(Coord<float>(p2.x + t2.x, p1.y));
-		per->setVelocidade("x", 0);
-	}
-	if (dir == BAIXO) {
-		per->setPosicao(Coord<float>(p1.x, p2.y - t1.y));
-		per->setVelocidade("y", 0);
-        if(per->getID() == jogador){
-            Jogador* jog = dynamic_cast<Jogador*>(per);
+    Personagem* per = dynamic_cast<Personagem*>(e1);
+    Obstaculo* obs = dynamic_cast<Obstaculo*>(e2);
+    Jogador* jog = nullptr;
+    Coord<float> p1 = e1->getPosicao();
+    Coord<float> p2 = e2->getPosicao();
+    Coord<float> t1 = e1->getTamanho();
+    Coord<float> t2 = e2->getTamanho();
+
+    if(per->getID() == jogador){
+        jog = dynamic_cast<Jogador*>(per);
+        if(dir == BAIXO)
             jog->setPulo(true);
-        }
+        if(obs->getDano())
+            jog->receberDano();
+    }
 
-	}
-	else if (dir == CIMA) {
-		per->setPosicao(Coord<float>(p1.x, p2.y + t2.y));
-		per->setVelocidade("y", 0);
-	}
+    if((jog && obs->getID() == torreEletrica) && (jog->getInvencivel() || !obs->getDano())){}
+    else{
+        if (dir == DIREITA) {
+            per->setPosicao(Coord<float>(p2.x - t1.x, p1.y));
+            per->setVelocidade("x", 0);
+        }
+        else if (dir == ESQUERDA) {
+            per->setPosicao(Coord<float>(p2.x + t2.x, p1.y));
+            per->setVelocidade("x", 0);
+        }
+        if (dir == BAIXO) {
+            per->setPosicao(Coord<float>(p1.x, p2.y - t1.y));
+            per->setVelocidade("y", 0);
+        }
+        else if (dir == CIMA) {
+            per->setPosicao(Coord<float>(p1.x, p2.y + t2.y));
+            per->setVelocidade("y", 0);
+        }
+    }
+}
+void GerenciadorColisao::ColisaoProjetilObstaculo(Entidade* e1) {
+    e1->setEstado(false);
 }

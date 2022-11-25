@@ -4,13 +4,13 @@
 
 using namespace Entidades;
 using namespace Listas;
-using namespace Fases;
 
-Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> dir, ID id) : Entidade(posicao, tamanho, id) {
-	aceleracao = Coord<float>(0, 0.5f);
+Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> dir, ID id) :
+	Entidade(posicao, tamanho, id) {
 	direcao = dir;
-	faseAtual = nullptr;
-	getShape()->setFillColor(sf::Color::Green);
+	velocidade = Coord<float>(0, 0);
+	aceleracao = Coord<float>(0, 0.2f);
+	shape->setFillColor(sf::Color::Green);
 }
 
 void Personagem::mover() {
@@ -21,9 +21,12 @@ void Personagem::mover() {
     setPosicao(posicao + dv);
 }
 
-void Personagem::setFase(Fase* f) {
-	faseAtual = f;
-};
+void Personagem::setDirecao(std::string coordenada, int valor) {
+	if (coordenada == "x")
+		direcao.x = valor;
+	else
+		direcao.y = valor;
+}
 
 void Personagem::setVelocidade(std::string coordenada, int valor) {
 	if (coordenada == "x")

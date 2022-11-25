@@ -23,6 +23,8 @@ namespace Gerenciadores {
 
         static GerenciadorGrafico* getInstancia();
 
+        sf::View* getView() { return &view; };
+
         void renderizar(sf::RectangleShape* body);
 
         void renderizar(sf::Text* text);

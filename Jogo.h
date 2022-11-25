@@ -1,10 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Math/Coord.h>
-#include <Entidades/Plataforma.h>
+#include <Entidades/Obstaculos/Plataforma.h>
 #include <Entidades/Personagens/Jogador.h>
 #include <Gerenciadores/GerenciadorColisao.h>
 #include <Gerenciadores/GerenciadorGrafico.h>
+#include <Menus/MenuFase.h>
+#include <Menus/MenuPause.h>
+#include <Menus/MenuPrincipal.h>
 #include <iostream>
 #include <Fases/Fase1.h>
 #include <Fases/Fase2.h>
@@ -27,16 +30,23 @@ class Jogo
 private:
 	int faseAtual = 0;
 	State state;
-	Menu* menu;
-	// Menu* pauseMenu;
+
+	Menu* pMenuAtual;
+	Menu* pMenuPrincipal;
+	Menu* pMenuPause;
+	Menu* pMenuFase;
+
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
 	Jogador jogador;
+	GerenciadorGrafico* gGrafico;
 public:
-	static float dT;
-
 	Jogo();
 	~Jogo() {};
+
 	void Inicializar();
+
+	void salvar();
+	void carregar();
 };

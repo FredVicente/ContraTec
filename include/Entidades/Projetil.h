@@ -5,6 +5,7 @@ namespace Entidades {
 	class Projetil : public Entidade {
 	private:
 		Coord<float> velocidade;
+		Coord<int> direcao;
 		ID atirador;
 	public:
 		Projetil(int vel, Coord<int> dir, Coord<float> pos, Coord<float> tam, ID at) :

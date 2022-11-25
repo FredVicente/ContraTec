@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(vector<std::string> op) { 
+Menu::Menu(vector<std::string> op) : Ente() { 
     opcoes = { op[0], op[1], op[2] };
 }
 
@@ -10,7 +10,7 @@ void Menu::Executar() {
         exit(1);
     }
     
-    posicoes = { {350, 150}, {350, 300}, {350, 450} };
+    posicoes = { {0, 150}, {0, 300}, {0, 450} };
 
     textos.resize(3);
     int i;
@@ -21,7 +21,10 @@ void Menu::Executar() {
     }
 }
 
-void Menu::Atualizar(sf::RenderWindow* window) {
+void Menu::Atualizar() {
+    sf::RenderWindow* window = gGrafico->getJanela();
+    sf::View* view = gGrafico->getView();
+
     int i;
     for (i = 0; i < opcoes.size(); i++) {
         window->draw(textos[i]);
@@ -30,9 +33,12 @@ void Menu::Atualizar(sf::RenderWindow* window) {
         else
             textos[i].setCharacterSize(28);
     }
+
+    view->setCenter(0, view->getCenter().y);
+    window->setView(*view);
 }
 
-int Menu::alterar(sf::Event e) {
+int Menu::Alterar(sf::Event e) {
     int i = 0;
     if (e.type == sf::Event::KeyPressed) {
         if (e.key.code == sf::Keyboard::S || e.key.code == sf::Keyboard::Down)
@@ -40,7 +46,7 @@ int Menu::alterar(sf::Event e) {
         else if (e.key.code == sf::Keyboard::W || e.key.code == sf::Keyboard::Up)
             i = -1;
         else if (e.key.code == sf::Keyboard::Enter || e.key.code == sf::Keyboard::Space)
-            return selected+1;
+            return menuEvent(selected);
     }
     
     selected += i;
@@ -49,5 +55,5 @@ int Menu::alterar(sf::Event e) {
     else if (selected < 0)
         selected = opcoes.size() - 1;
 
-    return 0;
+    return -1;
 }

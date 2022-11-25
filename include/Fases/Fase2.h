@@ -11,7 +11,7 @@ namespace Fases {
 		~Fase2() {};
 
 		void Executar();
-		void Atualizar(float dt);
+		int PassarFase();
 	};
 }
 

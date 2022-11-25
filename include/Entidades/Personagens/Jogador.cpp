@@ -4,8 +4,8 @@
 using namespace Entidades;
 using namespace Fases;
 
-Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
-    Personagem(posicao, tamanho, Coord<int>(1, 0), jogador),
+Jogador::Jogador(Coord<float> tamanho) :
+    Personagem( Coord<float>(0,0), tamanho, Coord<int>(1, 0), jogador),
     tempoInvencivel(0),
     invencivel(false),
     pControle(this) {
@@ -16,8 +16,22 @@ Jogador::Jogador(Coord<float> posicao, Coord<float> tamanho) :
 
 void Jogador::pular(){
     if (podePular) {
-        velocidade.y = -15;
+        velocidade.y = -8;
         podePular = false;
+    }
+}
+
+void Jogador::agacharOuLevantar(bool a){
+    if(podePular){
+        if(a && !agachado){
+            setTamanho(Coord<float>(50, ALTURA_AGACHADO));
+            setPosicao(Coord<float>(posicao.x, posicao.y + (ALTURA_NORMAL - ALTURA_AGACHADO)));
+        }
+        else if(!a && agachado){
+            setTamanho(Coord<float>(50, ALTURA_NORMAL));
+            setPosicao(Coord<float>(posicao.x, posicao.y - (ALTURA_NORMAL - ALTURA_AGACHADO)));
+        }
+        agachado = a;
     }
 }
 
@@ -36,13 +50,13 @@ void Jogador::Atualizar(float dt) {
     else{
         dT += dt;
 
-        if(dT > 500){
+        if(dT > 1000){
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
-                    p = new Projetil(12, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
+                    p = new Projetil(10, Coord<int>(0,-1), posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
                 else
-                    p = new Projetil(12, direcao, posicao, Coord<float>(20, 20), jogador);
+                    p = new Projetil(10, direcao, posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
@@ -53,11 +67,13 @@ void Jogador::Atualizar(float dt) {
             tempoInvencivel += dt;
 
             if(tempoInvencivel >= 4000){
-                invencivel = false;
+                setInvencivel(false);
                 tempoInvencivel = 0;
             }
         }
 
-        mover();
+        setVelocidade("x", andando * 2);
+        if(!agachado)
+            mover();
     }
 }

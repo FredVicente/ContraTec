@@ -1,56 +1,70 @@
 #include "Jogo.h"
 
 Jogo::Jogo() :
-    jogador(Coord<float>(50,90), Coord<float>(50, 90))
+    jogador(Coord<float>(50,90)),
+    gGrafico(gGrafico->getInstancia()),
+    pMenuAtual(nullptr)
 {
     fase1 = nullptr;
     fase2 = nullptr;
     pFaseAtual = nullptr;
 
-    vector<std::string> opMenu;
-    opMenu.push_back("Jogar");
-    opMenu.push_back("Continuar");
-    opMenu.push_back("Sair");
-    menu = new Menu(opMenu);
-    menu->Executar();
-
-    /* Sistema pra salvar
-    vector<std::string> opPause;
-    opMenu.push_back("Continuar");
-    opMenu.push_back("Salvar");
-    opMenu.push_back("Sair");
-    pauseMenu = new Menu(opMenu);
-    pauseMenu->executar();
-    */
+    // Menus
+    pMenuPrincipal = new MenuPrincipal();
+    pMenuFase = new MenuFase();
+    pMenuPause = new MenuPause();
 
     Inicializar();
 }
 
 void Jogo::Inicializar(){
-    float tAnt = 0;
-    float dt = 0;
-    // Gerenciador grafico.
-    sf::Vector2f janela(800, 600);
-    sf::RenderWindow window(sf::VideoMode(janela.x, janela.y), "Teste");
-    sf::View view(sf::FloatRect(0, 0, janela.x, janela.y));
 
-    while (window.isOpen()) {
+    pMenuAtual = pMenuPrincipal;
+    
+    sf::RenderWindow* window = gGrafico->getJanela();
+    window->setView(*(gGrafico->getView()));
+    carregar();
+
+    float dt = 0;
+    float tAnt = 0;
+
+    while (gGrafico->janelaAberta()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (window->pollEvent(event)) {
             if(event.type == sf::Event::Closed)
-                window.close();
+                gGrafico->fecharJanela();
 
             if (state == playing) {
                 jogador.pControle.eventController(event);
-                if (event.KeyPressed && event.key.code == sf::Keyboard::P)
+                if (event.KeyPressed && event.key.code == sf::Keyboard::P){
                     state = pause;
+                    pMenuAtual = pMenuPause;
+                }
+                    
             }
             else {
-                switch (menu->alterar(event)) {
-                    case 1:
+                switch (pMenuAtual->Alterar(event)) {
+                    case menu1:
+                        pMenuAtual = pMenuPrincipal;
+                        break;
+                    case menu2:
+                        pMenuAtual = pMenuFase;
+                        break;
+                    case entrarFase1:
+                        state = playing;
+                        faseAtual = 1;
+                        break;
+                    case entrarFase2:
+                        state = playing;
+                        faseAtual = 2;
+                        break;
+                    case entrarFaseAtual:
                         state = playing;
                         break;
-                    case 3:
+                    case salvarJogo:
+                        salvar();
+                        break;
+                    case sairJogo:
                         exit(0);
                         break;
                     default:
@@ -59,9 +73,9 @@ void Jogo::Inicializar(){
             }
         }
 
+        gGrafico->clear();
         if (state == playing) {
-            // Gerenciador geral para update.
-            if (Fase::faseAtual != faseAtual) {
+            if (Fase::faseAtual != faseAtual || !pFaseAtual) {
                 if(pFaseAtual)
                     delete(pFaseAtual);
                 faseAtual = Fase::faseAtual;
@@ -78,25 +92,38 @@ void Jogo::Inicializar(){
                 default:
                     break;
                 }
-                jogador.setFase(pFaseAtual);
                 pFaseAtual->Executar();
             }
-            tAnt = dt;
+
             dt += (clock() - tAnt) / CLOCKS_PER_SEC;
-            if(dt > 40){
+
+            if (dt > 20) {
                 pFaseAtual->Atualizar(dt);
-                pFaseAtual->imprimir(&view, &window);
+                tAnt = dt;
                 dt = 0;
             }
         }
         else {
-            window.clear();
-            menu->Atualizar(&window);
-            view.setCenter(janela.x/2, janela.y/2);
-            window.setView(view);
-            window.display();
+            pMenuAtual->Atualizar();
+            window->display();
         }
     }
 
     return;
+}
+
+void Jogo::salvar() {
+    ofstream file;
+    file.open("save.txt");
+    file << to_string(jogador.pontos);
+    file.close();
+}
+
+void Jogo::carregar() {
+    ifstream file;
+    file.open("save.txt");
+    if(!file)
+        return;
+    file >> jogador.pontos;
+    file.close();
 }
