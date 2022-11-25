@@ -113,83 +113,97 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 					}
 					else if (fase[i][j] == 'B')
 						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), bombeta));
+					else if (fase[i][j] == 'b' && chanceInimigo())
+						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), bombeta));
 					else if (fase[i][j] == 'T')
+						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreta));
+					else if (fase[i][j] == 't' && chanceInimigo())
 						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreta));
 				}
 			}
 		}
 	}
 
-	if (pathSave != "") {
-		char valor[20];
-		string pos;
-		ifstream fileSave;
-		fileSave.open(pathSave);
-
-		int i = 0;
-		int j;
-		bool estado = false;
-		ID id = vazio;
-		Coord<float> posicao;
-		fileSave >> valor[0];
-		while (!fileSave.eof()) {
-			fileSave >> valor[i];
-			if (valor[i] == ':') {
-				switch ((int)(valor[0]) - 48) {
-				case((int)jogador):
-					id = jogador;
-					break;
-				case((int)bombeta):
-					id = bombeta;
-					break;
-				case((int)torreta):
-					id = torreta;
-					break;
-				default:
-					break;
-				}
-				if ((int)(valor[1] - 48))
-					estado = true;
-				else
-					estado = false;
-				i = -1;
-			}
-			else if (valor[i] == '-') {
-				for (j = 0; j < i; j++)
-					pos.push_back(valor[j]);
-				posicao.x = stoi(pos);
-				pos.clear();
-				i = -1;
-			}
-			else if (valor[i] == '_') {
-				for (j = 0; j < i; j++)
-					pos.push_back(valor[j]);
-				posicao.y = stoi(pos);
-
-				Entidade* e = nullptr;
-				if (id == jogador) {
-					listaEntidadesMoveis->adicionarEntidade(player);
-					player->setPosicao(posicao);
-				}
-				else if (id == bombeta)
-					e = instanciaEntidade(posicao, bombeta);
-				else if (id == torreta)
-					e = instanciaEntidade(posicao, torreta);
-				listaEntidadesMoveis->adicionarEntidade(e);
-				if(id != jogador)
-					e->setEstado(estado);
-				pos.clear();
-				i = -1;
-			}
-			i++;
-		}
-
-		fileSave.close();
-	}
+	if (pathSave != "")
+		carregarFase();
 
 	for (i = 0; i < tamanho.y; i++)
 		free(fase[i]);
 	free(fase);
 
 	fileLevel.close();
+}
+
+void Fase::carregarFase() {
+	char valor[20];
+	string pos;
+	ifstream fileSave;
+	fileSave.open(pathSave);
+
+	int i = 0;
+	int j;
+	bool estado = false;
+	ID id = vazio;
+	Coord<float> posicao;
+	fileSave >> valor[0];
+	while (!fileSave.eof()) {
+		fileSave >> valor[i];
+		if (valor[i] == ':') {
+			switch ((int)(valor[0]) - 48) {
+			case((int)jogador):
+				id = jogador;
+				break;
+			case((int)bombeta):
+				id = bombeta;
+				break;
+			case((int)torreta):
+				id = torreta;
+				break;
+			default:
+				break;
+			}
+			if ((int)(valor[1] - 48))
+				estado = true;
+			else
+				estado = false;
+			i = -1;
+		}
+		else if (valor[i] == '-') {
+			for (j = 0; j < i; j++)
+				pos.push_back(valor[j]);
+			posicao.x = stoi(pos);
+			pos.clear();
+			i = -1;
+		}
+		else if (valor[i] == '_') {
+			for (j = 0; j < i; j++)
+				pos.push_back(valor[j]);
+			posicao.y = stoi(pos);
+
+			Entidade* e = nullptr;
+			if (id == jogador) {
+				listaEntidadesMoveis->adicionarEntidade(player);
+				player->setPosicao(posicao);
+			}
+			else if (id == bombeta)
+				e = instanciaEntidade(posicao, bombeta);
+			else if (id == torreta)
+				e = instanciaEntidade(posicao, torreta);
+			listaEntidadesMoveis->adicionarEntidade(e);
+			if (id != jogador)
+				e->setEstado(estado);
+			pos.clear();
+			i = -1;
+		}
+		i++;
+	}
+
+	fileSave.close();
+}
+
+bool Fase::chanceInimigo() {
+	int r = rand() % 100;
+	if (r > 50)
+		return true;
+	return false;
 }

@@ -29,6 +29,8 @@ namespace Gerenciadores {
 
         void renderizar(sf::Text* text);
 
+        void renderizar(sf::Sprite* sprite);
+
         void display();
 
         void clear();

@@ -10,6 +10,7 @@ namespace Entidades {
 			velocidade = Coord<float>(2, 0);
 			getShape()->setFillColor(sf::Color::Cyan);
 			vidas = 3;
+			//setTextura("assets/bombeta/idle.png");
 		};
 
 		~Bombeta() {};

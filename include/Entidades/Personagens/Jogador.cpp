@@ -42,7 +42,7 @@ void Jogador::Atualizar(float dt) {
                 if(velocidade.x == 0 && direcao.y != 0)
                     p = new Projetil(6, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
                 else
-                    p = new Projetil(6, direcao, posicao, Coord<float>(20, 20), jogador);
+                    p = new Projetil(6, direcao, posicao + Coord<float>(0, 20), Coord<float>(20, 20), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Ente.h"
+#include <iostream>
 #define NAO_COLIDINDO 0
 #define BAIXO 1
 #define CIMA 2
@@ -26,6 +27,8 @@ namespace Entidades {
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		sf::RectangleShape* shape;
+		sf::Texture* textura;
+		sf::Sprite* sprite;
 		Coord<int> direcao;
 		ID id;
 		bool ativo = true;
@@ -47,10 +50,16 @@ namespace Entidades {
 		void setRange(bool valor){ range = valor; };
 		void setPosicao(Coord<float> posicao);
 		void setFase(Fases::Fase* f) { faseAtual = f; };
+		void setTextura(sf::String path);
 		Fases::Fase* getFase() { return faseAtual; };
 
 		void virtual Executar() = 0;
 		void virtual Atualizar(float dt) = 0;
-		void imprimir() { GerenciadorGrafico::getInstancia()->renderizar(shape); }
+		void imprimir() {
+			if (sprite)
+				GerenciadorGrafico::getInstancia()->renderizar(sprite);
+			else
+				GerenciadorGrafico::getInstancia()->renderizar(shape);
+		};
 	};
 }
