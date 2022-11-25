@@ -50,7 +50,7 @@ namespace Entidades {
 		void setRange(bool valor){ range = valor; };
 		void setPosicao(Coord<float> posicao);
 		void setFase(Fases::Fase* f) { faseAtual = f; };
-		void setTextura(sf::String path);
+		void setTextura(sf::String path, sf::IntRect tamanhoImagem);
 		Fases::Fase* getFase() { return faseAtual; };
 
 		void virtual Executar() = 0;

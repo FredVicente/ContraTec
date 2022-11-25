@@ -16,15 +16,18 @@ Entidade::Entidade(Coord<float> pos, Coord<float> tam, ID id) : ativo(true) {
 
 void Entidade::setPosicao(Coord<float> posicao) {
 	this->posicao = posicao;
-	(*shape).setPosition(posicao.x, posicao.y);
+	shape->setPosition(posicao.x, posicao.y);
 }
 
-void Entidade::setTextura(sf::String path) {
+void Entidade::setTextura(sf::String path, sf::IntRect tamanhoImagem) {
 	textura = new sf::Texture;
-	if (!textura->loadFromFile(path))
+	if (!textura->loadFromFile((path), tamanhoImagem))
 		std::cout << "ERROR: Caminho para textura nao existe!";
 	else {
 		sprite = new sf::Sprite();
 		sprite->setTexture(*textura);
+		sprite->setPosition(posicao.x, posicao.y);
+		const sf::Vector2f escala = sf::Vector2f(tamanho.x / textura->getSize().x, tamanho.y / textura->getSize().y);
+		sprite->setScale(escala);
 	}
 }

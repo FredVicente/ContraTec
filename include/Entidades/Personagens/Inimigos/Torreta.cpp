@@ -10,7 +10,7 @@ Torreta::Torreta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
     velocidade = Coord<float>(0, 0);
     getShape()->setFillColor(sf::Color::Yellow);
     vidas = 3;
-    setTextura("assets/torreta/idle.png");
+    //setTextura("assets/torreta/idle.png", sf::IntRect(0,0,32,48));
 };
 
 void Torreta::Atualizar(float dt){
