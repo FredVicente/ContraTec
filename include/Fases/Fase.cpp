@@ -75,6 +75,19 @@ Entidade* Fase::instanciaEntidade(Coord<float> pos, ID id) {
 		t->setFase(this);
 		return t;
 	}
+	case(elevador):{
+		Elevador* e = new Elevador(pos, 100, 30, 60);
+		return e;
+	}
+	case(torreEletrica):{
+		TorreEletrica* t = new TorreEletrica(pos);
+		return t;
+	}
+	case(reiRobo):{
+		ReiRobo* r = new ReiRobo(pos, player, 1);
+		r->setFase(this);
+		return r;
+	}
 	default:
 		break;
 	}
@@ -119,6 +132,16 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreta));
 					else if (fase[i][j] == 't' && chanceInimigo())
 						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreta));
+					else if(fase[i][j] == 'E')
+						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), elevador));
+					else if(fase[i][j] == 'e' && chanceInimigo())
+						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), elevador));
+					else if(fase[i][j] == 'V')
+						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreEletrica));
+					else if(fase[i][j] == 'v' && chanceInimigo)
+						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreEletrica));
+					else if(fase[i][j] == 'R')
+						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), reiRobo));				
 				}
 			}
 		}

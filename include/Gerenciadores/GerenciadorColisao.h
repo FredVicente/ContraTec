@@ -25,8 +25,8 @@ namespace Gerenciadores {
 		void ColisaoJogadorInimigo(Entidade* e1, Entidade* e2);
 		void ColisaoJogadorProjetil(Entidade* e1, Entidade* e2);
 		void ColisaoInimigoProjetil(Entidade* e1, Entidade* e2);
-		void ColisaoPersonagemPlataforma(Entidade* e1, Entidade* e2, int dir);
-		void ColisaoProjetilPlataforma(Entidade* e1);
+		void ColisaoPersonagemObstaculo(Entidade* e1, Entidade* e2, int dir);
+		void ColisaoProjetilObstaculo(Entidade* e1);
 	};
 }
 

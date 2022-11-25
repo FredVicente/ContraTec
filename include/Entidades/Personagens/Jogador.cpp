@@ -16,8 +16,22 @@ Jogador::Jogador(Coord<float> tamanho) :
 
 void Jogador::pular(){
     if (podePular) {
-        velocidade.y = -6;
+        velocidade.y = -8;
         podePular = false;
+    }
+}
+
+void Jogador::agacharOuLevantar(bool a){
+    if(podePular){
+        if(a && !agachado){
+            setTamanho(Coord<float>(50, ALTURA_AGACHADO));
+            setPosicao(Coord<float>(posicao.x, posicao.y + (ALTURA_NORMAL - ALTURA_AGACHADO)));
+        }
+        else if(!a && agachado){
+            setTamanho(Coord<float>(50, ALTURA_NORMAL));
+            setPosicao(Coord<float>(posicao.x, posicao.y - (ALTURA_NORMAL - ALTURA_AGACHADO)));
+        }
+        agachado = a;
     }
 }
 
@@ -36,13 +50,13 @@ void Jogador::Atualizar(float dt) {
     else{
         dT += dt;
 
-        if(dT > 4000){
+        if(dT > 1000){
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
-                    p = new Projetil(6, Coord<int>(0,-1), posicao + Coord<float>(20, 0), Coord<float>(20, 20), jogador);
+                    p = new Projetil(10, Coord<int>(0,-1), posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
                 else
-                    p = new Projetil(6, direcao, posicao + Coord<float>(0, 20), Coord<float>(20, 20), jogador);
+                    p = new Projetil(10, direcao, posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
@@ -53,12 +67,13 @@ void Jogador::Atualizar(float dt) {
             tempoInvencivel += dt;
 
             if(tempoInvencivel >= 4000){
-                invencivel = false;
+                setInvencivel(false);
                 tempoInvencivel = 0;
             }
         }
-        
+
         setVelocidade("x", andando * 2);
-        mover();
+        if(!agachado)
+            mover();
     }
 }

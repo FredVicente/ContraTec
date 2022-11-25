@@ -45,7 +45,7 @@ void ControleJogador::notifyPressed(std::string tecla) {
     else if (tecla == up)
         pJogador->setDirecao("y", -1);
     else if (tecla == down)
-        pJogador->setAgachado(true);
+        pJogador->agacharOuLevantar(true);
     else if (tecla == jump)
         pJogador->pular();
     else if(tecla == attack)
@@ -63,7 +63,7 @@ void ControleJogador::notifyReleased(std::string tecla) {
     else if (tecla == right && pJogador->getDirecao().x != -1 || tecla == left && pJogador->getDirecao().x != 1)
         pJogador->andando = 0;
     else if(tecla == down)
-        pJogador->setAgachado(false);
+        pJogador->agacharOuLevantar(false);
     else if(tecla == attack)
         pJogador->setAtacando(false);
 }

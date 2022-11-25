@@ -20,7 +20,7 @@ void Torreta::Atualizar(float dt){
         dT += dt;
         if(dT > 4000){
             if (faseAtual) {
-                Projetil* p = new Projetil(6, direcao, posicao, Coord<float>(20, 20), torreta);
+                Projetil* p = new Projetil(5, direcao, posicao, Coord<float>(20, 20), torreta);
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
             dT = 0;

@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(vector<std::string> op) { 
+Menu::Menu(vector<std::string> op) : Ente() { 
     opcoes = { op[0], op[1], op[2] };
 }
 
@@ -46,7 +46,7 @@ int Menu::Alterar(sf::Event e) {
         else if (e.key.code == sf::Keyboard::W || e.key.code == sf::Keyboard::Up)
             i = -1;
         else if (e.key.code == sf::Keyboard::Enter || e.key.code == sf::Keyboard::Space)
-            return selected + 1;
+            return menuEvent(selected);
     }
     
     selected += i;
@@ -55,5 +55,5 @@ int Menu::Alterar(sf::Event e) {
     else if (selected < 0)
         selected = opcoes.size() - 1;
 
-    return 0;
+    return -1;
 }

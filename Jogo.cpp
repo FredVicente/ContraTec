@@ -1,34 +1,27 @@
 #include "Jogo.h"
 
 Jogo::Jogo() :
-    gGrafico(gGrafico->getInstancia())
+    gGrafico(gGrafico->getInstancia()),
+    pMenuAtual(nullptr)
 {
     fase1 = nullptr;
     fase2 = nullptr;
     pFaseAtual = nullptr;
 
-    vector<std::string> opMenu;
-    opMenu.push_back("Jogar");
-    opMenu.push_back("Continuar");
-    opMenu.push_back("Sair");
-    startMenu = new Menu(opMenu);
-    startMenu->Executar();
-
-    // Sistema pra salvar
-    vector<std::string> opPause;
-    opPause.push_back("Continuar");
-    opPause.push_back("Salvar");
-    opPause.push_back("Menu");
-    pauseMenu = new Menu(opPause);
-    pauseMenu->Executar();
+    // Menus
+    pMenuPrincipal = new MenuPrincipal();
+    pMenuFase = new MenuFase();
+    pMenuPause = new MenuPause();
 
     Inicializar();
 }
 
 void Jogo::Inicializar(){
+    pMenuAtual = pMenuPrincipal;
+    
     sf::RenderWindow* window = gGrafico->getJanela();
     window->setView(*(gGrafico->getView()));
-    // Vari�veis de tempo.
+
     float dt = 0;
     float tAnt = 0;
 
@@ -39,22 +32,35 @@ void Jogo::Inicializar(){
                 gGrafico->fecharJanela();
 
             if (state == playing) {
-                jogador->pControle.eventController(event);
-                if (event.KeyPressed && event.key.code == sf::Keyboard::P)
+                jogador.pControle.eventController(event);
+                if (event.KeyPressed && event.key.code == sf::Keyboard::P){
                     state = pause;
+                    pMenuAtual = pMenuPause;
+                }
             }
             else {
-                if (state == menu) {
-                    switch (startMenu->Alterar(event)) {
-                    case 1:
-                        faseAtual = 0;
+                switch (pMenuAtual->Alterar(event)) {
+                    case menu1:
+                        pMenuAtual = pMenuPrincipal;
+                        break;
+                    case menu2:
+                        pMenuAtual = pMenuFase;
+                        break;
+                    case entrarFase1:
+                        state = playing;
+                        faseAtual = 1;
+                        break;
+                    case entrarFase2:
+                        state = playing;
+                        faseAtual = 2;
+                        break;
+                    case entrarFaseAtual:
                         state = playing;
                         break;
-                    case 2:
-                        state = playing;
-                        Carregar();
+                    case salvarJogo:
+                        salvar();
                         break;
-                    case 3:
+                    case sairJogo:
                         exit(0);
                         break;
                     default:
@@ -96,16 +102,8 @@ void Jogo::Inicializar(){
                 state = menu;
         }
         else {
-            switch (state) {
-            case menu:
-                startMenu->Atualizar();
-                window->display();
-                break;
-            case pause:
-                pauseMenu->Atualizar();
-                window->display();
-                break;
-            }
+            pMenuAtual->Atualizar();
+            window->display();
         }
     }
 

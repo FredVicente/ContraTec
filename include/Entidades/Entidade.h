@@ -20,7 +20,9 @@ namespace Entidades {
 		imagem,
 		bombeta,
 		torreta,
-		obstaculo
+		elevador,
+		torreEletrica,
+		reiRobo
 	};
 	class Entidade : public Ente{
 	protected:
@@ -34,6 +36,7 @@ namespace Entidades {
 		bool ativo = true;
 		bool range = true;
 		Fases::Fase* faseAtual;
+		float dT;
 	public:
 		Entidade(Coord<float> pos, Coord<float> tam, ID id);
 		Entidade() { id = vazio; shape = nullptr; };
