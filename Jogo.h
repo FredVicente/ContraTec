@@ -40,7 +40,7 @@ private:
 	Fase1* fase1;
 	Fase2* fase2;
 	Fase* pFaseAtual;
-	Jogador jogador;
+	Jogador* jogador;
 	GerenciadorGrafico* gGrafico;
 public:
 	Jogo();

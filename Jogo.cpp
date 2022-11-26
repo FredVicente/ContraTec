@@ -32,7 +32,7 @@ void Jogo::Inicializar(){
                 gGrafico->fecharJanela();
 
             if (state == playing) {
-                jogador.pControle.eventController(event);
+                jogador->pControle.eventController(event);
                 if (event.KeyPressed && event.key.code == sf::Keyboard::P){
                     state = pause;
                     pMenuAtual = pMenuPause;
@@ -48,43 +48,26 @@ void Jogo::Inicializar(){
                         break;
                     case entrarFase1:
                         state = playing;
-                        faseAtual = 1;
+                        Fase::faseAtual = 1;
                         break;
                     case entrarFase2:
                         state = playing;
-                        faseAtual = 2;
+                        Fase::faseAtual = 2;
                         break;
                     case entrarFaseAtual:
                         state = playing;
                         break;
                     case salvarJogo:
-                        salvar();
+                        Salvar();
                         break;
                     case sairJogo:
                         exit(0);
                         break;
                     default:
                         break;
-                    }
-                }
-                else if (state == pause) {
-                    switch (pauseMenu->Alterar(event)) {
-                    case 1:
-                        state = playing;
-                        break;
-                    case 2:
-                        Salvar();
-                        break;
-                    case 3:
-                        state = menu;
-                        break;
-                    default:
-                        break;
-                    }
                 }
             }
         }
-
         gGrafico->clear();
         if (state == playing) {
             if (Fase::faseAtual != faseAtual)
@@ -98,16 +81,16 @@ void Jogo::Inicializar(){
                 dt = 0;
             }
 
-            if (jogador->getVidas() <= 0 || jogador->getPosicao().y > 1000)
+            if (jogador->getVidas() <= 0 || jogador->getPosicao().y > 1000) {
                 state = menu;
+                faseAtual = 0;
+            }
         }
         else {
             pMenuAtual->Atualizar();
             window->display();
         }
     }
-
-    return;
 }
 
 void Jogo::setFase(int fase, string path) {
@@ -144,7 +127,7 @@ void Jogo::Salvar() {
     for (i = 0; i < tam; i++) {
         Entidade* e = (*(pFaseAtual->listaEntidadesMoveis))[i];
         char estado = '0';
-        if (e->getEstado())
+        if (e->estaAtivo())
             estado = '1';
         if(e->getID() != projetil)
             file << to_string(e->getID()) + estado + ": " + to_string((int)e->getPosicao().x) + "-" + to_string((int)e->getPosicao().y) + "_" + "\n";

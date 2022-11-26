@@ -27,6 +27,7 @@ void Entidade::setTextura(sf::String path, sf::IntRect tamanhoImagem) {
 		const sf::Vector2f escala = sf::Vector2f(tamanho.x / textura->getSize().x, tamanho.y / textura->getSize().y);
 		sprite->setScale(escala);
 	}
+}
 
 void Entidade::setPosicao(Coord<float> pos) {
 	this->posicao = pos;

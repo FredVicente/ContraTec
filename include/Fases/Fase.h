@@ -26,19 +26,15 @@ namespace Fases {
 		sf::Text vidas;
 		sf::Text pontos;
 		Jogador* player;
-		float dT;
 		string pathSave;
 	public:
 		GerenciadorColisao gC;
 		ListaEntidades* listaEntidadesEstaticas;
 		ListaEntidades* listaEntidadesMoveis;
-		// Lista apenas para entidades de colisao.
 		ListaEntidades* listaPlataformas;
 		static int faseAtual;
-		Jogador* player;
-		float dT;
 
-		Fase(Jogador* p = nullptr);
+		Fase(Jogador* p = nullptr, string path = "");
 		~Fase();
 
 		void Atualizar(float dt);
@@ -52,7 +48,5 @@ namespace Fases {
 		void criarFase(const char* path, Jogador* player, Coord<int> tamanho);
 
 		void carregarFase();
-
-		bool chanceInimigo();
 	};
 }

@@ -47,11 +47,12 @@ namespace Entidades {
 		Coord<float> getTamanho() { return tamanho; };
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
-		bool getEstado(){ return ativo; };
+		bool estaAtivo(){ return ativo; };
 		bool getRange(){ return range; };
 		void setEstado(bool valor){ ativo = valor; };
 		void setRange(bool valor){ range = valor; };
 		void setPosicao(Coord<float> posicao);
+		void setTamanho(Coord<float> tam);
 		void setFase(Fases::Fase* f) { faseAtual = f; };
 		void setTextura(sf::String path, sf::IntRect tamanhoImagem);
 		Fases::Fase* getFase() { return faseAtual; };

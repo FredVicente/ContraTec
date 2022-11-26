@@ -5,7 +5,7 @@ using namespace Fases;
 int Fase::faseAtual = 1;
 
 Fase::Fase(Jogador* p, string path) {
-	dT = 0;
+	//dT = 0;
 	listaEntidadesEstaticas = new ListaEntidades;
 	listaEntidadesMoveis = new ListaEntidades;
 	listaPlataformas = new ListaEntidades;
@@ -138,7 +138,7 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), elevador));
 					else if(fase[i][j] == 'V')
 						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreEletrica));
-					else if(fase[i][j] == 'v' && chanceInimigo)
+					else if(fase[i][j] == 'v' && chanceInimigo())
 						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), torreEletrica));
 					else if(fase[i][j] == 'R')
 						listaEntidadesMoveis->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), reiRobo));				

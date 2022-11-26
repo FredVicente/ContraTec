@@ -33,7 +33,7 @@ void ListaEntidades::atualizaTodos(float dt, Coord<float> range) {
 		pos = e->getPosicao();
 		if (abs(pos.x - posView.x) < range.x && abs(pos.y - posView.y) < range.y) {
 			e->setRange(true);
-			if (e->getEstado()) {
+			if (e->estaAtivo()) {
 				e->Atualizar(dt);
 				e->imprimir();
 			}
