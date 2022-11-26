@@ -12,6 +12,7 @@ Jogo::Jogo() :
     pMenuPrincipal = new MenuPrincipal();
     pMenuFase = new MenuFase();
     pMenuPause = new MenuPause();
+    pMenuNomeJogador = new MenuNomeJogador();
 
     Inicializar();
 }
@@ -40,11 +41,14 @@ void Jogo::Inicializar(){
             }
             else {
                 switch (pMenuAtual->Alterar(event)) {
-                    case menu1:
+                    case menuPrincipal:
                         pMenuAtual = pMenuPrincipal;
                         break;
-                    case menu2:
+                    case menuEscolherFase:
                         pMenuAtual = pMenuFase;
+                        break;
+                    case menuNomeDoJogador:
+                        pMenuAtual = pMenuNomeJogador;
                         break;
                     case entrarFase1:
                         state = playing;
@@ -73,9 +77,9 @@ void Jogo::Inicializar(){
             if (Fase::faseAtual != faseAtual)
                 setFase(Fase::faseAtual);
 
-            dt += (clock() - tAnt) / CLOCKS_PER_SEC;
+            dt += ((float)clock() - tAnt) / CLOCKS_PER_SEC;
 
-            if (dt > 20) {
+            if (dt > 1) {
                 pFaseAtual->Atualizar(dt);
                 tAnt = dt;
                 dt = 0;
@@ -83,6 +87,7 @@ void Jogo::Inicializar(){
 
             if (jogador->getVidas() <= 0 || jogador->getPosicao().y > 1000) {
                 state = menu;
+                pMenuAtual = pMenuNomeJogador;
                 faseAtual = 0;
             }
         }
@@ -151,4 +156,6 @@ void Jogo::Carregar() {
     file.close();
 
     setFase(Fase::faseAtual, "save.txt");
+
+    pMenuAtual = pMenuPrincipal;
 }

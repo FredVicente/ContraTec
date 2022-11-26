@@ -13,7 +13,7 @@ public:
 
         acoes.push_back(entrarFaseAtual);
         acoes.push_back(salvarJogo);
-        acoes.push_back(menu1);
+        acoes.push_back(menuPrincipal);
 
         Executar();
     };

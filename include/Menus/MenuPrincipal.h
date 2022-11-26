@@ -11,7 +11,8 @@ public:
         opcoes.push_back("Ranking");
         opcoes.push_back("Sair");
 
-        acoes.push_back(menu2);
+        //acoes.push_back(menuEscolherFase);
+        acoes.push_back(menuNomeDoJogador);
         acoes.push_back(salvarJogo);
         acoes.push_back(sairJogo);
 

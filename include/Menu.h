@@ -8,12 +8,12 @@ using namespace std;
 using namespace Math;
 
 enum MenuReturn {
-	menu1 = 0,
-    menu2,
-    menu3,
+	menuPrincipal = 0,
+    menuEscolherFase,
+    menuPausa,
+    menuNomeDoJogador,
     entrarFase1,
     entrarFase2,
-    menuPausa,
     salvarJogo,
     sairJogo,
     entrarFaseAtual
@@ -33,12 +33,12 @@ public:
     Menu(){};
     ~Menu() {};
 
-    void Executar();
+    virtual void Executar();
 
-    void Atualizar();
+    virtual void Atualizar();
 
-    int Alterar(sf::Event e);
+    virtual int Alterar(sf::Event e);
 
-    virtual int menuEvent(int i) = 0;
+    virtual int menuEvent(int i) { return -1; };
 };
 

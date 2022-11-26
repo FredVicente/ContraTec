@@ -8,6 +8,7 @@
 #include <Menus/MenuFase.h>
 #include <Menus/MenuPause.h>
 #include <Menus/MenuPrincipal.h>
+#include <Menus/MenuNomeJogador.h>
 #include <iostream>
 #include <Fases/Fase1.h>
 #include <Fases/Fase2.h>
@@ -36,6 +37,7 @@ private:
 	Menu* pMenuPrincipal;
 	Menu* pMenuPause;
 	Menu* pMenuFase;
+	Menu* pMenuNomeJogador;
 
 	Fase1* fase1;
 	Fase2* fase2;

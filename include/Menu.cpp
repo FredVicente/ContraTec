@@ -22,20 +22,16 @@ void Menu::Executar() {
 }
 
 void Menu::Atualizar() {
-    sf::RenderWindow* window = gGrafico->getJanela();
-    sf::View* view = gGrafico->getView();
-
     int i;
     for (i = 0; i < opcoes.size(); i++) {
-        window->draw(textos[i]);
+        gGrafico->renderizar(&(textos[i]));
         if (i == selected)
             textos[i].setCharacterSize(36);
         else
             textos[i].setCharacterSize(28);
     }
 
-    view->setCenter(0, view->getCenter().y);
-    window->setView(*view);
+    gGrafico->centralizarView(0);
 }
 
 int Menu::Alterar(sf::Event e) {

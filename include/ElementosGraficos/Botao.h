@@ -4,31 +4,37 @@
 
 namespace ElementosGraficos {
 
-    class Button : ElementoGrafico {
+    class Botao : public ElementoGrafico {
     private:
         Coord<int> posicao;
-        sf::Text texto;
-        sf::Font font;
+        Coord<int> tamanho;
+        sf::Text* texto;
     public:
-        Button(Coord<int> pos = Coord<int>(0, 0), std::string info = "") : posicao(pos){
-            Executar();
-            texto.setString(info);
-
-            body.setSize(sf::Vector2f(50, 70));
-            body.setPosition(sf::Vector2f(50, 50));
+        Botao(sf::Font font, Coord<int> pos = Coord<int>(0, 0), std::string info = "") : 
+        posicao(pos),
+        tamanho(Coord<int>(100, 50)),
+        ElementoGrafico()
+        {
+            texto = new sf::Text();
+            texto->setFont(font);
+            texto->setString(info);
+            texto->setPosition(sf::Vector2f(pos.x, pos.y));
+            
+            body.setSize(sf::Vector2f(tamanho.x, tamanho.y));
+            body.setPosition(sf::Vector2f(pos.x, pos.y));
             body.setFillColor(sf::Color::Yellow);
         };
 
-        ~Button();
+        ~Botao(){};
 
-        void Executar(){
-            if (!font.loadFromFile("../Fonts/PixelFont2.ttf")) {
-                std::cout << "ERROR: Could not load font.";
-                exit(1);
-            }
+        Coord<int> getPosicao(){ return posicao; };
+        Coord<int> getTamanho(){ return tamanho; };
 
-            texto.setFont(font);
-            texto.setPosition(50,50);
+        void imprimir(){
+            gGrafico->renderizar(&body);
+            gGrafico->renderizar(texto);
         };
+
+        void Executar(){};
     };
 }

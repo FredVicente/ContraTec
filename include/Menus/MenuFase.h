@@ -13,7 +13,7 @@ public:
 
         acoes.push_back(entrarFase1);
         acoes.push_back(entrarFase2);
-        acoes.push_back(menu1);
+        acoes.push_back(menuPrincipal);
 
         Executar();
     };

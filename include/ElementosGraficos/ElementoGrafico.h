@@ -7,12 +7,14 @@ namespace ElementosGraficos{
     protected:
         sf::RectangleShape body;
     public:
-        ElementoGrafico();
+        ElementoGrafico() {};
 
-        virtual ~ElementoGrafico();
+        ~ElementoGrafico(){};
 
-        void Executar();
+        void Executar(){};
 
-        void imprimir();
+        virtual void imprimir(){
+            gGrafico->renderizar(&body);
+        };
     };
 }
