@@ -6,7 +6,8 @@ using namespace Entidades;
 using namespace Listas;
 
 Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> dir, ID id) :
-	Entidade(posicao, tamanho, id) {
+	Entidade(posicao, tamanho, id),
+	anim(shape){
 	direcao = dir;
 	velocidade = Coord<float>(0, 0);
 	aceleracao = Coord<float>(0, 0.2f);

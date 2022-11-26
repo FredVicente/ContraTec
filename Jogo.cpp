@@ -75,10 +75,9 @@ void Jogo::Inicializar(){
 
             dt += (clock() - tAnt) / CLOCKS_PER_SEC;
 
-            if (dt > 20) {
+            if (dt > 1) {
                 pFaseAtual->Atualizar(dt);
-                tAnt = dt;
-                dt = 0;
+                tAnt = clock();
             }
 
             if (jogador->getVidas() <= 0 || jogador->getPosicao().y > 1000) {

@@ -155,6 +155,10 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 	free(fase);
 
 	fileLevel.close();
+
+	listaEntidadesEstaticas->executarTodos();
+	listaEntidadesMoveis->executarTodos();
+	listaPlataformas->executarTodos();
 }
 
 void Fase::carregarFase() {

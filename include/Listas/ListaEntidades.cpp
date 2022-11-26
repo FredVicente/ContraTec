@@ -24,6 +24,14 @@ Entidade* ListaEntidades::operator[](int posicao) {
 	return lista[posicao];
 }
 
+void ListaEntidades::executarTodos() {
+	int i, tam = getTamanho();
+	for (i = 0; i < tam; i++) {
+		Entidade* e = lista[i];
+		e->Executar();
+	}
+}
+
 void ListaEntidades::atualizaTodos(float dt, Coord<float> range) {
 	int i, tam = getTamanho();
 	Coord<float> pos, posView = Coord<float>(GerenciadorGrafico::getInstancia()->getView()->getCenter().x, 

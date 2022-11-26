@@ -56,6 +56,7 @@ namespace Gerenciadores {
 
         sf::RenderWindow* getJanela() const;
 
+        sf::Texture carregarTextura(const char* caminhoTextura);
     };
 
 }

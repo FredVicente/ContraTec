@@ -52,6 +52,8 @@ namespace Entidades{
             }
 		}
         
+        void AtualizarAnimacao();
+
         ControleJogador pControle;
     };
 }

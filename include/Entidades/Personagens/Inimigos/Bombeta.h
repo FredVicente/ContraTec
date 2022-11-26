@@ -13,7 +13,8 @@ namespace Entidades {
 			velocidade = Coord<float>(velocidadeX, 0);
 			getShape()->setFillColor(sf::Color::Cyan);
 			vidas = 3;
-			//setTextura("assets/bombeta/idle.png");
+			anim.addAnimacao("assets/bombeta/idle.png", "PARADO", 4, 0.4f, sf::Vector2f(3, 3));
+			shape->setOrigin(sf::Vector2f(0,40));
 		};
 
 		~Bombeta() {};
@@ -28,7 +29,10 @@ namespace Entidades {
 				else
 					direcao.x = -1;
 				mover();
+				AtualizarAnimacao();
 			}
 		}
+
+		void AtualizarAnimacao() { anim.atualizar(true, "PARADO"); };
 	};
 }

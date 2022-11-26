@@ -20,6 +20,8 @@ namespace Entidades{
 
         void Atualizar(float dt);
 
+        void AtualizarAnimacao() {};
+
         void receberDano();
     };
 };

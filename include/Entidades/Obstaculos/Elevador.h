@@ -15,7 +15,7 @@ namespace Entidades {
         alturaMinima(altMin),
         direcaoMudancaDeAltura(1),
 		Obstaculo(pos, Coord<float>(larg, altMin), elevador) {
-			shape->setFillColor(sf::Color::Blue);
+            //sprite = new Imagem("assets/elevator.png", 8, 1, sf::Vector2f(50, 50), sf::Vector2f(0, 0), sf::Vector2f(1, 1));
 		};
 		~Elevador() {};
 

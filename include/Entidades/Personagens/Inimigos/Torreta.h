@@ -11,5 +11,7 @@ namespace Entidades {
 		~Torreta() {};
 
 		void Atualizar(float dt);
+
+		void AtualizarAnimacao() { anim.atualizar(true, "PARADO"); };
 	};
 }

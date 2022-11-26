@@ -8,10 +8,13 @@ Jogador::Jogador(Coord<float> tamanho) :
     Personagem( Coord<float>(0,0), tamanho, Coord<int>(1, 0), jogador),
     tempoInvencivel(0),
     invencivel(false),
-    pControle(this) {
+    pControle(this){
         velocidade = Coord<float>(0, 0);
         podePular = true;
         vidas = 3;
+        anim.addAnimacao("assets/character/idle.png", "PARADO", 4, 0.4f, sf::Vector2f(2, 1));
+        anim.addAnimacao("assets/character/walk.png", "ANDANDO", 6, 0.1f, sf::Vector2f(2, 1));
+        //shape->setOrigin(sf::Vector2f(0,0));
 }
 
 void Jogador::pular(){
@@ -50,7 +53,7 @@ void Jogador::Atualizar(float dt) {
     else{
         dT += dt;
 
-        if(dT > 1000){
+        if(dT > 200){
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
@@ -66,7 +69,7 @@ void Jogador::Atualizar(float dt) {
         if(invencivel){
             tempoInvencivel += dt;
 
-            if(tempoInvencivel >= 4000){
+            if(tempoInvencivel >= 500){
                 setInvencivel(false);
                 tempoInvencivel = 0;
             }
@@ -75,5 +78,17 @@ void Jogador::Atualizar(float dt) {
         setVelocidade("x", andando * 2);
         if(!agachado)
             mover();
+
+         AtualizarAnimacao();
     }
+}
+
+void Jogador::AtualizarAnimacao() {
+    bool lado = false;
+    if (direcao.x < 0)
+        lado = true;
+    if (!andando)
+        anim.atualizar(lado, "PARADO");
+    else
+        anim.atualizar(lado, "ANDANDO");
 }

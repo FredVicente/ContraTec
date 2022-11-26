@@ -29,8 +29,6 @@ namespace Entidades {
 		Coord<float> posicao;
 		Coord<float> tamanho;
 		sf::RectangleShape* shape;
-		sf::Texture* textura;
-		sf::Sprite* sprite;
 		Coord<int> direcao;
 		ID id;
 		bool ativo = true;
@@ -54,16 +52,12 @@ namespace Entidades {
 		void setPosicao(Coord<float> posicao);
 		void setTamanho(Coord<float> tam);
 		void setFase(Fases::Fase* f) { faseAtual = f; };
-		void setTextura(sf::String path, sf::IntRect tamanhoImagem);
 		Fases::Fase* getFase() { return faseAtual; };
 
 		void virtual Executar() = 0;
 		void virtual Atualizar(float dt) = 0;
-		void imprimir() {
-			if (sprite)
-				GerenciadorGrafico::getInstancia()->renderizar(sprite);
-			else
-				GerenciadorGrafico::getInstancia()->renderizar(shape);
+		void imprimir() { 
+			GerenciadorGrafico::getInstancia()->renderizar(shape); 
 		};
 	};
 }
