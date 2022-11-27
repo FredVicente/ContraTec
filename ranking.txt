@@ -1,2 +1,4 @@
 teste:460
 Fred:2350
+Fred:400
+None:300

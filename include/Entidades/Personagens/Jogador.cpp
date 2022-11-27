@@ -86,9 +86,11 @@ void Jogador::Atualizar(float dt) {
             }
         }
 
-        setVelocidade("x", andando * 3);
         if(!agachado)
-            mover();
+            setVelocidade("x", andando * 3);
+        else
+            setVelocidade("x", andando * 0);
+        mover();
     }
     AtualizarAnimacao();
 }
