@@ -7,9 +7,10 @@ using namespace Fases;
 Jogador::Jogador(Coord<float> tamanho) :
     Personagem( Coord<float>(0,0), tamanho, Coord<int>(1, 0), jogador),
     tempoInvencivel(0),
+    pontos(0),
     invencivel(false),
     pControle(this) {
-        velocidade = Coord<float>(0, 0);
+        velocidade = {0,0};
         podePular = true;
         vidas = 3;
 }
@@ -72,8 +73,13 @@ void Jogador::Atualizar(float dt) {
             }
         }
 
+        distanciaAnterior = posicao.x;
+
         setVelocidade("x", andando * 2);
         if(!agachado)
             mover();
+        
+        if(distanciaAnterior < posicao.x)
+            pontos += posicao.x - distanciaAnterior;
     }
 }

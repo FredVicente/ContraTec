@@ -5,7 +5,7 @@ Menu::Menu(vector<std::string> op) : Ente() {
 }
 
 void Menu::Executar() {
-    if (!font.loadFromFile("Fonts/PixelFont2.ttf")) {
+    if (!font.loadFromFile("Fonts/AstroSpace.ttf")) {
         cout << "ERROR: Could not load font.";
         exit(1);
     }

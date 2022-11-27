@@ -13,7 +13,7 @@ Fase::Fase(Jogador* p, string path) {
 	player->setFase(this);
 	pathSave = path;
 
-	fonte.loadFromFile("Fonts/PixelFont2.ttf");
+	fonte.loadFromFile("Fonts/AstroSpace.ttf");
 	vidas.setFont(fonte);
 	vidas.setCharacterSize(30);
 	pontos.setFont(fonte);
@@ -48,7 +48,7 @@ void Fase::imprimir() {
 	vidas.setString("Vidas: " + to_string(player->getVidas()));
 	vidas.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2 - 10, window->getSize().y / 2 - 20));
 
-	pontos.setString("Pontos: " + to_string((int)player->pontos));
+	pontos.setString("Pontos: " + to_string((int)player->getPontos()));
 	pontos.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2 - 10, window->getSize().y / 2 - 70));
 
 	view->setCenter(player->getPosicao().x + player->getTamanho().x / 2, view->getCenter().y);

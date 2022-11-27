@@ -12,7 +12,7 @@ public:
         opcoes.push_back("Tela Inicial");
 
         acoes.push_back(entrarFaseAtual);
-        acoes.push_back(salvarJogo);
+        acoes.push_back(salvarFase);
         acoes.push_back(menuPrincipal);
 
         Executar();

@@ -12,9 +12,11 @@ enum MenuReturn {
     menuEscolherFase,
     menuPausa,
     menuNomeDoJogador,
+    menuRanking,
     entrarFase1,
     entrarFase2,
-    salvarJogo,
+    salvarFase,
+    salvarRanking,
     sairJogo,
     entrarFaseAtual
 };
@@ -40,5 +42,9 @@ public:
     virtual int Alterar(sf::Event e);
 
     virtual int menuEvent(int i) { return -1; };
+
+    void adicionarOpcao(string s){
+        opcoes.push_back(s);
+    };
 };
 

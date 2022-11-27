@@ -17,17 +17,19 @@ namespace Entidades{
         bool podePular;
         bool invencivel = false;
         float tempoInvencivel;
+        float distanciaAnterior;
+        int pontos;
     public:
         Jogador(Coord<float> tamanho = Coord<float>(50,90));
         ~Jogador() {};
 
-        int pontos;
         int andando;
 
         void Executar();
         void Atualizar(float dt);
         void pular();
         bool getInvencivel(){ return invencivel; };
+        int getPontos(){ return pontos; };
         void agacharOuLevantar(bool a);
         void setAgachado(bool valor){ agachado = valor; };
         void setPulo(bool valor){ podePular = valor; }

@@ -13,6 +13,7 @@ Jogo::Jogo() :
     pMenuFase = new MenuFase();
     pMenuPause = new MenuPause();
     pMenuNomeJogador = new MenuNomeJogador();
+    pMenuRanking = new MenuRanking();
 
     Inicializar();
 }
@@ -50,6 +51,10 @@ void Jogo::Inicializar(){
                     case menuNomeDoJogador:
                         pMenuAtual = pMenuNomeJogador;
                         break;
+                    case menuRanking:
+                        CarregarRanking();
+                        pMenuAtual = pMenuRanking;
+                        break;
                     case entrarFase1:
                         state = playing;
                         Fase::faseAtual = 1;
@@ -61,8 +66,14 @@ void Jogo::Inicializar(){
                     case entrarFaseAtual:
                         state = playing;
                         break;
-                    case salvarJogo:
-                        Salvar();
+                    case salvarFase:
+                        SalvarFase();
+                        pMenuAtual = pMenuPrincipal;
+                        break;
+                    case salvarRanking:
+                        SalvarRanking();
+                        CarregarRanking();
+                        pMenuAtual = pMenuRanking;
                         break;
                     case sairJogo:
                         exit(0);
@@ -122,7 +133,7 @@ void Jogo::setFase(int fase, string path) {
     pFaseAtual->Executar();
 }
 
-void Jogo::Salvar() {
+void Jogo::SalvarFase() {
     ofstream file;
     file.open("save.txt");
     int i, tam = pFaseAtual->listaEntidadesMoveis->getTamanho();
@@ -137,11 +148,10 @@ void Jogo::Salvar() {
         if(e->getID() != projetil)
             file << to_string(e->getID()) + estado + ": " + to_string((int)e->getPosicao().x) + "-" + to_string((int)e->getPosicao().y) + "_" + "\n";
     }
-    //file << to_string(jogador->pontos);
     file.close();
 }
 
-void Jogo::Carregar() {
+void Jogo::CarregarFase() {
     ifstream file;
     file.open("save.txt");
     if(!file)
@@ -151,11 +161,36 @@ void Jogo::Carregar() {
     file >> valor;
     Fase::faseAtual = stoi(valor);
 
-    // Sem refencira para o jogador!
-    //file >> jogador->pontos;
     file.close();
 
     setFase(Fase::faseAtual, "save.txt");
 
     pMenuAtual = pMenuPrincipal;
+}
+
+void Jogo::SalvarRanking() {
+    ofstream file;
+    file.open("ranking.txt", ios::app);
+
+    MenuNomeJogador* m = dynamic_cast<MenuNomeJogador*>(pMenuNomeJogador);
+    file << m->getUltimoNome() + ":" + to_string(jogador->getPontos()) + "\n";
+
+    file.close();
+}
+
+void Jogo::CarregarRanking() {
+    ifstream file;
+    file.open("ranking.txt");
+    if(!file)
+        return;
+
+    pMenuRanking = new MenuRanking();
+    string valor;
+    while(getline(file, valor)){
+        pMenuRanking->adicionarOpcao(valor);
+    }
+    
+    file.close();
+
+    pMenuRanking->Executar();
 }

@@ -9,6 +9,7 @@
 #include <Menus/MenuPause.h>
 #include <Menus/MenuPrincipal.h>
 #include <Menus/MenuNomeJogador.h>
+#include <Menus/MenuRanking.h>
 #include <iostream>
 #include <Fases/Fase1.h>
 #include <Fases/Fase2.h>
@@ -38,6 +39,7 @@ private:
 	Menu* pMenuPause;
 	Menu* pMenuFase;
 	Menu* pMenuNomeJogador;
+	Menu* pMenuRanking;
 
 	Fase1* fase1;
 	Fase2* fase2;
@@ -52,6 +54,8 @@ public:
 
 	void setFase(int fase, string path = "");
 
-	void Salvar();
-	void Carregar();
+	void SalvarFase();
+	void CarregarFase();
+	void SalvarRanking();
+	void CarregarRanking();
 };

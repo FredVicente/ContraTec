@@ -9,7 +9,7 @@ namespace Entidades {
 		Coord<int> direcao;
 		int vidas;
 	public:
-		Personagem(Coord<float> posicao = Coord<float>(0, 0), Coord<float> tamanho = Coord<float>(0, 0), Coord<int> dir = Coord<int>(0, 0), ID id = vazio);
+		Personagem(Coord<float> posicao = {0,0}, Coord<float> tamanho = {0,0}, Coord<int> dir = {0,0}, ID id = vazio);
 		~Personagem() {};
 
 		void Executar() = 0;
