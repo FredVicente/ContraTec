@@ -12,9 +12,14 @@ Jogador::Jogador(Coord<float> tamanho) :
         velocidade = Coord<float>(0, 0);
         podePular = true;
         vidas = 3;
-        anim.addAnimacao("assets/character/idle.png", "PARADO", 4, 0.4f, sf::Vector2f(2, 1));
-        anim.addAnimacao("assets/character/walk.png", "ANDANDO", 6, 0.1f, sf::Vector2f(2, 1));
-        //shape->setOrigin(sf::Vector2f(0,0));
+        tempoVida = 700;
+        anim.addAnimacao("assets/character/Idle.png", "PARADO", 4, 0.4f, sf::Vector2f(1.5f, 1));
+        anim.addAnimacao("assets/character/Walk.png", "ANDANDO", 6, 0.1f, sf::Vector2f(1.5f, 1));
+        anim.addAnimacao("assets/character/Attack_Front.png", "ATACANDO", 3, 0.1f, sf::Vector2f(1.5f, 1));
+        anim.addAnimacao("assets/character/Attack_Front_Walking.png", "ATACANDO_ANDANDO", 6, 0.1f, sf::Vector2f(1.5f, 1));
+        anim.addAnimacao("assets/character/Agachado.png", "AGACHADO", 1, 0.1f, sf::Vector2f(1.5f, 1.6f));
+        anim.addAnimacao("assets/character/Attack_Agachado.png", "ATACANDO_AGACHADO", 3, 0.1f, sf::Vector2f(1.5f, 1.6f));
+        anim.addAnimacao("assets/character/Death.png", "MORTO", 6, (tempoVida / 250) / 6, sf::Vector2f(1.5f, 1));
 }
 
 void Jogador::pular(){
@@ -27,11 +32,11 @@ void Jogador::pular(){
 void Jogador::agacharOuLevantar(bool a){
     if(podePular){
         if(a && !agachado){
-            setTamanho(Coord<float>(50, ALTURA_AGACHADO));
+            setTamanho(Coord<float>(70, ALTURA_AGACHADO));
             setPosicao(Coord<float>(posicao.x, posicao.y + (ALTURA_NORMAL - ALTURA_AGACHADO)));
         }
         else if(!a && agachado){
-            setTamanho(Coord<float>(50, ALTURA_NORMAL));
+            setTamanho(Coord<float>(70, ALTURA_NORMAL));
             setPosicao(Coord<float>(posicao.x, posicao.y - (ALTURA_NORMAL - ALTURA_AGACHADO)));
         }
         agachado = a;
@@ -48,18 +53,23 @@ void Jogador::setVelocidade(std::string coordenada, int valor) {
 void Jogador::Executar() {}
 
 void Jogador::Atualizar(float dt) {
-    if(vidas <= 0)
-        ativo = false;
+    if (vidas <= 0) {
+        tempoVida -= dt;
+        if (tempoVida < 0) {
+            ativo = false;
+            return;
+        }
+    }
     else{
         dT += dt;
 
-        if(dT > 200){
+        if(dT > 150){
             if (faseAtual && atacando) {
                 Projetil* p;
                 if(velocidade.x == 0 && direcao.y != 0)
-                    p = new Projetil(10, Coord<int>(0,-1), posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
+                    p = new Projetil(10, Coord<int>(0,-1), posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ), jogador);
                 else
-                    p = new Projetil(10, direcao, posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ/2), jogador);
+                    p = new Projetil(10, direcao, posicao + Coord<float>(tamanho.x/2, tamanho.y/2 - TAM_PROJ/2), Coord<float>(TAM_PROJ, TAM_PROJ), jogador);
 
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);
             }
@@ -75,20 +85,42 @@ void Jogador::Atualizar(float dt) {
             }
         }
 
-        setVelocidade("x", andando * 2);
+        setVelocidade("x", andando * 3);
         if(!agachado)
             mover();
-
-         AtualizarAnimacao();
     }
+    AtualizarAnimacao();
 }
 
 void Jogador::AtualizarAnimacao() {
     bool lado = false;
-    if (direcao.x < 0)
+    shape->setOrigin(sf::Vector2f(0, 0));
+    if (direcao.x < 0) {
         lado = true;
-    if (!andando)
-        anim.atualizar(lado, "PARADO");
+        shape->setOrigin(sf::Vector2f(25, 0));
+    }
+    if (vidas > 0) {
+        if (!atacando) {
+            if (!andando && !agachado)
+                anim.atualizar(lado, "PARADO");
+            else if (!agachado)
+                anim.atualizar(lado, "ANDANDO");
+            else {
+                shape->setOrigin(sf::Vector2f(shape->getOrigin().x, 20));
+                anim.atualizar(lado, "AGACHADO");
+            }
+        }
+        else {
+            if (!andando && !agachado)
+                anim.atualizar(lado, "ATACANDO");
+            else if(!agachado)
+                anim.atualizar(lado, "ATACANDO_ANDANDO");
+            else {
+                shape->setOrigin(sf::Vector2f(shape->getOrigin().x, 20));
+                anim.atualizar(lado, "ATACANDO_AGACHADO");
+            }
+        }
+    }
     else
-        anim.atualizar(lado, "ANDANDO");
+        anim.atualizar(lado, "MORTO");
 }

@@ -5,6 +5,7 @@ namespace Entidades {
 	class Torreta : public Inimigo {
     private:
         float dT;
+		float tempoTiro;
 	public:
 		Torreta(Coord<int> dir, Coord<float> posicao, Jogador* pJ);
 
@@ -12,6 +13,6 @@ namespace Entidades {
 
 		void Atualizar(float dt);
 
-		void AtualizarAnimacao() { anim.atualizar(true, "PARADO"); };
+		void AtualizarAnimacao();
 	};
 }

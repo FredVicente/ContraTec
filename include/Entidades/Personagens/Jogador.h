@@ -5,7 +5,7 @@
 
 #define ALTURA_NORMAL 90
 #define ALTURA_AGACHADO 60
-#define TAM_PROJ 20
+#define TAM_PROJ 15
 
 using namespace std;
 
@@ -41,7 +41,7 @@ namespace Entidades{
             if(valor)
                 shape->setFillColor(sf::Color::Red);
             else
-                shape->setFillColor(sf::Color::Green);
+                shape->setFillColor(sf::Color::White);
         }
         void setVelocidade(std::string coordenada, int valor);
 

@@ -1,6 +1,6 @@
 #include "Fase2.h"
 
-Fase2::Fase2(Jogador* p, string path) : Fase(p, path) {}
+Fase2::Fase2(Jogador* p, string path) : Fase(p, "assets/Background/6.png", path) {}
 
 void Fase2::Executar() {
     criarFase("Fase2.txt", player, Coord<int>(176, 14));

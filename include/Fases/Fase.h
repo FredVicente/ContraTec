@@ -27,6 +27,8 @@ namespace Fases {
 		sf::Text pontos;
 		Jogador* player;
 		string pathSave;
+		sf::RectangleShape backgroundShape;
+		const sf::Texture backgroundTexture;
 	public:
 		GerenciadorColisao gC;
 		ListaEntidades* listaEntidadesEstaticas;
@@ -34,7 +36,7 @@ namespace Fases {
 		ListaEntidades* listaPlataformas;
 		static int faseAtual;
 
-		Fase(Jogador* p = nullptr, string path = "");
+		Fase(Jogador* p, const char* backgroundPath, string path = "");
 		~Fase();
 
 		void Atualizar(float dt);

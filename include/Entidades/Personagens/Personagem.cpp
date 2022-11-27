@@ -11,7 +11,6 @@ Personagem::Personagem(Coord<float> posicao, Coord<float> tamanho, Coord<int> di
 	direcao = dir;
 	velocidade = Coord<float>(0, 0);
 	aceleracao = Coord<float>(0, 0.2f);
-	shape->setFillColor(sf::Color::Green);
 }
 
 void Personagem::mover() {

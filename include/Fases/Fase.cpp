@@ -4,8 +4,9 @@ using namespace Fases;
 
 int Fase::faseAtual = 1;
 
-Fase::Fase(Jogador* p, string path) {
-	//dT = 0;
+Fase::Fase(Jogador* p, const char* backgroundPath, string path) :
+	backgroundShape(sf::Vector2f(1300,700)),
+	backgroundTexture(gGrafico->carregarTextura(backgroundPath)){
 	listaEntidadesEstaticas = new ListaEntidades;
 	listaEntidadesMoveis = new ListaEntidades;
 	listaPlataformas = new ListaEntidades;
@@ -18,6 +19,7 @@ Fase::Fase(Jogador* p, string path) {
 	vidas.setCharacterSize(30);
 	pontos.setFont(fonte);
 	pontos.setCharacterSize(30);
+	backgroundShape.setTexture(&backgroundTexture);
 }
 
 Fase::~Fase() {
@@ -31,6 +33,12 @@ Fase::~Fase() {
 }
 
 void Fase::Atualizar(float dt) {
+	sf::RenderWindow* window = gGrafico->getJanela();
+	sf::View* view = gGrafico->getView();
+
+	backgroundShape.setPosition(view->getCenter() - sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2));
+	window->draw(backgroundShape);
+
 	listaEntidadesMoveis->atualizaTodos(dt);
 	listaEntidadesEstaticas->atualizaTodos(dt);
 	listaPlataformas->atualizaTodos(dt);

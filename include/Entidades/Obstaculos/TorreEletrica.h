@@ -13,24 +13,29 @@ namespace Entidades {
         tempoDano(0)
         {
             dano = 0;
-			shape->setFillColor(sf::Color::Magenta);
+            anim.addAnimacao("assets/objects/Torre.png", "DESATIVADO", 1, 0.4f, sf::Vector2f(1.5f, 1));
+            anim.addAnimacao("assets/objects/Torre2.png", "ATIVADO", 1, 0.4f, sf::Vector2f(1.5f, 1));
 		};
 		~TorreEletrica() {};
 
         void Atualizar(float dt){
             tempoDano += dt;
-            if(tempoDano >= 6000){
-                if(dano){
+            if(tempoDano >= 2000){
+                if(dano)
                     dano = false;
-                    shape->setFillColor(sf::Color::Blue);
-                }
-                else{
+                else
                     dano = true;
-                    shape->setFillColor(sf::Color::Magenta);
-                }
                 
                 tempoDano = 0;
             }
+            AtualizarAnimacao();
+        };
+
+        void AtualizarAnimacao() {
+            if (!dano)
+                anim.atualizar(false, "DESATIVADO");
+            else
+                anim.atualizar(false, "ATIVADO");
         };
 	};
 }

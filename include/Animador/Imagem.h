@@ -9,7 +9,6 @@ namespace Animador{
         GerenciadorGrafico* gGrafico;
         sf::Texture textura;
         sf::IntRect tamanho;
-        sf::RectangleShape* body;
         const sf::Vector2f escala;
         const unsigned int qtdImagem;
         unsigned int imgAtual;

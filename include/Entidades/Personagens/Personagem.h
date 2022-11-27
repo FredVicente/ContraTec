@@ -1,8 +1,5 @@
 #pragma once
 #include <Entidades/Projetil.h>
-#include "Animador/Animacao.h"
-
-using namespace Animador;
 
 namespace Entidades {
 	class Personagem : public Entidade{
@@ -11,6 +8,7 @@ namespace Entidades {
 		Coord<float> aceleracao;
 		Coord<int> direcao;
 		int vidas;
+		float tempoVida;
 		Animacao anim;
 	public:
 		Personagem(Coord<float> posicao = Coord<float>(0, 0), Coord<float> tamanho = Coord<float>(0, 0), Coord<int> dir = Coord<int>(0, 0), ID id = vazio);

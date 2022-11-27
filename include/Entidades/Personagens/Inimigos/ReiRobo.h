@@ -13,6 +13,7 @@ namespace Entidades{
     private:
         int nivelDeTirania;
         int vidaTotal;
+        float tempoTiro;
         Jogador* player;
     public:
         ReiRobo(Coord<float> pos, Jogador* pJ = nullptr, int nivelT = 1);
@@ -20,7 +21,7 @@ namespace Entidades{
 
         void Atualizar(float dt);
 
-        void AtualizarAnimacao() {};
+        void AtualizarAnimacao();
 
         void receberDano();
     };

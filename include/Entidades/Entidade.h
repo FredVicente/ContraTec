@@ -6,6 +6,9 @@
 #define CIMA 2
 #define DIREITA 3
 #define ESQUERDA 4
+#include "Animador/Animacao.h"
+
+using namespace Animador;
 
 namespace Fases {
 	class Fase;
