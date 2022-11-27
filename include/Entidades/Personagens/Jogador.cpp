@@ -89,9 +89,6 @@ void Jogador::Atualizar(float dt) {
         setVelocidade("x", andando * 3);
         if(!agachado)
             mover();
-        
-        if(distanciaAnterior < posicao.x)
-            pontos += posicao.x - distanciaAnterior;
     }
     AtualizarAnimacao();
 }

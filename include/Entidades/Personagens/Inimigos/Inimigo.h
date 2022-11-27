@@ -5,6 +5,7 @@ namespace Entidades {
 	class Inimigo : public Personagem {
 	protected:
 		Jogador* player;
+		int pontos;
 	public:
 		Inimigo(Coord<int> dir, Coord<float> posicao, Coord<float> tamanho, Jogador* pJ, ID id);
 		~Inimigo() {};

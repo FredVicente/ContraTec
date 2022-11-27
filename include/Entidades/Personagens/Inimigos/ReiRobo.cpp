@@ -8,6 +8,7 @@ ReiRobo::ReiRobo(Coord<float> pos, Jogador* pJ, int nivelT)
 : nivelDeTirania(nivelT),
 player(pJ),
 Inimigo(Coord<int>(-1,0), pos, Coord<float>(140,100), pJ, reiRobo){
+    pontos = 200;
     vidas = 12 * nivelDeTirania;
     vidaTotal = vidas;
     velocidade = Coord<float>(1, 0);
@@ -23,6 +24,7 @@ void ReiRobo::Atualizar(float dt){
         tempoVida -= dt;
         if (tempoVida < 0) {
             ativo = false;
+            player->pontos += pontos;
             return;
         }
     }
@@ -37,7 +39,7 @@ void ReiRobo::Atualizar(float dt){
             
         dT += dt;
         
-        if(dT > 2000/nivelDeTirania){
+        if(dT > 1500/nivelDeTirania){
             if (faseAtual) {
                 Projetil* p = new Projetil(5, direcao, posicao + Coord<float>(0,45 + tamanho.y / 10), Coord<float>(20, 20), reiRobo);
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);

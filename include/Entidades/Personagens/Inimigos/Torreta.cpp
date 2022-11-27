@@ -7,6 +7,7 @@ using namespace Fases;
 Torreta::Torreta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
 : Inimigo(dir, posicao, Coord<float>(140.f, 140.f), pJ, torreta)
 {
+    pontos = 100;
     velocidade = Coord<float>(0, 0);
     vidas = 3;
     tempoVida = 600;
@@ -18,12 +19,15 @@ Torreta::Torreta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
 void Torreta::Atualizar(float dt){
     if (vidas <= 0) {
         tempoVida -= dt;
-        if (tempoVida < 0)
+        if (tempoVida < 0) {
             ativo = false;
+            player->pontos += pontos;
+            return;
+        }
     }
     else{
         dT += dt;
-        if(dT > 500){
+        if(dT > 800){
             if (faseAtual) {
                 Projetil* p = new Projetil(5, direcao, posicao + Coord<float>(tamanho.x / 2, tamanho.y / 2 - TAM_PROJ / 2), Coord<float>(15, 15), torreta);
                 faseAtual->listaEntidadesMoveis->adicionarEntidade(p);

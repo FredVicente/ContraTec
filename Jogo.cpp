@@ -174,7 +174,7 @@ void Jogo::SalvarRanking() {
     file.open("ranking.txt", ios::app);
 
     MenuNomeJogador* m = dynamic_cast<MenuNomeJogador*>(pMenuNomeJogador);
-    file << m->getUltimoNome() + ":" + to_string(jogador->getPontos()) + "\n";
+    file << m->getUltimoNome() + ":" + to_string(jogador->pontos) + "\n";
 
     file.close();
 }

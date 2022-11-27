@@ -10,6 +10,7 @@ namespace Entidades {
 		: Inimigo(dir, posicao, Coord<float>(50.f, 50.f), pJ, bombeta),
 		velocidadeX(1)
 		{
+			pontos = 50;
 			velocidade = Coord<float>(velocidadeX, 0);
 			vidas = 3;
 			tempoVida = 600;
@@ -22,8 +23,11 @@ namespace Entidades {
 		void Atualizar(float dt){
 			if (vidas <= 0) {
 				tempoVida -= dt;
-				if (tempoVida < 0)
+				if (tempoVida < 0) {
 					ativo = false;
+					player->pontos += pontos;
+					return;
+				}
 			}
 			else{
 				velocidade.x = velocidadeX;
