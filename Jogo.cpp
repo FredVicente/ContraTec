@@ -55,6 +55,10 @@ void Jogo::Inicializar(){
                         CarregarRanking();
                         pMenuAtual = pMenuRanking;
                         break;
+                    case carregarFase:
+                        CarregarFase();
+                        state = playing;
+                        break;
                     case entrarFase1:
                         state = playing;
                         setFase(1);
@@ -144,16 +148,35 @@ void Jogo::SalvarFase() {
     file.open("save.txt");
     int i, tam = pFaseAtual->listaEntidadesMoveis->getTamanho();
 
+    int pontos = 0;
+    int vidas = 3;
+    if (jogador) {
+        pontos = jogador->pontos;
+        vidas = jogador->getVidas();
+    }
+
     file << to_string(faseAtual) + "\n";
+    file << to_string(pontos) + "\n";
+    file << to_string(vidas) + "\n";
 
     for (i = 0; i < tam; i++) {
         Entidade* e = (*(pFaseAtual->listaEntidadesMoveis))[i];
-        char estado = '0';
+        string estado = "0";
         if (e->estaAtivo())
-            estado = '1';
+            estado = "1";
         if(e->getID() != projetil)
-            file << to_string(e->getID()) + estado + ": " + to_string((int)e->getPosicao().x) + "-" + to_string((int)e->getPosicao().y) + "_" + "\n";
+            file << estado + "\n" + to_string((int)e->getPosicao().x) + "\n" + to_string((int)e->getPosicao().y) + "\n" + to_string(e->getID()) + "\n";
     }
+
+    tam = pFaseAtual->listaPlataformas->getTamanho();
+    for (i = 0; i < tam; i++) {
+        Entidade* e = (*(pFaseAtual->listaPlataformas))[i];
+        int posy = 0;
+        if (e->getID() == elevador)
+            posy = (e->getTamanho().y - 30);
+        file << "1\n" + to_string((int)e->getPosicao().x) + "\n" + to_string((int)e->getPosicao().y + posy) + "\n" + to_string(e->getID()) + "\n";
+    }
+
     file.close();
 }
 
@@ -167,9 +190,20 @@ void Jogo::CarregarFase() {
     file >> valor;
     Fase::faseAtual = stoi(valor);
 
+    int pontos = 0;
+    file >> valor;
+    pontos = stoi(valor);
+
+    int vidas = 3;
+    file >> valor;
+    vidas = stoi(valor);
+
     file.close();
 
     setFase(Fase::faseAtual, "save.txt");
+
+    jogador->pontos = pontos;
+    jogador->setVidas(vidas);
 
     pMenuAtual = pMenuPrincipal;
 }

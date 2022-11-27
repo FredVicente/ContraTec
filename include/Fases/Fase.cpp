@@ -123,12 +123,12 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 			for (j = 0; j < tamanho.x; j++) {
 				fileLevel >> fase[i][j];
 
-				if (fase[i][j] == 'P')
-					listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
-				else if (fase[i][j] == 'p')
+				if (fase[i][j] == 'p')
 					listaEntidadesEstaticas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
 				if (pathSave == "") {
-					if (fase[i][j] == 'J') {
+					if (fase[i][j] == 'P')
+						listaPlataformas->adicionarEntidade(instanciaEntidade(Coord<float>(j * 50, i * 50), plataforma));
+					else if (fase[i][j] == 'J') {
 						listaEntidadesMoveis->adicionarEntidade(player);
 						player->setPosicao(Coord<float>(j * 50, i * 50));
 					}
@@ -170,67 +170,73 @@ void Fase::criarFase(const char* path, Jogador* player, Coord<int> tamanho) {
 }
 
 void Fase::carregarFase() {
-	char valor[20];
-	string pos;
+	string valor;
 	ifstream fileSave;
 	fileSave.open(pathSave);
 
-	int i = 0;
-	int j;
+	fileSave >> valor;
+	fileSave >> valor;
+	fileSave >> valor;
+
 	bool estado = false;
 	ID id = vazio;
 	Coord<float> posicao;
-	fileSave >> valor[0];
-	while (!fileSave.eof()) {
-		fileSave >> valor[i];
-		if (valor[i] == ':') {
-			switch ((int)(valor[0]) - 48) {
-			case((int)jogador):
-				id = jogador;
-				break;
-			case((int)bombeta):
-				id = bombeta;
-				break;
-			case((int)torreta):
-				id = torreta;
-				break;
-			default:
-				break;
-			}
-			if ((int)(valor[1] - 48))
-				estado = true;
-			else
-				estado = false;
-			i = -1;
-		}
-		else if (valor[i] == '-') {
-			for (j = 0; j < i; j++)
-				pos.push_back(valor[j]);
-			posicao.x = stoi(pos);
-			pos.clear();
-			i = -1;
-		}
-		else if (valor[i] == '_') {
-			for (j = 0; j < i; j++)
-				pos.push_back(valor[j]);
-			posicao.y = stoi(pos);
 
-			Entidade* e = nullptr;
-			if (id == jogador) {
-				listaEntidadesMoveis->adicionarEntidade(player);
-				player->setPosicao(posicao);
-			}
-			else if (id == bombeta)
-				e = instanciaEntidade(posicao, bombeta);
-			else if (id == torreta)
-				e = instanciaEntidade(posicao, torreta);
-			listaEntidadesMoveis->adicionarEntidade(e);
-			if (id != jogador)
-				e->setEstado(estado);
-			pos.clear();
-			i = -1;
+	while (!fileSave.eof()) {
+		fileSave >> valor;
+		if (stoi(valor))
+			estado = true;
+		else
+			estado = false;
+		
+		fileSave >> valor;
+		posicao.x = stoi(valor);
+
+		fileSave >> valor;
+		posicao.y = stoi(valor);
+
+		fileSave >> valor;
+		Entidade* e = nullptr;
+		bool plat = false;
+
+		switch (stoi(valor)) {
+		case((int)jogador):
+			e = player;
+			player->setPosicao(posicao);
+			break;
+		case((int)bombeta):
+			e = instanciaEntidade(posicao, bombeta);
+			break;
+		case((int)torreta):
+			e = instanciaEntidade(posicao, torreta);
+			break;
+		case((int)reiRobo):
+			e = instanciaEntidade(posicao, reiRobo);
+			break;
+		case((int)plataforma):
+			e = instanciaEntidade(posicao, plataforma);
+			plat = true;
+			break;
+		case((int)elevador):
+			e = instanciaEntidade(posicao, elevador);
+			plat = true;
+			break;
+		case((int)torreEletrica):
+			e = instanciaEntidade(posicao, torreEletrica);
+			plat = true;
+			break;
+		default:
+			break;
 		}
-		i++;
+		if (!e) {
+			cout << "ERROR: entidade salva nulo!";
+			exit(1);
+		}
+		if (!plat)
+			listaEntidadesMoveis->adicionarEntidade(e);
+		else
+			listaPlataformas->adicionarEntidade(e);
+		e->setEstado(estado);
 	}
 
 	fileSave.close();

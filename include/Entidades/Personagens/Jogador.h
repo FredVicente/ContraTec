@@ -32,6 +32,7 @@ namespace Entidades{
         bool getInvencivel(){ return invencivel; };
         void agacharOuLevantar(bool a);
         void setAgachado(bool valor){ agachado = valor; };
+        void setVidas(int valor){ vidas = valor; };
         void setPulo(bool valor){ podePular = valor; }
         void setAtacando(bool valor){
             if(!atacando)
