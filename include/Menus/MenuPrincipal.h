@@ -8,10 +8,12 @@ private:
 public:
     MenuPrincipal() : Menu(){
         opcoes.push_back("Jogar");
+        opcoes.push_back("Continuar");
         opcoes.push_back("Ranking");
         opcoes.push_back("Sair");
 
         acoes.push_back(menuEscolherFase);
+        acoes.push_back(carregarFase);
         acoes.push_back(menuRanking);
         acoes.push_back(sairJogo);
 

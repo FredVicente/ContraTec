@@ -1,7 +1,9 @@
 #include "Menu.h"
 
 Menu::Menu(vector<std::string> op) : Ente() { 
-    opcoes = { op[0], op[1], op[2] };
+    int i, size = op.size();
+    for(i = 0; i < size; i++)
+        opcoes.push_back(op[i]);
 }
 
 void Menu::Executar() {
@@ -9,15 +11,13 @@ void Menu::Executar() {
         cout << "ERROR: Could not load font.";
         exit(1);
     }
-    
-    posicoes = { {0, 150}, {0, 300}, {0, 450} };
 
-    textos.resize(3);
+    textos.resize(opcoes.size());
     int i;
     for (i = 0; i < textos.size(); i++) {
         textos[i].setFont(font);
         textos[i].setString(opcoes[i]);
-        textos[i].setPosition(posicoes[i]);
+        textos[i].setPosition(sf::Vector2f(-20, 125 * (i + 1)));
     }
 }
 

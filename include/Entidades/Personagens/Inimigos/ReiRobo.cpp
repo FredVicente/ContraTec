@@ -78,10 +78,10 @@ void ReiRobo::receberDano(){
 
 void ReiRobo::AtualizarAnimacao() {
     bool lado = false;
-    shape->setOrigin(20, tamanho.y / 9 + 10);
+    shape->setOrigin(20, tamanho.y / 9 + 12);
     if (direcao.x < 0) {
         lado = true;
-        shape->setOrigin(0, tamanho.y / 9 + 10);
+        shape->setOrigin(0, tamanho.y / 9 + 12);
     }
     if (vidas > 0){
         if (tempoTiro <= 0) {

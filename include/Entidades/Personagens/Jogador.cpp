@@ -32,7 +32,7 @@ void Jogador::pular(){
 
 void Jogador::agacharOuLevantar(bool a){
     if(podePular){
-        if(a && !agachado){
+        if(a && !agachado && vidas > 0){
             setTamanho(Coord<float>(70, ALTURA_AGACHADO));
             setPosicao(Coord<float>(posicao.x, posicao.y + (ALTURA_NORMAL - ALTURA_AGACHADO)));
         }
@@ -87,8 +87,9 @@ void Jogador::Atualizar(float dt) {
         }
 
         setVelocidade("x", andando * 3);
-        if(!agachado)
-            mover();
+        if(agachado)
+            setVelocidade("x", 0);
+        mover();
     }
     AtualizarAnimacao();
 }

@@ -15,6 +15,7 @@ enum MenuReturn {
     menuRanking,
     entrarFase1,
     entrarFase2,
+    carregarFase,
     salvarFase,
     salvarRanking,
     sairJogo,

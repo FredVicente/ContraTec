@@ -1,2 +1,6 @@
 teste:460
 Fred:2350
+Abacate:6313390
+abacate:200
+ a:350
+a:250
