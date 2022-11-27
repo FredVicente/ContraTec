@@ -57,11 +57,11 @@ void Jogo::Inicializar(){
                         break;
                     case entrarFase1:
                         state = playing;
-                        Fase::faseAtual = 1;
+                        setFase(1);
                         break;
                     case entrarFase2:
                         state = playing;
-                        Fase::faseAtual = 2;
+                        setFase(2);
                         break;
                     case entrarFaseAtual:
                         state = playing;
@@ -114,9 +114,15 @@ void Jogo::setFase(int fase, string path) {
     if (pFaseAtual)
         delete(pFaseAtual);
 
+    Fase::faseAtual = fase;
     faseAtual = fase;
 
+    int pontos = 0;
+    if (jogador)
+        pontos = jogador->pontos;
+
     jogador = new Jogador(Coord<float>(70, 90));
+    jogador->pontos = pontos;
 
     switch (faseAtual) {
     case(1):
@@ -124,7 +130,6 @@ void Jogo::setFase(int fase, string path) {
         pFaseAtual = fase1;
         break;
     case(2):
-
         fase2 = new Fase2(jogador, path);
         pFaseAtual = fase2;
         break;

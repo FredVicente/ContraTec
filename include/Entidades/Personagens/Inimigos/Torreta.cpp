@@ -10,10 +10,10 @@ Torreta::Torreta(Coord<int> dir, Coord<float> posicao, Jogador* pJ)
     pontos = 100;
     velocidade = Coord<float>(0, 0);
     vidas = 3;
-    tempoVida = 600;
-    anim.addAnimacao("assets/torreta/torreta2_idle.png", "PARADO", 1, 0.2f, sf::Vector2f(1.2, 1.1));
-    anim.addAnimacao("assets/torreta/torreta2.png", "MORTE", 4, (tempoVida / 250) / 4, sf::Vector2f(1.2, 1.1));
-    shape->setOrigin(sf::Vector2f(15, 10));
+    tempoVida = 400;
+    anim.addAnimacao("assets/torreta/torreta2_idle.png", "PARADO", 1, 0.2f, sf::Vector2f(1.1, 1));
+    anim.addAnimacao("assets/torreta/torreta2.png", "MORTE", 4, (tempoVida / 250) / 4, sf::Vector2f(1.1, 1));
+    shape->setOrigin(sf::Vector2f(0, -5));
 };
 
 void Torreta::Atualizar(float dt){

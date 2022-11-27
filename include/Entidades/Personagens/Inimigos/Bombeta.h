@@ -13,7 +13,7 @@ namespace Entidades {
 			pontos = 50;
 			velocidade = Coord<float>(velocidadeX, 0);
 			vidas = 3;
-			tempoVida = 600;
+			tempoVida = 300;
 			anim.addAnimacao("assets/bombeta/walk.png", "ANDANDO", 4, 0.2f, sf::Vector2f(2.5f, 2.5f));
 			anim.addAnimacao("assets/bombeta/death.png", "MORTE", 4, (tempoVida / 250) / 6, sf::Vector2f(2.5f, 2.5f));
 		};
