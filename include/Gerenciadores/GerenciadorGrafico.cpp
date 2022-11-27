@@ -94,4 +94,13 @@ namespace Gerenciadores {
     sf::RenderWindow* GerenciadorGrafico::getJanela() const {
         return window;
     }
+
+    sf::Texture GerenciadorGrafico::carregarTextura(const char* caminhoTextura) {
+        sf::Texture textura;
+        if (!textura.loadFromFile(caminhoTextura)) {
+            std::cout << "ERRO: nao foi possivel encontrar o caminho da textura - " << caminhoTextura << std::endl;
+            exit(1);
+        }
+        return textura;
+    }
 }

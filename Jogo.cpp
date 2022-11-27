@@ -88,15 +88,16 @@ void Jogo::Inicializar(){
             if (Fase::faseAtual != faseAtual)
                 setFase(Fase::faseAtual);
 
-            dt += ((float)clock() - tAnt) / CLOCKS_PER_SEC;
+            float c = clock();
+            dt += (c - tAnt) / CLOCKS_PER_SEC;
 
-            if (dt > 1) {
+            if (dt > 5) {
                 pFaseAtual->Atualizar(dt);
-                tAnt = dt;
+                tAnt = c;
                 dt = 0;
             }
 
-            if (jogador->getVidas() <= 0 || jogador->getPosicao().y > 1000) {
+            if (!jogador->estaAtivo() || jogador->getPosicao().y > 1000) {
                 state = menu;
                 pMenuAtual = pMenuNomeJogador;
                 faseAtual = 0;
@@ -115,7 +116,7 @@ void Jogo::setFase(int fase, string path) {
 
     faseAtual = fase;
 
-    jogador = new Jogador(Coord<float>(50, 90));
+    jogador = new Jogador(Coord<float>(70, 90));
 
     switch (faseAtual) {
     case(1):

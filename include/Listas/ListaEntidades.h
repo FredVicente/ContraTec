@@ -24,7 +24,9 @@ namespace Listas {
 
 		Entidade* operator[](int posicao);
 
-		void atualizaTodos(float dt, Coord<float> range = Coord<float>(800,700));
+		void executarTodos();
+
+		void atualizaTodos(float dt, Coord<float> range = Coord<float>(800, 700));
 	};
 }
 

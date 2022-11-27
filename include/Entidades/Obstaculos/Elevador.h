@@ -15,7 +15,10 @@ namespace Entidades {
         alturaMinima(altMin),
         direcaoMudancaDeAltura(1),
 		Obstaculo(pos, Coord<float>(larg, altMin), elevador) {
-			shape->setFillColor(sf::Color::Blue);
+            anim.addAnimacao("assets/objects/hammer.png", "IDLE", 8, 0, sf::Vector2f(1, -((float)altMax/(float)altMin) / 2));
+            anim.atualizar(false, "IDLE");
+            anim.atualizar(false, "IDLE");
+            anim.atualizar(false, "IDLE");
 		};
 		~Elevador() {};
 
@@ -25,9 +28,10 @@ namespace Entidades {
             mudarAltura();
         };
 
-        void mudarAltura(){
+        void mudarAltura() {
             setTamanho(Coord<float>(tamanho.x, tamanho.y + direcaoMudancaDeAltura));
             setPosicao(Coord<float>(posicao.x, posicao.y - direcaoMudancaDeAltura));
-        }
+            shape->setOrigin(0, alturaMinima + (tamanho.y - alturaMinima));
+        };
 	};
 }
