@@ -29,64 +29,9 @@ void Jogo::Inicializar(){
 
     while (gGrafico->janelaAberta()) {
         sf::Event event;
-        while (window->pollEvent(event)) {
-            if(event.type == sf::Event::Closed)
-                gGrafico->fecharJanela();
+        while (window->pollEvent(event))
+            TestaEstado(event);
 
-            if (state == playing) {
-                jogador->pControle.eventController(event);
-                if (event.KeyPressed && event.key.code == sf::Keyboard::P){
-                    state = pause;
-                    pMenuAtual = pMenuPause;
-                }
-            }
-            else {
-                switch (pMenuAtual->Alterar(event)) {
-                    case menuPrincipal:
-                        pMenuAtual = pMenuPrincipal;
-                        break;
-                    case menuEscolherFase:
-                        pMenuAtual = pMenuFase;
-                        break;
-                    case menuNomeDoJogador:
-                        pMenuAtual = pMenuNomeJogador;
-                        break;
-                    case menuRanking:
-                        CarregarRanking();
-                        pMenuAtual = pMenuRanking;
-                        break;
-                    case carregarFase:
-                        CarregarFase();
-                        state = playing;
-                        break;
-                    case entrarFase1:
-                        state = playing;
-                        setFase(1);
-                        break;
-                    case entrarFase2:
-                        state = playing;
-                        setFase(2);
-                        break;
-                    case entrarFaseAtual:
-                        state = playing;
-                        break;
-                    case salvarFase:
-                        SalvarFase();
-                        pMenuAtual = pMenuPrincipal;
-                        break;
-                    case salvarRanking:
-                        SalvarRanking();
-                        CarregarRanking();
-                        pMenuAtual = pMenuRanking;
-                        break;
-                    case sairJogo:
-                        exit(0);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
         gGrafico->clear();
         if (state == playing) {
             if (Fase::faseAtual != faseAtual)
@@ -110,6 +55,85 @@ void Jogo::Inicializar(){
         else {
             pMenuAtual->Atualizar();
             window->display();
+        }
+    }
+}
+
+void Jogo::TestaEstado(sf::Event event) {
+    if (event.type == sf::Event::Closed)
+        gGrafico->fecharJanela();
+
+    if (state == playing) {
+        jogador->pControle.eventController(event);
+        if (event.KeyPressed && event.key.code == sf::Keyboard::P) {
+            state = pause;
+            pMenuAtual = pMenuPause;
+        }
+    }
+    else {
+        switch (pMenuAtual->Alterar(event)) {
+        case menuPrincipal:
+            pMenuAtual = pMenuPrincipal;
+            break;
+        case menuEscolherFase:
+            pMenuAtual = pMenuFase;
+            break;
+        case menuNomeDoJogador:
+            pMenuAtual = pMenuNomeJogador;
+            break;
+        case menuRanking:
+            CarregarRanking();
+            pMenuAtual = pMenuRanking;
+            break;
+        case carregarFase:
+            try {
+                CarregarFase();
+            }
+            catch (int value) {
+                switch (value) {
+                case 1:
+                    cout << "ERRO: erro ao carregar entidade vazia na fase.\n";
+                    break;
+                default:
+                    cout << "ERRO: erro ao tentar carregar fase.\n";
+                    break;
+                }
+            }
+            catch (...) {
+                cout << "ERRO: erro ao tentar carregar fase.\n";
+                pMenuAtual = pMenuPrincipal;
+            }
+            state = playing;
+            break;
+        case entrarFase1:
+            state = playing;
+            setFase(1);
+            break;
+        case entrarFase2:
+            state = playing;
+            setFase(2);
+            break;
+        case entrarFaseAtual:
+            state = playing;
+            break;
+        case salvarFase:
+            try {
+                SalvarFase();
+            }
+            catch (...) {
+                cout << "ERRO: erro ao tentar salvar fase.\n";
+            }
+            state = playing;
+        case salvarRanking:
+            SalvarRanking();
+            CarregarRanking();
+            pMenuAtual = pMenuRanking;
+            break;
+        case sairJogo:
+            exit(0);
+            break;
+        default:
+            break;
         }
     }
 }
@@ -146,6 +170,7 @@ void Jogo::setFase(int fase, string path) {
 void Jogo::SalvarFase() {
     ofstream file;
     file.open("save.txt");
+
     int i, tam = pFaseAtual->listaEntidadesMoveis->getTamanho();
 
     int pontos = 0;

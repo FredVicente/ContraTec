@@ -228,10 +228,8 @@ void Fase::carregarFase() {
 		default:
 			break;
 		}
-		if (!e) {
-			cout << "ERROR: entidade salva nulo!";
-			exit(1);
-		}
+		if (!e)
+			throw(1);
 		if (!plat)
 			listaEntidadesMoveis->adicionarEntidade(e);
 		else

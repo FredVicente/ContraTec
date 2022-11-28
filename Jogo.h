@@ -52,6 +52,8 @@ public:
 
 	void Inicializar();
 
+	void TestaEstado(sf::Event event);
+
 	void setFase(int fase, string path = "");
 
 	void SalvarFase();
