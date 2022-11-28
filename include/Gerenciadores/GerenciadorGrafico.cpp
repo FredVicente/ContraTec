@@ -38,10 +38,6 @@ namespace Gerenciadores {
         window->draw(*text);
     }
 
-    void GerenciadorGrafico::renderizar(sf::Sprite* sprite) {
-        window->draw(*sprite);
-    }
-
     /* Display everything that was drawn. */
     void GerenciadorGrafico::display() {
         if (janelaAberta())

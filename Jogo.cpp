@@ -101,7 +101,7 @@ void Jogo::Inicializar(){
                 dt = 0;
             }
 
-            if (!jogador->estaAtivo() || jogador->getPosicao().y > 1000) {
+            if (!jogador->ativo || jogador->getPosicao().y > 1000) {
                 state = menu;
                 pMenuAtual = pMenuNomeJogador;
                 faseAtual = 0;
@@ -161,11 +161,11 @@ void Jogo::SalvarFase() {
 
     for (i = 0; i < tam; i++) {
         Entidade* e = (*(pFaseAtual->listaEntidadesMoveis))[i];
-        string estado = "0";
-        if (e->estaAtivo())
-            estado = "1";
+        string ativo = "0";
+        if (e->ativo)
+            ativo = "1";
         if(e->getID() != projetil)
-            file << estado + "\n" + to_string((int)e->getPosicao().x) + "\n" + to_string((int)e->getPosicao().y) + "\n" + to_string(e->getID()) + "\n";
+            file << ativo + "\n" + to_string((int)e->getPosicao().x) + "\n" + to_string((int)e->getPosicao().y) + "\n" + to_string(e->getID()) + "\n";
     }
 
     tam = pFaseAtual->listaPlataformas->getTamanho();

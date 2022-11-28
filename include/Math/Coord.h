@@ -1,6 +1,8 @@
 #pragma once
-
 #include <iostream>
+/*
+* Baseado no codigo de Matheus Burda.
+*/
 
 namespace Math {
 	template <typename T>

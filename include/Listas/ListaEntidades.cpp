@@ -40,16 +40,16 @@ void ListaEntidades::atualizaTodos(float dt, Coord<float> range) {
 		Entidade* e = lista[i];
 		pos = e->getPosicao();
 		if (abs(pos.x - posView.x) < range.x && abs(pos.y - posView.y) < range.y) {
-			e->setRange(true);
-			if (e->estaAtivo()) {
+			e->range = true;
+			if (e->ativo) {
 				e->Atualizar(dt);
 				e->imprimir();
 			}
 		}
 		else {
-			e->setRange(false);
+			e->range = false;
 			if (e->getID() == projetil)
-				e->setEstado(false);
+				e->ativo = false;
 		}
 	}
 }

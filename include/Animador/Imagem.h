@@ -1,5 +1,9 @@
 #pragma once
 #include "Gerenciadores/GerenciadorGrafico.h"
+/*
+* Baseado no codigo do atual monitor de 
+* engenharia da computação, Giovane Limas Salvi.
+*/
 
 using namespace Gerenciadores;
 

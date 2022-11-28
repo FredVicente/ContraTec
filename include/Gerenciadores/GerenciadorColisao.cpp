@@ -21,12 +21,12 @@ void GerenciadorColisao::Colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        if (e1->estaAtivo() && e1->getRange()){
+        if (e1->ativo && e1->range){
             while (j < listaEstatica->getTamanho()) {
                 e2 = (*listaEstatica)[j];
                 j++;
 
-                if (e2->getRange()) {
+                if (e2->range) {
                     // Dire��o de colis�o.
                     int dir = TestaColisao(e1, e2);
 
@@ -51,12 +51,12 @@ void GerenciadorColisao::Colisoes() {
         e1 = (*listaMoveis)[i];
         i++;
         j = i;
-        if(e1->estaAtivo() && e1->getRange()){
+        if(e1->ativo && e1->range){
             while (j < listaMoveis->getTamanho()) {
                 e2 = (*listaMoveis)[j];
                 j++;
                 // Dire��o de colis�o.
-                if (e2->estaAtivo() && e2->getRange()) {
+                if (e2->ativo && e2->range) {
                     int dir = TestaColisao(e1, e2);
 
                     if (dir != NAO_COLIDINDO) {
@@ -141,9 +141,9 @@ void GerenciadorColisao::ColisaoJogadorProjetil(Entidade* e1, Entidade* e2){
         proj = dynamic_cast<Projetil*>(e1);
     }
 
-    if(proj->estaAtivo() && proj->getAtirador() != jogador){
+    if(proj->ativo && proj->getAtirador() != jogador){
         jog->receberDano();
-        proj->setEstado(false);
+        proj->ativo = false;
     }
 }
 void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
@@ -160,9 +160,9 @@ void GerenciadorColisao::ColisaoInimigoProjetil(Entidade* e1, Entidade* e2){
         proj = dynamic_cast<Projetil*>(e1);
     }
     
-    if(proj->estaAtivo() && proj->getAtirador() == jogador){
+    if(proj->ativo && proj->getAtirador() == jogador){
         per->receberDano();
-        proj->setEstado(false);
+        proj->ativo = false;
     }
 }
 void GerenciadorColisao::ColisaoPersonagemObstaculo(Entidade* e1, Entidade* e2, int dir){
@@ -178,7 +178,7 @@ void GerenciadorColisao::ColisaoPersonagemObstaculo(Entidade* e1, Entidade* e2, 
     if(per->getID() == jogador){
         jog = dynamic_cast<Jogador*>(per);
         if(dir == BAIXO)
-            jog->setPulo(true);
+            jog->podePular = true;
         if(obs->getDano())
             jog->receberDano();
     }
@@ -204,5 +204,5 @@ void GerenciadorColisao::ColisaoPersonagemObstaculo(Entidade* e1, Entidade* e2, 
     }
 }
 void GerenciadorColisao::ColisaoProjetilObstaculo(Entidade* e1) {
-    e1->setEstado(false);
+    e1->ativo = false;
 }

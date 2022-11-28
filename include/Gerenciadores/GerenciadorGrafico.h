@@ -1,9 +1,11 @@
 #pragma once
-
 #include <Math/Coord.h>
 #include <SFML/Graphics.hpp>
-
 #include <map>
+/*
+* Baseado no codigo do atual monitor de
+* engenharia da computação, Giovane Limas Salvi.
+*/
 
 using namespace Math;
 
@@ -28,8 +30,6 @@ namespace Gerenciadores {
         void renderizar(sf::RectangleShape* body);
 
         void renderizar(sf::Text* text);
-
-        void renderizar(sf::Sprite* sprite);
 
         void display();
 

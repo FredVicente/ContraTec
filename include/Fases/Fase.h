@@ -39,6 +39,7 @@ namespace Fases {
 		Fase(Jogador* p, const char* backgroundPath, string path = "");
 		~Fase();
 
+		virtual void Executar();
 		void Atualizar(float dt);
 		virtual int PassarFase() = 0;
 		void imprimir();

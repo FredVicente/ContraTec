@@ -236,7 +236,7 @@ void Fase::carregarFase() {
 			listaEntidadesMoveis->adicionarEntidade(e);
 		else
 			listaPlataformas->adicionarEntidade(e);
-		e->setEstado(estado);
+		e->ativo  = estado;
 	}
 
 	fileSave.close();

@@ -34,13 +34,13 @@ namespace Entidades {
 		sf::RectangleShape* shape;
 		Coord<int> direcao;
 		ID id;
-		bool ativo = true;
-		bool range = true;
 		Fases::Fase* faseAtual;
 		float dT;
 	public:
+		bool ativo = true;
+		bool range = true;
+
 		Entidade(Coord<float> pos, Coord<float> tam, ID id);
-		Entidade() { id = vazio; shape = nullptr; };
 
 		~Entidade() { delete(shape); };
 
@@ -48,10 +48,6 @@ namespace Entidades {
 		Coord<float> getTamanho() { return tamanho; };
 		sf::RectangleShape* getShape() { return shape; };
 		int getID() { return id; };
-		bool estaAtivo(){ return ativo; };
-		bool getRange(){ return range; };
-		void setEstado(bool valor){ ativo = valor; };
-		void setRange(bool valor){ range = valor; };
 		void setPosicao(Coord<float> posicao);
 		void setTamanho(Coord<float> tam);
 		void setFase(Fases::Fase* f) { faseAtual = f; };
@@ -59,8 +55,6 @@ namespace Entidades {
 
 		void virtual Executar() = 0;
 		void virtual Atualizar(float dt) = 0;
-		void imprimir() { 
-			GerenciadorGrafico::getInstancia()->renderizar(shape); 
-		};
+		void imprimir() { GerenciadorGrafico::getInstancia()->renderizar(shape); };
 	};
 }
