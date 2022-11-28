@@ -9,7 +9,7 @@ void Fase1::Executar() {
 }
 
 int Fase1::PassarFase() {
-    if (player->getPosicao().x > 7500) {
+    if (player->getPosicao().x > 7700) {
         return 1;
     }
     return 0;
