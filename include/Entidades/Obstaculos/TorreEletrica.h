@@ -13,6 +13,7 @@ namespace Entidades {
         tempoDano(0)
         {
             dano = 0;
+            shape->setOrigin(0, 40);
             anim.addAnimacao("assets/objects/Torre.png", "DESATIVADO", 1, 0.4f, sf::Vector2f(1.5f, 1));
             anim.addAnimacao("assets/objects/Torre2.png", "ATIVADO", 1, 0.4f, sf::Vector2f(1.5f, 1));
 		};

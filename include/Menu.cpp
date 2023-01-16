@@ -7,9 +7,9 @@ Menu::Menu(vector<std::string> op) : Ente() {
 }
 
 void Menu::Executar() {
-    if (!font.loadFromFile("Fonts/AstroSpace.ttf")) {
-        cout << "ERROR: Could not load font.";
-        exit(1);
+    if(!font.loadFromFile("Fonts/AstroSpace.ttf")){
+        cout << "ERROR: Could not load font menu.";
+        system("pause");
     }
 
     textos.resize(opcoes.size());

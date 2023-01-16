@@ -16,9 +16,9 @@ public:
     ~MenuRanking() {};
 
     void Executar(){
-        if (!font.loadFromFile("Fonts/AstroSpace.ttf")){
+        if(!font.loadFromFile("Fonts/AstroSpace.ttf")) {
             cout << "ERROR: Could not load font.";
-            exit(1);
+            system("pause");
         }
         textos.resize(opcoes.size()+1);
 
@@ -34,21 +34,21 @@ public:
         textos[i].setFillColor(sf::Color::Black);
     }
 
-    int Alterar(sf::Event e){
-        if(e.type == sf::Event::MouseButtonPressed){
+    int Alterar(sf::Event e) {
+        if (e.type == sf::Event::MouseButtonPressed) {
             int posX = botao->getPosition().x;
             int posY = botao->getPosition().y;
 
-            if(((e.mouseButton.x - gGrafico->getTamanhoJanela().x/2) > posX) && ((e.mouseButton.x - gGrafico->getTamanhoJanela().x/2) < (posX + botao->getSize().x)))
-                if((e.mouseButton.y > posY) && (e.mouseButton.y < (posY + botao->getSize().y)))
+            if (((e.mouseButton.x - gGrafico->getTamanhoJanela().x / 2) > posX) && ((e.mouseButton.x - gGrafico->getTamanhoJanela().x / 2) < (posX + botao->getSize().x)))
+                if ((e.mouseButton.y > posY) && (e.mouseButton.y < (posY + botao->getSize().y)))
                     return menuPrincipal;
         }
-        else if(e.type == sf::Event::KeyPressed){
-            if(e.key.code == sf::Keyboard::Escape)
+        else if (e.type == sf::Event::KeyPressed) {
+            if (e.key.code == sf::Keyboard::Escape)
                 return menuPrincipal;
         }
         return -1;
-    }
+    };
 
     void Atualizar(){
         gGrafico->renderizar(botao);

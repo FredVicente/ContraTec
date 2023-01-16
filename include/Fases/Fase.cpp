@@ -14,7 +14,10 @@ Fase::Fase(Jogador* p, const char* backgroundPath, string path) :
 	player->setFase(this);
 	pathSave = path;
 
-	fonte.loadFromFile("Fonts/AstroSpace.ttf");
+	if (!fonte.loadFromFile("Fonts/AstroSpace.ttf")) {
+		cout << "ERROR: Could not load font.";
+		system("pause");
+	}
 	vidas.setFont(fonte);
 	vidas.setCharacterSize(30);
 	pontos.setFont(fonte);

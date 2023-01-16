@@ -74,6 +74,7 @@ void Jogo::TestaEstado(sf::Event event) {
         switch (pMenuAtual->Alterar(event)) {
         case menuPrincipal:
             pMenuAtual = pMenuPrincipal;
+            setFase(0);
             break;
         case menuEscolherFase:
             pMenuAtual = pMenuFase;
@@ -153,6 +154,11 @@ void Jogo::setFase(int fase, string path) {
     jogador->pontos = pontos;
 
     switch (faseAtual) {
+    case(0):
+        pFaseAtual = nullptr;
+        delete(jogador);
+        jogador = nullptr;
+        break;
     case(1):
         fase1 = new Fase1(jogador, path);
         pFaseAtual = fase1;
@@ -164,7 +170,8 @@ void Jogo::setFase(int fase, string path) {
     default:
         break;
     }
-    pFaseAtual->Executar();
+    if (pFaseAtual)
+        pFaseAtual->Executar();   
 }
 
 void Jogo::SalvarFase() {
@@ -199,6 +206,8 @@ void Jogo::SalvarFase() {
         int posy = 0;
         if (e->getID() == elevador)
             posy = (e->getTamanho().y - 30);
+        else if (e->getID() == torreEletrica)
+            posy = 100;
         file << "1\n" + to_string((int)e->getPosicao().x) + "\n" + to_string((int)e->getPosicao().y + posy) + "\n" + to_string(e->getID()) + "\n";
     }
 
